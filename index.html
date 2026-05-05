@@ -202,7 +202,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .pinyin-hero h3{font-family:'Playfair Display',serif;font-size:26px;color:var(--td);margin-bottom:8px;}
 .pinyin-hero p{font-size:13px;color:var(--tm);line-height:1.6;max-width:720px;}
 .pinyin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.pinyin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.pinyin-tab{padding:10px 14px;border-radius:12px;border:2px solid var(--p100);background:white;color:var(--tm);font-family:'Quicksand',sans-serif;font-weight:800;font-size:12px;cursor:pointer;}
+.pinyin-tab.active,.pinyin-tab:hover{background:var(--p400);border-color:var(--p400);color:white;}
 .pinyin-section{background:white;border:2px solid var(--p100);border-radius:18px;padding:18px;margin-bottom:16px;}
+.pinyin-panel{display:none;}
+.pinyin-panel.active{display:block;}
 .pinyin-section h3{font-size:16px;color:var(--td);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .sound-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:8px;}
 .sound-card{border:2px solid var(--p100);border-radius:12px;background:linear-gradient(135deg,#fff,#fff8fb);padding:10px 8px;text-align:center;min-height:74px;display:flex;flex-direction:column;justify-content:center;gap:4px;}
@@ -274,27 +279,35 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <button class="fc-nav-btn" onclick="startPinyinQuiz()">Luyện quiz</button>
     </div>
   </div>
-  <div class="pinyin-section">
+  <div class="pinyin-tabs">
+    <button class="pinyin-tab active" onclick="switchPinyinPanel(this,'initials')">Thanh mẫu</button>
+    <button class="pinyin-tab" onclick="switchPinyinPanel(this,'finals')">Vận mẫu</button>
+    <button class="pinyin-tab" onclick="switchPinyinPanel(this,'rules')">Quy tắc</button>
+    <button class="pinyin-tab" onclick="switchPinyinPanel(this,'tones')">Thanh điệu</button>
+    <button class="pinyin-tab" onclick="switchPinyinPanel(this,'matrix')">Ghép âm</button>
+    <button class="pinyin-tab" onclick="switchPinyinPanel(this,'quiz')">Quiz</button>
+  </div>
+  <div class="pinyin-section pinyin-panel active" id="pinyin-panel-initials">
     <h3>🔤 Thanh mẫu đầy đủ</h3>
     <div class="sound-grid" id="initials-grid"></div>
   </div>
-  <div class="pinyin-section">
+  <div class="pinyin-section pinyin-panel" id="pinyin-panel-finals">
     <h3>🎵 Vận mẫu đầy đủ</h3>
     <div class="sound-grid" id="finals-grid"></div>
   </div>
-  <div class="pinyin-section">
+  <div class="pinyin-section pinyin-panel" id="pinyin-panel-rules">
     <h3>📌 Quy tắc khi đứng một mình</h3>
     <div class="rule-list" id="rules-grid"></div>
   </div>
-  <div class="pinyin-section">
+  <div class="pinyin-section pinyin-panel" id="pinyin-panel-tones">
     <h3>〰️ 4 thanh điệu</h3>
     <div class="tone-grid" id="tones-grid"></div>
   </div>
-  <div class="pinyin-section">
+  <div class="pinyin-section pinyin-panel" id="pinyin-panel-matrix">
     <h3>🧩 Bảng ghép âm cơ bản</h3>
     <div class="matrix-wrap"><table class="matrix" id="pinyin-matrix"></table></div>
   </div>
-  <div class="pinyin-section">
+  <div class="pinyin-section pinyin-panel" id="pinyin-panel-quiz">
     <h3>🎯 Quiz luyện Pinyin</h3>
     <div class="quiz-box">
       <div class="quiz-question" id="pinyin-q">Bấm “Luyện quiz” để bắt đầu.</div>
@@ -323,12 +336,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <span class="tag">38 từ/câu</span>
       </div>
     </div>
-    <div class="lcard" onclick="alert('🔒 Bài này sẽ mở khóa sớm! 🌸')">
-      <span class="lic">🔒</span>
+    <div class="lcard" onclick="openLesson('h3b2')">
+      <span class="lic">🌿</span>
       <div class="lnum">HSK 3 · BÀI 2</div>
-      <div class="ltitle">Sắp ra mắt...</div>
-      <div class="lcn" style="font-family:'Noto Sans SC',sans-serif;">敬请期待</div>
-      <div class="ltags"><span class="tag">Sắp mở khóa</span></div>
+      <div class="ltitle">Lên xuống & Văn phòng</div>
+      <div class="lcn" style="font-family:'Noto Sans SC',sans-serif;">上山容易下山难 / 办公室</div>
+      <div class="ltags"><span class="tag cur">Mới thêm</span><span class="tag">29 từ/câu</span></div>
+    </div>
+    <div class="lcard" onclick="openLesson('h3b3')">
+      <span class="lic">🍵</span>
+      <div class="lnum">HSK 3 · BÀI 3</div>
+      <div class="ltitle">Mua sắm & Đồ uống</div>
+      <div class="lcn" style="font-family:'Noto Sans SC',sans-serif;">还是 / 或者 / 水果</div>
+      <div class="ltags"><span class="tag cur">Mới thêm</span><span class="tag">26 từ/câu</span></div>
     </div>
   </div>
 </div>
@@ -760,6 +780,7 @@ LESSONS['h3b1'] = {
   {cn:"着急",    py:"zháojí",       vi:"lo lắng / hốt hoảng / vội"},
   {cn:"着急去哪儿？",py:"zháojí qù nǎr?",vi:"Vội đi đâu vậy?"},
   {cn:"他不着急走，还要等一个人",py:"tā bù zháojí zǒu, hái yào děng yī gè rén",vi:"Anh ấy không vội đi, vẫn cần đợi một người"},
+  {cn:"为",py:"wèi",vi:"vì / cho / vì...mà (trong 为你着急 đọc là wèi)",audio:"为你"},
   {cn:"大家都为你着急",py:"dàjiā dōu wèi nǐ zháojí",vi:"Mọi người đều lo lắng cho bạn"},
   {cn:"复习",    py:"fùxí",         vi:"ôn tập"},
   {cn:"练习",    py:"liànxí",       vi:"luyện tập"},
@@ -822,6 +843,134 @@ LESSONS['h3b1'] = {
   {vi:"Tuần này tôi rất bận, không có chút thời gian nào.", cn:"这个星期我很忙，一点儿时间也没有。", py:"Zhège xīngqī wǒ hěn máng, yīdiǎnr shíjiān yě méiyǒu."},
   {vi:"Bạn có thể đưa tôi về nhà không?", cn:"你能带我回家吗？", py:"Nǐ néng dài wǒ huí jiā ma?"},
   {vi:"Chúng ta cần nói chuyện nghiêm túc.", cn:"我们需要认真谈谈。", py:"Wǒmen xūyào rènzhēn tán tán."}
+ ]
+};
+
+LESSONS['h3b2'] = {
+ title:"HSK3 · Bài 2: Lên xuống & Văn phòng",
+ cn:"上山容易下山难",
+ count:29,
+ grammar:{
+  label:"💡 Ngữ pháp: Bổ ngữ xu hướng kép + V1了就V2",
+  formula:"V + 上/下/进/出/回/过/起 + 来/去 · V1了就V2",
+  ex:"我拿了伞就下来。= Tôi lấy ô xong thì xuống ngay."
+ },
+ words:[
+  {cn:"伞",py:"sǎn",vi:"ô / dù"},{cn:"经理",py:"jīnglǐ",vi:"giám đốc / quản lý"},
+  {cn:"办公室",py:"bàngōngshì",vi:"văn phòng"},{cn:"脚",py:"jiǎo",vi:"bàn chân"},
+  {cn:"楼",py:"lóu",vi:"tầng / tòa nhà"},{cn:"树",py:"shù",vi:"cây"},
+  {cn:"一棵树",py:"yì kē shù",vi:"một cái cây"},{cn:"叶",py:"yè",vi:"lá"},
+  {cn:"腿",py:"tuǐ",vi:"chân"},{cn:"疼",py:"téng",vi:"đau"},
+  {cn:"容易",py:"róngyì",vi:"dễ"},{cn:"做什么很容易？",py:"zuò shénme hěn róngyì?",vi:"Làm gì thì dễ?"},
+  {cn:"学汉语很容易。",py:"xué Hànyǔ hěn róngyì.",vi:"Học tiếng Trung rất dễ."},
+  {cn:"上山容易下山难。",py:"shàng shān róngyì xià shān nán.",vi:"Lên núi dễ, xuống núi khó."},
+  {cn:"难",py:"nán",vi:"khó"},{cn:"汉语很难。",py:"Hànyǔ hěn nán.",vi:"Tiếng Trung rất khó."},
+  {cn:"写汉字很难。",py:"xiě Hànzì hěn nán.",vi:"Viết chữ Hán rất khó."},
+  {cn:"他说话太难听了。",py:"tā shuōhuà tài nántīng le.",vi:"Anh ấy nói chuyện khó nghe quá."},
+  {cn:"太太",py:"tàitai",vi:"vợ / bà"},{cn:"秘书",py:"mìshū",vi:"thư ký"},
+  {cn:"辆",py:"liàng",vi:"lượng từ cho xe"},{cn:"叫辆出租车",py:"jiào liàng chūzūchē",vi:"gọi một chiếc taxi"},
+  {cn:"几辆公共汽车",py:"jǐ liàng gōnggòng qìchē",vi:"mấy chiếc xe buýt"},
+  {cn:"拿",py:"ná",vi:"cầm / lấy"},{cn:"拿什么？",py:"ná shénme?",vi:"Lấy gì?"},
+  {cn:"拿钱",py:"ná qián",vi:"lấy tiền"},{cn:"拿书",py:"ná shū",vi:"lấy sách"},
+  {cn:"我去拿把伞",py:"wǒ qù ná bǎ sǎn",vi:"Tôi đi lấy một cái ô."},
+  {cn:"把",py:"bǎ",vi:"lượng từ cho vật có cán / cấu trúc 把"},
+  {cn:"胖",py:"pàng",vi:"mập / béo"},{cn:"其实",py:"qíshí",vi:"thật ra / kỳ thực"},
+  {cn:"这家饭店中午和晚上经常有很多人，但我觉得其实菜一点儿也不好吃。",py:"zhè jiā fàndiàn zhōngwǔ hé wǎnshang jīngcháng yǒu hěn duō rén, dàn wǒ juéde qíshí cài yìdiǎnr yě bù hǎochī.",vi:"Nhà hàng này trưa và tối thường rất đông, nhưng tôi thấy thật ra món ăn chẳng ngon chút nào."},
+  {cn:"瘦",py:"shòu",vi:"gầy"}
+ ],
+ dialogue:[
+  {spk:"丽",cn:"休息一下吧。",py:"Xiūxi yíxià ba.",vi:"Nghỉ một chút đi."},
+  {spk:"刚",cn:"怎么了？",py:"Zěnme le?",vi:"Sao vậy?"},
+  {spk:"丽",cn:"我现在腿也疼，脚也疼。",py:"Wǒ xiànzài tuǐ yě téng, jiǎo yě téng.",vi:"Bây giờ chân tôi cũng đau, bàn chân cũng đau."},
+  {spk:"刚",cn:"好，那边树多，我们过去坐一下吧。",py:"Hǎo, nàbiān shù duō, wǒmen guòqù zuò yíxià ba.",vi:"Được, bên kia nhiều cây, chúng ta qua đó ngồi một chút đi."},
+  {spk:"丽",cn:"上来的时候我怎么没觉得这么累？",py:"Shànglái de shíhou wǒ zěnme méi juéde zhème lèi?",vi:"Lúc đi lên sao tôi không thấy mệt thế này nhỉ?"},
+  {spk:"刚",cn:"上山容易下山难，你不知道？",py:"Shàng shān róngyì xià shān nán, nǐ bù zhīdào?",vi:"Lên núi dễ xuống núi khó, bạn không biết à?"},
+  {spk:"周",cn:"你好，请问周明在吗？",py:"Nǐ hǎo, qǐngwèn Zhōu Míng zài ma?",vi:"Xin chào, cho hỏi Chu Minh có ở đó không?"},
+  {spk:"秘",cn:"周经理出去了，不在办公室。",py:"Zhōu jīnglǐ chūqù le, bú zài bàngōngshì.",vi:"Giám đốc Chu ra ngoài rồi, không ở văn phòng."},
+  {spk:"周",cn:"回来了就让他给我打个电话。",py:"Huílái le jiù ràng tā gěi wǒ dǎ ge diànhuà.",vi:"Anh ấy về thì bảo gọi điện cho tôi."},
+  {spk:"刚",cn:"那你等等，我上楼去给你拿把伞。",py:"Nà nǐ děng deng, wǒ shàng lóu qù gěi nǐ ná bǎ sǎn.",vi:"Vậy bạn đợi chút, tôi lên lầu lấy ô cho bạn."},
+  {spk:"刚",cn:"你在这儿等吧，我拿了伞就下来。",py:"Nǐ zài zhèr děng ba, wǒ ná le sǎn jiù xiàlái.",vi:"Bạn đợi ở đây nhé, tôi lấy ô xong sẽ xuống ngay."},
+  {spk:"明",cn:"你每天晚上吃了饭就睡觉，也不出去走走，能不胖吗？",py:"Nǐ měitiān wǎnshang chī le fàn jiù shuìjiào, yě bù chūqù zǒu zou, néng bù pàng ma?",vi:"Tối nào ăn cơm xong em cũng ngủ, không ra ngoài đi bộ, sao không béo được?"},
+  {spk:"周",cn:"其实我每天都运动。",py:"Qíshí wǒ měitiān dōu yùndòng.",vi:"Thật ra ngày nào em cũng vận động."},
+  {spk:"明",cn:"但是你一点儿也没瘦！你做什么运动了？",py:"Dànshì nǐ yìdiǎnr yě méi shòu! Nǐ zuò shénme yùndòng le?",vi:"Nhưng em chẳng gầy chút nào! Em vận động kiểu gì vậy?"},
+  {spk:"周",cn:"做饭啊。",py:"Zuò fàn a.",vi:"Nấu cơm đó."}
+ ],
+ translate:[
+  {vi:"Hôm nay trời mưa, bạn nhớ mang ô đi nhé.",cn:"今天下雨，你记得带伞去。",py:"Jīntiān xià yǔ, nǐ jìde dài sǎn qù."},
+  {vi:"Giám đốc của chúng tôi đang đi công tác.",cn:"我们的经理正在出差。",py:"Wǒmen de jīnglǐ zhèngzài chūchāi."},
+  {vi:"Cô ấy đang đợi bạn ở văn phòng.",cn:"她正在办公室等你。",py:"Tā zhèngzài bàngōngshì děng nǐ."},
+  {vi:"Tôi đi bộ nhiều nên chân hơi đau.",cn:"我走路走得很多，所以腿有点儿疼。",py:"Wǒ zǒulù zǒu de hěn duō, suǒyǐ tuǐ yǒudiǎnr téng."},
+  {vi:"Công ty của tôi ở tầng 8 của tòa nhà này.",cn:"我的公司在这座楼的八层。",py:"Wǒ de gōngsī zài zhè zuò lóu de bā céng."},
+  {vi:"Bên ngoài cửa sổ có một cái cây lớn.",cn:"窗外有一棵大树。",py:"Chuāng wài yǒu yì kē dà shù."},
+  {vi:"Anh ấy bị đau bụng, đã uống thuốc rồi.",cn:"他肚子疼，已经吃药了。",py:"Tā dùzi téng, yǐjīng chī yào le."},
+  {vi:"Học tiếng Trung có khó không?",cn:"学汉语难不难？",py:"Xué Hànyǔ nán bu nán?"},
+  {vi:"Thư ký đã gửi tài liệu cho tất cả mọi người.",cn:"秘书已经把材料发给大家了。",py:"Mìshū yǐjīng bǎ cáiliào fā gěi dàjiā le."},
+  {vi:"Tôi muốn mua một chiếc ô tô mới.",cn:"我想买一辆新汽车。",py:"Wǒ xiǎng mǎi yí liàng xīn qìchē."},
+  {vi:"Bạn có thể giúp tôi lấy cái chén đó được không?",cn:"你能帮我拿那个杯子吗？",py:"Nǐ néng bāng wǒ ná nà ge bēizi ma?"},
+  {vi:"Kỳ thực tôi không thích món ăn này lắm.",cn:"其实我不太喜欢这个菜。",py:"Qíshí wǒ bú tài xǐhuān zhè ge cài."},
+  {vi:"Cô ấy rất gầy, nhưng ăn rất nhiều.",cn:"她很瘦，但是吃得很多。",py:"Tā hěn shòu, dànshì chī de hěn duō."}
+ ]
+};
+
+LESSONS['h3b3'] = {
+ title:"HSK3 · Bài 3: Mua sắm & Đồ uống",
+ cn:"还是 / 或者",
+ count:26,
+ grammar:{
+  label:"💡 Ngữ pháp: 还是 và 或者",
+  formula:"A 还是 B？ · A 或者 B。",
+  ex:"你要喝咖啡还是喝茶？/ 我今天吃米饭或者面条。"
+ },
+ words:[
+  {cn:"饮料",py:"yǐnliào",vi:"đồ uống"},{cn:"花茶",py:"huāchá",vi:"trà hoa"},
+  {cn:"绿茶",py:"lǜchá",vi:"trà xanh"},{cn:"水果",py:"shuǐguǒ",vi:"hoa quả"},
+  {cn:"衬衫",py:"chènshān",vi:"áo sơ mi"},{cn:"你喜欢什么颜色的衬衫？",py:"nǐ xǐhuān shénme yánsè de chènshān?",vi:"Bạn thích áo sơ mi màu gì?"},
+  {cn:"裤子",py:"kùzi",vi:"quần"},{cn:"条",py:"tiáo",vi:"lượng từ cho quần, vật dài"},
+  {cn:"你已经有两条这样的裤子了。",py:"nǐ yǐjīng yǒu liǎng tiáo zhèyàng de kùzi le.",vi:"Bạn đã có hai cái quần như thế này rồi."},
+  {cn:"记得",py:"jìde",vi:"nhớ"},{cn:"你记得我们学过什么吗？",py:"nǐ jìde wǒmen xué guo shénme ma?",vi:"Bạn nhớ chúng ta đã học gì không?"},
+  {cn:"元",py:"yuán",vi:"tệ / đồng nhân dân tệ"},{cn:"新鲜",py:"xīnxiān",vi:"tươi"},
+  {cn:"牛奶很新鲜",py:"niúnǎi hěn xīnxiān",vi:"Sữa rất tươi."},{cn:"甜",py:"tián",vi:"ngọt"},
+  {cn:"只",py:"zhǐ",vi:"chỉ"},{cn:"放",py:"fàng",vi:"đặt / để"},
+  {cn:"舒服",py:"shūfu",vi:"thoải mái"},{cn:"花",py:"huā",vi:"hoa"},
+  {cn:"茶",py:"chá",vi:"trà"},{cn:"还是",py:"háishi",vi:"hay là (dùng trong câu hỏi lựa chọn)"},
+  {cn:"或者",py:"huòzhě",vi:"hoặc là (dùng trong câu trần thuật)"},
+  {cn:"冷",py:"lěng",vi:"lạnh"},{cn:"热",py:"rè",vi:"nóng"},
+  {cn:"爬山",py:"páshān",vi:"leo núi"},{cn:"我们明天要去爬山",py:"wǒmen míngtiān yào qù páshān",vi:"Ngày mai chúng tôi muốn đi leo núi."},
+  {cn:"晴天",py:"qíngtiān",vi:"trời nắng"},{cn:"阴天",py:"yīntiān",vi:"trời âm u"},
+  {cn:"小心点儿",py:"xiǎoxīn diǎnr",vi:"cẩn thận một chút"},{cn:"小心车",py:"xiǎoxīn chē",vi:"cẩn thận xe"}
+ ],
+ dialogue:[
+  {spk:"周",cn:"你觉得这条裤子怎么样？",py:"Nǐ juéde zhè tiáo kùzi zěnmeyàng?",vi:"Anh thấy cái quần này thế nào?"},
+  {spk:"明",cn:"我记得你已经有两条这样的裤子了。",py:"Wǒ jìde nǐ yǐjīng yǒu liǎng tiáo zhèyàng de kùzi le.",vi:"Anh nhớ em đã có hai cái quần như thế này rồi."},
+  {spk:"周",cn:"那我们再看看别的。",py:"Nà wǒmen zài kàn kan bié de.",vi:"Vậy chúng ta xem cái khác đi."},
+  {spk:"明",cn:"这件衬衫怎么样？",py:"Zhè jiàn chènshān zěnmeyàng?",vi:"Cái áo sơ mi này thế nào?"},
+  {spk:"周",cn:"还不错，多少钱？",py:"Hái búcuò, duōshao qián?",vi:"Cũng được, bao nhiêu tiền?"},
+  {spk:"明",cn:"这上面写着320元。",py:"Zhè shàngmian xiě zhe sān bǎi èrshí yuán.",vi:"Trên này viết 320 tệ."},
+  {spk:"周",cn:"这些水果真新鲜，我们买西瓜还是苹果？",py:"Zhèxiē shuǐguǒ zhēn xīnxiān, wǒmen mǎi xīguā háishi píngguǒ?",vi:"Hoa quả này tươi thật, chúng ta mua dưa hấu hay táo?"},
+  {spk:"明",cn:"西瓜吧。",py:"Xīguā ba.",vi:"Dưa hấu đi."},
+  {spk:"周",cn:"好啊，今天晚上只吃水果不吃饭！",py:"Hǎo a, jīntiān wǎnshang zhǐ chī shuǐguǒ bù chī fàn!",vi:"Được, tối nay chỉ ăn hoa quả không ăn cơm!"},
+  {spk:"丽",cn:"桌子上放着很多饮料，你喝什么？",py:"Zhuōzi shang fàng zhe hěn duō yǐnliào, nǐ hē shénme?",vi:"Trên bàn có nhiều đồ uống, bạn uống gì?"},
+  {spk:"刚",cn:"茶或者咖啡都可以。你呢？",py:"Chá huòzhě kāfēi dōu kěyǐ. Nǐ ne?",vi:"Trà hoặc cà phê đều được. Còn bạn?"},
+  {spk:"丽",cn:"我喝茶，茶是我的最爱。",py:"Wǒ hē chá, chá shì wǒ de zuì'ài.",vi:"Tôi uống trà, trà là thứ tôi thích nhất."},
+  {spk:"丽",cn:"天冷了或者工作累了的时候，喝杯热茶会很舒服。",py:"Tiān lěng le huòzhě gōngzuò lèi le de shíhou, hē bēi rè chá huì hěn shūfu.",vi:"Khi trời lạnh hoặc làm việc mệt, uống một cốc trà nóng rất thoải mái."},
+  {spk:"刚",cn:"你喜欢喝什么茶？",py:"Nǐ xǐhuān hē shénme chá?",vi:"Bạn thích uống trà gì?"},
+  {spk:"丽",cn:"花茶、绿茶、红茶，我都喜欢。",py:"Huāchá, lǜchá, hóngchá, wǒ dōu xǐhuān.",vi:"Trà hoa, trà xanh, trà đỏ, tôi đều thích."}
+ ],
+ translate:[
+  {vi:"Bạn muốn uống đồ uống nóng hay lạnh?",cn:"你想喝热饮料还是冷饮料？",py:"Nǐ xiǎng hē rè yǐnliào háishi lěng yǐnliào?"},
+  {vi:"Cô ấy rất thích uống trà hoa.",cn:"她很喜欢喝花茶。",py:"Tā hěn xǐhuān hē huāchá."},
+  {vi:"Uống trà xanh tốt cho sức khỏe.",cn:"喝绿茶对身体好。",py:"Hē lǜchá duì shēntǐ hǎo."},
+  {vi:"Tôi muốn mua một ít hoa quả tươi.",cn:"我想买一些新鲜水果。",py:"Wǒ xiǎng mǎi yìxiē xīnxiān shuǐguǒ."},
+  {vi:"Chiếc áo sơ mi này bao nhiêu tiền?",cn:"这件衬衫多少钱？",py:"Zhè jiàn chènshān duōshao qián?"},
+  {vi:"Tôi mua một cái quần mới hôm qua.",cn:"我昨天买了一条新裤子。",py:"Wǒ zuótiān mǎi le yì tiáo xīn kùzi."},
+  {vi:"Bạn nhớ mang theo chìa khóa nhé.",cn:"你记得带钥匙。",py:"Nǐ jìde dài yàoshi."},
+  {vi:"Chiếc điện thoại này hơn 2000 tệ.",cn:"这个手机两千多元。",py:"Zhè ge shǒujī liǎng qiān duō yuán."},
+  {vi:"Bánh kem này quá ngọt.",cn:"这个蛋糕太甜了。",py:"Zhè ge dàngāo tài tián le."},
+  {vi:"Xin hãy để quyển sách này lên bàn.",cn:"请把这本书放在桌子上。",py:"Qǐng bǎ zhè běn shū fàng zài zhuōzi shang."},
+  {vi:"Mặc bộ quần áo này rất thoải mái.",cn:"穿这件衣服很舒服。",py:"Chuān zhè jiàn yīfu hěn shūfu."},
+  {vi:"Bạn muốn đi xe buýt hay là đi tàu điện ngầm?",cn:"你想坐公共汽车还是坐地铁？",py:"Nǐ xiǎng zuò gōnggòng qìchē háishi zuò dìtiě?"},
+  {vi:"Chúng ta có thể đi xem phim hoặc là đi mua sắm.",cn:"我们可以去看电影或者去买东西。",py:"Wǒmen kěyǐ qù kàn diànyǐng huòzhě qù mǎi dōngxi."},
+  {vi:"Hôm nay trời rất lạnh, bạn nên mặc thêm quần áo.",cn:"今天天气很冷，你应该多穿一点儿衣服。",py:"Jīntiān tiānqì hěn lěng, nǐ yīnggāi duō chuān yìdiǎnr yīfu."}
  ]
 };
 /* ═══════════════════════════════════════════════
@@ -894,6 +1043,14 @@ const PINYIN_MATRIX_FINALS = ['a','o','e','ai','ei','ao','ou','an','en','ang','e
 let currentPinyinAnswer = '';
 
 function pinyinAudio(text){ speakCN(text); }
+
+function switchPinyinPanel(btn,panel){
+  document.querySelectorAll('.pinyin-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pinyin-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pinyin-panel-'+panel).classList.add('active');
+  if(panel==='quiz' && !currentPinyinAnswer) startPinyinQuiz();
+}
 
 function renderPinyin(){
   const renderSound = (items, target) => {
@@ -1017,8 +1174,24 @@ function resetPbar(){
 ═══════════════════════════════════════════════ */
 let fcWords=[], fcIdx=0, fcFlipped=false;
 
+function flashcardDifficulty(w,idx){
+  const cn = w.cn || '';
+  const py = w.py || '';
+  const isSentence = /[。？！?！]/.test(cn) || cn.length >= 8 || /\s/.test(py) && py.split(/\s+/).length >= 4;
+  const isPhrase = !isSentence && (cn.length >= 3 || /\s/.test(py));
+  const group = isSentence ? 2 : isPhrase ? 1 : 0;
+  return {group, len: cn.length, idx};
+}
+
+function orderedFlashcards(words){
+  return words
+    .map((word,idx)=>({word,...flashcardDifficulty(word,idx)}))
+    .sort((a,b)=>a.group-b.group || a.len-b.len || a.idx-b.idx)
+    .map(item=>item.word);
+}
+
 function initFlash(){
-  fcWords=[...LESSONS[activeLesson].words].sort(()=>0.5-Math.random());
+  fcWords=orderedFlashcards(LESSONS[activeLesson].words);
   fcIdx=0; fcFlipped=false;
   renderFC();
 }
@@ -1076,7 +1249,7 @@ function flipCard(){
     back.style.flexDirection='column';
     back.style.alignItems='center';
     // Auto-phát âm khi lật sang mặt sau
-    if(fcWords[fcIdx]) speakCN(fcWords[fcIdx].cn);
+    if(fcWords[fcIdx]) speakCN(fcWords[fcIdx].audio || fcWords[fcIdx].cn);
   } else {
     front.style.display='flex';
     front.style.flexDirection='column';
@@ -1093,7 +1266,7 @@ function fcNext(){
   }
 }
 function fcPrev(){if(fcIdx>0){fcIdx--;renderFC();}}
-function fcSpeak(){if(fcWords[fcIdx])speakCN(fcWords[fcIdx].cn);}
+function fcSpeak(){if(fcWords[fcIdx])speakCN(fcWords[fcIdx].audio || fcWords[fcIdx].cn);}
 function showFCDone(){
   document.getElementById('panel-flash').innerHTML=`<div style="text-align:center;padding:40px 20px;">
     <div style="font-size:48px;margin-bottom:12px;">🎉</div>
@@ -1250,7 +1423,7 @@ function checkType(){
 function playWord(){
   if(!qCurWord) return;
   document.getElementById('dplay').classList.add('playing');
-  speakCN(qCurWord.cn);
+  speakCN(qCurWord.audio || qCurWord.cn);
 }
 function checkDict(){
   const inp=document.getElementById('dinp');
