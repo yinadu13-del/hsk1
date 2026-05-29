@@ -102,6 +102,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .fc-nav-btn{padding:10px 18px;border-radius:12px;border:2px solid var(--p200);background:white;font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;color:var(--tm);cursor:pointer;transition:all .18s;}
 .fc-nav-btn:hover{border-color:var(--p400);color:var(--p400);}
 .fc-speak-btn{padding:10px 16px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--p400),var(--p600));color:white;font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;}
+.fc-status-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px;}
+.fc-status-btn{padding:12px 14px;border-radius:14px;border:2px solid var(--p200);font-family:'Quicksand',sans-serif;font-weight:800;font-size:13px;cursor:pointer;transition:all .18s;background:white;color:var(--tm);}
+.fc-status-btn.unknown:hover{border-color:#fca5a5;background:#fff1f2;color:#be123c;}
+.fc-status-btn.known{border:none;background:linear-gradient(135deg,var(--p400),var(--p600));color:white;}
+.fc-status-btn.known:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(232,56,124,.2);}
+.lesson-dict{margin-top:16px;text-align:left;background:white;border:2px solid var(--p100);border-radius:16px;padding:14px;}
+.lesson-dict-title{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--td);margin-bottom:10px;}
+.lesson-dict-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lesson-dict-col{border:1px solid var(--p100);border-radius:12px;overflow:hidden;background:#fffafd;}
+.lesson-dict-head{padding:8px 10px;font-size:11px;font-weight:800;color:var(--p600);background:var(--p50);display:flex;justify-content:space-between;}
+.lesson-dict-list{max-height:190px;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:6px;}
+.lesson-dict-item{border:1px solid #f4d8e4;background:white;border-radius:10px;padding:8px 9px;}
+.lesson-dict-cn{font-family:'Noto Sans SC',sans-serif;font-size:17px;font-weight:800;color:var(--td);}
+.lesson-dict-py{font-size:11px;color:var(--ts);font-style:italic;margin-top:1px;}
+.lesson-dict-vi{font-size:11px;color:var(--tm);margin-top:2px;line-height:1.35;}
+.lesson-dict-empty{font-size:12px;color:var(--ts);text-align:center;padding:16px 8px;}
 .fc-progress{display:flex;gap:4px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
 .fc-dot{width:8px;height:8px;border-radius:50%;background:var(--p200);transition:background .2s;}
 .fc-dot.seen{background:var(--p400);}
@@ -295,7 +311,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .py-table td.py-syllable{background:white;color:#7c3aed;font-weight:600;}
 .py-table td.no-sound{color:#e5e7eb;font-size:10px;}
 
-@media(max-width:480px){.opts{grid-template-columns:1fr;}.modal{border-radius:18px;}.mh{border-radius:16px 16px 0 0;}.drow{flex-direction:column;}.mode-tabs{gap:0;}.mtab{font-size:11px;padding:11px 5px;}}
+@media(max-width:480px){.opts{grid-template-columns:1fr;}.modal{border-radius:18px;}.mh{border-radius:16px 16px 0 0;}.drow{flex-direction:column;}.mode-tabs{gap:0;}.mtab{font-size:11px;padding:11px 5px;}.lesson-dict-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -316,6 +332,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <button class="npill" onclick="setLevel(this,'hsk1')">HSK 1</button>
   <button class="npill" onclick="setLevel(this,'hsk2')">HSK 2</button>
   <button class="npill" onclick="setLevel(this,'hsk3')">HSK 3</button>
+  <button class="npill" onclick="setLevel(this,'hsk4')">HSK 4</button>
   <button class="npill" onclick="setLevel(this,'daily')">Hội Thoại</button>
   <button class="npill" onclick="setLevel(this,'song')">Bài Hát</button>
 </nav>
@@ -406,10 +423,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="sec-head"><span class="badge">HSK 1</span><h2>Bài học cơ bản</h2></div>
   <div class="lessons-grid" id="lesson-cards"></div>
 </div>
-<div id="hsk2-section" style="display:none"><div class="sec-head"><span class="badge">HSK 2</span><h2>Đang cập nhật...</h2></div><p style="color:var(--ts);font-size:13px;margin-bottom:32px;">Nana đang chuẩn bị bài học HSK 2 🎀</p></div>
+<div id="hsk2-section" style="display:none">
+  <div class="sec-head"><span class="badge">HSK 2</span><h2>Bài học sơ cấp mở rộng</h2></div>
+  <div class="lessons-grid" id="hsk2-cards"></div>
+</div>
 <div id="hsk3-section" style="display:none">
   <div class="sec-head"><span class="badge">HSK 3</span><h2>Bài học trung cấp</h2></div>
   <div class="lessons-grid" id="hsk3-cards"></div>
+</div>
+<div id="hsk4-section" style="display:none">
+  <div class="sec-head"><span class="badge">HSK 4</span><h2>Bài học nâng cao</h2></div>
+  <div class="lessons-grid" id="hsk4-cards"></div>
 </div>
 <div id="daily-section" style="display:none">
   <div class="sec-head"><span class="badge">Hội Thoại</span><h2>Bài hội thoại thực tế</h2></div>
@@ -472,6 +496,26 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <button class="fc-nav-btn" onclick="fcPrev()">← Trước</button>
         <button class="fc-speak-btn" onclick="fcSpeak()">🔊 Nghe</button>
         <button class="fc-nav-btn" onclick="fcNext()">Tiếp →</button>
+      </div>
+      <div class="fc-status-actions">
+        <button class="fc-status-btn unknown" onclick="markFlash(false)">❌ Chưa thuộc</button>
+        <button class="fc-status-btn known" onclick="markFlash(true)">✓ Đã thuộc</button>
+      </div>
+      <div class="lesson-dict">
+        <div class="lesson-dict-title">
+          <span>📚 Từ điển bài học</span>
+          <span id="fc-dict-summary">0 đã thuộc / 0 từ</span>
+        </div>
+        <div class="lesson-dict-grid">
+          <div class="lesson-dict-col">
+            <div class="lesson-dict-head"><span>Chưa thuộc</span><span id="fc-dict-unlearned-count">0</span></div>
+            <div class="lesson-dict-list" id="fc-dict-unlearned"></div>
+          </div>
+          <div class="lesson-dict-col">
+            <div class="lesson-dict-head"><span>Đã thuộc</span><span id="fc-dict-learned-count">0</span></div>
+            <div class="lesson-dict-list" id="fc-dict-learned"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1228,6 +1272,987 @@ LESSONS['h3b3'] = {
   {vi:"Hôm nay trời rất lạnh, bạn nên mặc thêm quần áo.",cn:"今天天气很冷，你应该多穿一点儿衣服。",py:"Jīntiān tiānqì hěn lěng, nǐ yīnggāi duō chuān yìdiǎnr yīfu."}
  ]
 };
+/* ─── GENERATED HSK 2 LESSONS ─── */
+LESSONS['h2b1'] = {
+ title:"HSK2 · Bài 1 - Tháng 9 đi Bắc Kinh du lịch là đẹp nhất",
+ cn:"旅游",
+ count:62,
+ grammar:{label:"💡 Luyện HSK2",formula:"Từ vựng → mẫu câu → dịch Việt-Trung",ex:"Dữ liệu lấy từ tài liệu HSK2 bạn cung cấp."},
+ words:[
+  {cn:"旅游",py:"lǚ yóu",vi:"du lịch"},
+  {cn:"我们很喜欢去美丽的地方旅游",py:"wǒ men hěn xǐ huān qù měi lì de de fāng lǚ yóu",vi:"câu/cụm luyện tập"},
+  {cn:"觉得",py:"jué dé",vi:"cảm thấy / cho rằng"},
+  {cn:"我觉得汉语很难",py:"wǒ jué dé hàn yǔ hěn nán",vi:"từ vựng HSK2"},
+  {cn:"最",py:"zuì",vi:"nhất"},
+  {cn:"他是我最爱的人。",py:"tā shì wǒ zuì ài de rén.",vi:"câu/cụm luyện tập"},
+  {cn:"多",py:"duō",vi:"nhiều"},
+  {cn:"多少",py:"duō shǎo",vi:"bao nhiêu"},
+  {cn:"多大",py:"duō dà",vi:"bao nhiêu tuổi"},
+  {cn:"多高",py:"duō gāo",vi:"cao bao nhiêu"},
+  {cn:"为什么",py:"wèi shén me",vi:"tại sao"},
+  {cn:"你为什么不爱我？",py:"nǐ wèi shén me bù ài wǒ？",vi:"câu/cụm luyện tập"},
+  {cn:"你昨晚为什么不回家呢？",py:"nǐ zuó wǎn wèi shén me bù huí jiā ne？",vi:"câu/cụm luyện tập"},
+  {cn:"你为什么不做作业？",py:"nǐ wèi shén me bù zuò zuò yè？",vi:"câu/cụm luyện tập"},
+  {cn:"我要去北京旅游，你觉得什么时候去最好？",py:"wǒ yào qù běi jīng lǚ yóu， nǐ jué dé shén me shí hòu qù zuì hǎo？",vi:"câu/cụm luyện tập"},
+  {cn:"九月去北京旅游最好。",py:"jiǔ yuè qù běi jīng lǚ yóu zuì hǎo.",vi:"câu/cụm luyện tập"},
+  {cn:"为什么？",py:"wèi shén me？",vi:"câu/cụm luyện tập"},
+  {cn:"九月的北京天气不冷也不热。",py:"jiǔ yuè de běi jīng tiān qì bù lěng yě bù rè.",vi:"câu/cụm luyện tập"},
+  {cn:"运动",py:"yùn dòng",vi:"vận động / thể thao"},
+  {cn:"你喜欢什么运动？",py:"nǐ xǐ huān shén me yùn dòng？",vi:"câu/cụm luyện tập"},
+  {cn:"踢足球",py:"tī zú qiú",vi:"đá bóng"},
+  {cn:"一起",py:"yī qǐ",vi:"cùng nhau"},
+  {cn:"我们一起踢足球吧",py:"wǒ men yī qǐ tī zú qiú ba",vi:"câu/cụm luyện tập"},
+  {cn:"新",py:"xīn",vi:"mới"},
+  {cn:"新年",py:"xīn nián",vi:"năm mới"},
+  {cn:"新年快乐",py:"xīn nián kuài lè",vi:"chúc mừng năm mới"},
+  {cn:"我们一起去超市买新衣服吧。",py:"wǒ men yī qǐ qù chāo shì mǎi xīn yī fú ba.",vi:"câu/cụm luyện tập"},
+  {cn:"要",py:"yào",vi:"muốn / cần / sẽ"},
+  {cn:"谁要出去玩？",py:"shéi yào chū qù wán？",vi:"câu/cụm luyện tập"},
+  {cn:"买汽车要很多钱？",py:"mǎi qì chē yào hěn duō qián？",vi:"câu/cụm luyện tập"},
+  {cn:"你要努力学习一点",py:"nǐ yào nǔ lì xué xí yī diǎn",vi:"câu/cụm luyện tập"},
+  {cn:"我们要不要买几个新的椅子？",py:"wǒ men yào bù yào mǎi jǐ gè xīn de yǐ zǐ？",vi:"câu/cụm luyện tập"},
+  {cn:"好啊，什么时候去买？",py:"hǎo a， shén me shí hòu qù mǎi？",vi:"câu/cụm luyện tập"},
+  {cn:"明天下午怎么样？",py:"míng tiān xià wǔ zěn me yàng？",vi:"câu/cụm luyện tập"},
+  {cn:"你明天下午几点能回来？",py:"nǐ míng tiān xià wǔ jǐ diǎn néng huí lái？",vi:"câu/cụm luyện tập"},
+  {cn:"三点多。",py:"sān diǎn duō.",vi:"câu/cụm luyện tập"},
+  {cn:"它",py:"tā",vi:"nó"},
+  {cn:"这只猫好可爱，我养它一年了。",py:"zhè zhǐ māo hǎo kě ài， wǒ yǎng tā yī nián le.",vi:"câu/cụm luyện tập"},
+  {cn:"眼睛",py:"yǎn jīng",vi:"mắt"},
+  {cn:"一双眼睛",py:"yī shuāng yǎn jīng",vi:"từ vựng HSK2"},
+  {cn:"眼镜",py:"yǎn jìng",vi:"kính mắt"},
+  {cn:"桌子下面有个猫。",py:"zhuō zǐ xià miàn yǒu gè māo.",vi:"câu/cụm luyện tập"},
+  {cn:"那是我的猫，它叫花花。",py:"nà shì wǒ de māo， tā jiào huā huā.",vi:"câu/cụm luyện tập"},
+  {cn:"它很漂亮。",py:"tā hěn piào liàng.",vi:"câu/cụm luyện tập"},
+  {cn:"是啊，我觉得它的眼睛最漂亮。",py:"shì a， wǒ jué dé tā de yǎn jīng zuì piào liàng.",vi:"câu/cụm luyện tập"},
+  {cn:"它多大了？",py:"tā duō dà le？",vi:"câu/cụm luyện tập"},
+  {cn:"六个月。",py:"liù gè yuè.",vi:"câu/cụm luyện tập"},
+  {cn:"我觉得汉语很难。",py:"wǒ jué dé hàn yǔ hěn nán.",vi:"Tôi thấy tiếng Trung rất khó."},
+  {cn:"九月去北京旅游最好。",py:"jiǔ yuè qù běi jīng lǚ yóu zuì hǎo.",vi:"Tháng chín đi Bắc Kinh du lịch là đẹp nhất."},
+  {cn:"你昨晚为什么不回家呢？",py:"nǐ zuó wǎn wèi shén me bù huí jiā ne？",vi:"Tại sao bạn không về nhà tối qua?"},
+  {cn:"你喜欢什么运动？",py:"nǐ xǐ huān shén me yùn dòng？",vi:"Bạn thích môn thể thao nào?"},
+  {cn:"我们一起踢足球吧。",py:"wǒ men yī qǐ tī zú qiú ba.",vi:"Chúng ta cùng đá bóng nhé."},
+  {cn:"新年快乐！",py:"xīn nián kuài lè！",vi:"Chúc mừng năm mới!"},
+  {cn:"我们一起去超市买新衣服吧。",py:"wǒ men yī qǐ qù chāo shì mǎi xīn yī fú ba.",vi:"Chúng ta cùng đi siêu thị mua quần áo mới đi."},
+  {cn:"谁要出去玩？",py:"shéi yào chū qù wán？",vi:"Ai muốn đi chơi?"},
+  {cn:"买汽车要很多钱。",py:"mǎi qì chē yào hěn duō qián.",vi:"Mua xe hơi cần rất nhiều tiền."},
+  {cn:"你觉得什么时候去北京最好？",py:"nǐ jué dé shén me shí hòu qù běi jīng zuì hǎo？",vi:"Bạn nghĩ khi nào đi Bắc Kinh là tốt nhất?"},
+  {cn:"这只猫好可爱，我养它一年了。",py:"zhè zhǐ māo hǎo kě ài， wǒ yǎng tā yī nián le.",vi:"Con mèo này rất đáng yêu, tôi nuôi nó một năm rồi."},
+  {cn:"桌子下面有个猫。",py:"zhuō zǐ xià miàn yǒu gè māo.",vi:"Con mèo ở dưới bàn."},
+  {cn:"我觉得它的眼睛最漂亮。",py:"wǒ jué dé tā de yǎn jīng zuì piào liàng.",vi:"Tôi thấy mắt của nó đẹp nhất."},
+  {cn:"它六个月了。",py:"tā liù gè yuè le.",vi:"Nó bao nhiêu tháng rồi?"},
+  {cn:"你明天下午几点能回来？",py:"nǐ míng tiān xià wǔ jǐ diǎn néng huí lái？",vi:"Ngày mai buổi chiều mấy giờ bạn có thể về?"}
+ ],
+ dialogue:[
+  {spk:"句",cn:"我觉得汉语很难。",py:"wǒ jué dé hàn yǔ hěn nán.",vi:"Tôi thấy tiếng Trung rất khó."},
+  {spk:"句",cn:"九月去北京旅游最好。",py:"jiǔ yuè qù běi jīng lǚ yóu zuì hǎo.",vi:"Tháng chín đi Bắc Kinh du lịch là đẹp nhất."},
+  {spk:"句",cn:"你昨晚为什么不回家呢？",py:"nǐ zuó wǎn wèi shén me bù huí jiā ne？",vi:"Tại sao bạn không về nhà tối qua?"},
+  {spk:"句",cn:"你喜欢什么运动？",py:"nǐ xǐ huān shén me yùn dòng？",vi:"Bạn thích môn thể thao nào?"},
+  {spk:"句",cn:"我们一起踢足球吧。",py:"wǒ men yī qǐ tī zú qiú ba.",vi:"Chúng ta cùng đá bóng nhé."},
+  {spk:"句",cn:"新年快乐！",py:"xīn nián kuài lè！",vi:"Chúc mừng năm mới!"},
+  {spk:"句",cn:"我们一起去超市买新衣服吧。",py:"wǒ men yī qǐ qù chāo shì mǎi xīn yī fú ba.",vi:"Chúng ta cùng đi siêu thị mua quần áo mới đi."},
+  {spk:"句",cn:"谁要出去玩？",py:"shéi yào chū qù wán？",vi:"Ai muốn đi chơi?"}
+ ],
+ translate:[
+  {vi:"Tôi thấy tiếng Trung rất khó.",cn:"我觉得汉语很难。",py:"wǒ jué dé hàn yǔ hěn nán."},
+  {vi:"Tháng chín đi Bắc Kinh du lịch là đẹp nhất.",cn:"九月去北京旅游最好。",py:"jiǔ yuè qù běi jīng lǚ yóu zuì hǎo."},
+  {vi:"Tại sao bạn không về nhà tối qua?",cn:"你昨晚为什么不回家呢？",py:"nǐ zuó wǎn wèi shén me bù huí jiā ne？"},
+  {vi:"Bạn thích môn thể thao nào?",cn:"你喜欢什么运动？",py:"nǐ xǐ huān shén me yùn dòng？"},
+  {vi:"Chúng ta cùng đá bóng nhé.",cn:"我们一起踢足球吧。",py:"wǒ men yī qǐ tī zú qiú ba."},
+  {vi:"Chúc mừng năm mới!",cn:"新年快乐！",py:"xīn nián kuài lè！"},
+  {vi:"Chúng ta cùng đi siêu thị mua quần áo mới đi.",cn:"我们一起去超市买新衣服吧。",py:"wǒ men yī qǐ qù chāo shì mǎi xīn yī fú ba."},
+  {vi:"Ai muốn đi chơi?",cn:"谁要出去玩？",py:"shéi yào chū qù wán？"},
+  {vi:"Mua xe hơi cần rất nhiều tiền.",cn:"买汽车要很多钱。",py:"mǎi qì chē yào hěn duō qián."},
+  {vi:"Bạn nghĩ khi nào đi Bắc Kinh là tốt nhất?",cn:"你觉得什么时候去北京最好？",py:"nǐ jué dé shén me shí hòu qù běi jīng zuì hǎo？"},
+  {vi:"Con mèo này rất đáng yêu, tôi nuôi nó một năm rồi.",cn:"这只猫好可爱，我养它一年了。",py:"zhè zhǐ māo hǎo kě ài， wǒ yǎng tā yī nián le."},
+  {vi:"Con mèo ở dưới bàn.",cn:"桌子下面有个猫。",py:"zhuō zǐ xià miàn yǒu gè māo."},
+  {vi:"Tôi thấy mắt của nó đẹp nhất.",cn:"我觉得它的眼睛最漂亮。",py:"wǒ jué dé tā de yǎn jīng zuì piào liàng."},
+  {vi:"Nó bao nhiêu tháng rồi?",cn:"它六个月了。",py:"tā liù gè yuè le."},
+  {vi:"Ngày mai buổi chiều mấy giờ bạn có thể về?",cn:"你明天下午几点能回来？",py:"nǐ míng tiān xià wǔ jǐ diǎn néng huí lái？"}
+ ]
+};
+LESSONS['h2b2'] = {
+ title:"HSK2 · Bài 2 - Tôi mỗi ngày 6h thức dậy",
+ cn:"生病",
+ count:68,
+ grammar:{label:"💡 Luyện HSK2",formula:"Từ vựng → mẫu câu → dịch Việt-Trung",ex:"Dữ liệu lấy từ tài liệu HSK2 bạn cung cấp."},
+ words:[
+  {cn:"生病",py:"shēng bìng",vi:"bị bệnh"},
+  {cn:"跑步",py:"pǎo bù",vi:"chạy bộ"},
+  {cn:"起床",py:"qǐ chuáng",vi:"thức dậy"},
+  {cn:"早上",py:"zǎo shàng",vi:"buổi sáng"},
+  {cn:"早上好，我们一起去吃早饭吧。",py:"zǎo shàng hǎo， wǒ men yī qǐ qù chī zǎo fàn ba.",vi:"câu/cụm luyện tập"},
+  {cn:"早上好",py:"zǎo shàng hǎo",vi:"chào buổi sáng"},
+  {cn:"早！",py:"zǎo！",vi:"câu/cụm luyện tập"},
+  {cn:"每",py:"měi",vi:"mỗi"},
+  {cn:"你每天几点睡觉？",py:"nǐ měi tiān jǐ diǎn shuì jué？",vi:"câu/cụm luyện tập"},
+  {cn:"我每天六点起床。",py:"wǒ měi tiān liù diǎn qǐ chuáng.",vi:"câu/cụm luyện tập"},
+  {cn:"每个苹果",py:"měi gè píng guǒ",vi:"từ vựng HSK2"},
+  {cn:"每块蛋糕",py:"měi kuài dàn gāo",vi:"từ vựng HSK2"},
+  {cn:"每本书",py:"měi běn shū",vi:"từ vựng HSK2"},
+  {cn:"每只猫",py:"měi zhǐ māo",vi:"từ vựng HSK2"},
+  {cn:"你很少生病，是不是喜欢运动？",py:"nǐ hěn shǎo shēng bìng， shì bù shì xǐ huān yùn dòng？",vi:"câu/cụm luyện tập"},
+  {cn:"是啊，我每天早上都要出去跑步。",py:"shì a， wǒ měi tiān zǎo shàng dōu yào chū qù pǎo bù.",vi:"câu/cụm luyện tập"},
+  {cn:"你每天几点起床？",py:"nǐ měi tiān jǐ diǎn qǐ chuáng？",vi:"câu/cụm luyện tập"},
+  {cn:"吃药",py:"chī yào",vi:"uống thuốc"},
+  {cn:"药店",py:"yào diàn",vi:"hiệu thuốc"},
+  {cn:"身体",py:"shēn tǐ",vi:"cơ thể / sức khỏe"},
+  {cn:"医院",py:"yī yuàn",vi:"bệnh viện"},
+  {cn:"住院",py:"zhù yuàn",vi:"nằm viện"},
+  {cn:"出院",py:"chū yuàn",vi:"xuất viện"},
+  {cn:"出",py:"chū",vi:"ra"},
+  {cn:"吃药了吗？现在身体怎么样？",py:"chī yào le ma？ xiàn zài shēn tǐ zěn me yàng？",vi:"câu/cụm luyện tập"},
+  {cn:"吃了，现在好多了。",py:"chī le， xiàn zài hǎo duō le.",vi:"câu/cụm luyện tập"},
+  {cn:"什么时候能出院？",py:"shén me shí hòu néng chū yuàn？",vi:"câu/cụm luyện tập"},
+  {cn:"医生说下个星期。",py:"yī shēng shuō xià gè xīng qī.",vi:"câu/cụm luyện tập"},
+  {cn:"高",py:"gāo",vi:"cao"},
+  {cn:"很高",py:"hěn gāo",vi:"từ vựng HSK2"},
+  {cn:"不高",py:"bù gāo",vi:"từ vựng HSK2"},
+  {cn:"这么高",py:"zhè me gāo",vi:"từ vựng HSK2"},
+  {cn:"米",py:"mǐ",vi:"mét"},
+  {cn:"知道",py:"zhī dào",vi:"biết"},
+  {cn:"认识",py:"rèn shí",vi:"quen / biết"},
+  {cn:"很高兴认识你",py:"hěn gāo xìng rèn shí nǐ",vi:"từ vựng HSK2"},
+  {cn:"大卫今年多大？",py:"dà wèi jīn nián duō dà？",vi:"câu/cụm luyện tập"},
+  {cn:"二十多岁。",py:"èr shí duō suì.",vi:"câu/cụm luyện tập"},
+  {cn:"他多高？",py:"tā duō gāo？",vi:"câu/cụm luyện tập"},
+  {cn:"一米八几。",py:"yī mǐ bā jǐ.",vi:"câu/cụm luyện tập"},
+  {cn:"你怎么知道这么多呀？",py:"nǐ zěn me zhī dào zhè me duō ya？",vi:"câu/cụm luyện tập"},
+  {cn:"他是我同学。",py:"tā shì wǒ tóng xué.",vi:"câu/cụm luyện tập"},
+  {cn:"累",py:"lèi",vi:"mệt"},
+  {cn:"休息",py:"xiū xī",vi:"nghỉ ngơi"},
+  {cn:"明天星期天，我想在家休息。",py:"míng tiān xīng qī tiān， wǒ xiǎng zài jiā xiū xī.",vi:"câu/cụm luyện tập"},
+  {cn:"太累了，我们休息吧。",py:"tài lèi le， wǒ men xiū xī ba.",vi:"câu/cụm luyện tập"},
+  {cn:"忙",py:"máng",vi:"bận"},
+  {cn:"时间",py:"shí jiān",vi:"thời gian"},
+  {cn:"我很忙，没有时间",py:"wǒ hěn máng， méi yǒu shí jiān",vi:"câu/cụm luyện tập"},
+  {cn:"张老师星期六也不休息啊？",py:"zhāng lǎo shī xīng qī liù yě bù xiū xī a？",vi:"câu/cụm luyện tập"},
+  {cn:"是啊，他这几天很忙，没有时间休息。",py:"shì a， tā zhè jǐ tiān hěn máng， méi yǒu shí jiān xiū xī.",vi:"câu/cụm luyện tập"},
+  {cn:"那会很累吧？",py:"nà huì hěn lèi ba？",vi:"câu/cụm luyện tập"},
+  {cn:"他每天回来都很累。",py:"tā měi tiān huí lái dōu hěn lèi.",vi:"câu/cụm luyện tập"},
+  {cn:"我每天六点起床。",py:"wǒ měi tiān liù diǎn qǐ chuáng.",vi:"Mỗi ngày tôi sáu giờ thức dậy."},
+  {cn:"你很少生病，是不是喜欢运动？",py:"nǐ hěn shǎo shēng bìng， shì bù shì xǐ huān yùn dòng？",vi:"Bạn rất ít bị bệnh, có phải thích vận động không?"},
+  {cn:"我每天早上都要出去跑步。",py:"wǒ měi tiān zǎo shàng dōu yào chū qù pǎo bù.",vi:"Mỗi sáng tôi đều đi chạy bộ."},
+  {cn:"我们一起去吃早饭吧。",py:"wǒ men yī qǐ qù chī zǎo fàn ba.",vi:"Chúng ta cùng đi ăn sáng nhé."},
+  {cn:"你吃药了吗？",py:"nǐ chī yào le ma？",vi:"Bạn uống thuốc chưa?"},
+  {cn:"现在身体怎么样了？",py:"xiàn zài shēn tǐ zěn me yàng le？",vi:"Bây giờ cơ thể bạn thế nào rồi?"},
+  {cn:"医生说下个星期能出院。",py:"yī shēng shuō xià gè xīng qī néng chū yuàn.",vi:"Bác sĩ nói tuần sau có thể xuất viện."},
+  {cn:"大卫今年多大？",py:"dà wèi jīn nián duō dà？",vi:"David năm nay bao nhiêu tuổi?"},
+  {cn:"他多高？",py:"tā duō gāo？",vi:"Anh ấy cao bao nhiêu?"},
+  {cn:"你怎么知道这么多呀？",py:"nǐ zěn me zhī dào zhè me duō ya？",vi:"Làm sao bạn biết nhiều vậy?"},
+  {cn:"明天星期天，我想在家休息。",py:"míng tiān xīng qī tiān， wǒ xiǎng zài jiā xiū xī.",vi:"Ngày mai là chủ nhật, tôi muốn nghỉ ngơi ở nhà."},
+  {cn:"我很忙，没有时间休息。",py:"wǒ hěn máng， méi yǒu shí jiān xiū xī.",vi:"Tôi rất bận, không có thời gian nghỉ ngơi."},
+  {cn:"张老师这几天很忙。",py:"zhāng lǎo shī zhè jǐ tiān hěn máng.",vi:"Những ngày này thầy Trương rất bận."},
+  {cn:"他每天回来都很累。",py:"tā měi tiān huí lái dōu hěn lèi.",vi:"Anh ấy mỗi ngày về nhà đều rất mệt."},
+  {cn:"我们休息一下吧。",py:"wǒ men xiū xī yī xià ba.",vi:"Chúng ta nghỉ ngơi một chút đi."}
+ ],
+ dialogue:[
+  {spk:"句",cn:"我每天六点起床。",py:"wǒ měi tiān liù diǎn qǐ chuáng.",vi:"Mỗi ngày tôi sáu giờ thức dậy."},
+  {spk:"句",cn:"你很少生病，是不是喜欢运动？",py:"nǐ hěn shǎo shēng bìng， shì bù shì xǐ huān yùn dòng？",vi:"Bạn rất ít bị bệnh, có phải thích vận động không?"},
+  {spk:"句",cn:"我每天早上都要出去跑步。",py:"wǒ měi tiān zǎo shàng dōu yào chū qù pǎo bù.",vi:"Mỗi sáng tôi đều đi chạy bộ."},
+  {spk:"句",cn:"我们一起去吃早饭吧。",py:"wǒ men yī qǐ qù chī zǎo fàn ba.",vi:"Chúng ta cùng đi ăn sáng nhé."},
+  {spk:"句",cn:"你吃药了吗？",py:"nǐ chī yào le ma？",vi:"Bạn uống thuốc chưa?"},
+  {spk:"句",cn:"现在身体怎么样了？",py:"xiàn zài shēn tǐ zěn me yàng le？",vi:"Bây giờ cơ thể bạn thế nào rồi?"},
+  {spk:"句",cn:"医生说下个星期能出院。",py:"yī shēng shuō xià gè xīng qī néng chū yuàn.",vi:"Bác sĩ nói tuần sau có thể xuất viện."},
+  {spk:"句",cn:"大卫今年多大？",py:"dà wèi jīn nián duō dà？",vi:"David năm nay bao nhiêu tuổi?"}
+ ],
+ translate:[
+  {vi:"Mỗi ngày tôi sáu giờ thức dậy.",cn:"我每天六点起床。",py:"wǒ měi tiān liù diǎn qǐ chuáng."},
+  {vi:"Bạn rất ít bị bệnh, có phải thích vận động không?",cn:"你很少生病，是不是喜欢运动？",py:"nǐ hěn shǎo shēng bìng， shì bù shì xǐ huān yùn dòng？"},
+  {vi:"Mỗi sáng tôi đều đi chạy bộ.",cn:"我每天早上都要出去跑步。",py:"wǒ měi tiān zǎo shàng dōu yào chū qù pǎo bù."},
+  {vi:"Chúng ta cùng đi ăn sáng nhé.",cn:"我们一起去吃早饭吧。",py:"wǒ men yī qǐ qù chī zǎo fàn ba."},
+  {vi:"Bạn uống thuốc chưa?",cn:"你吃药了吗？",py:"nǐ chī yào le ma？"},
+  {vi:"Bây giờ cơ thể bạn thế nào rồi?",cn:"现在身体怎么样了？",py:"xiàn zài shēn tǐ zěn me yàng le？"},
+  {vi:"Bác sĩ nói tuần sau có thể xuất viện.",cn:"医生说下个星期能出院。",py:"yī shēng shuō xià gè xīng qī néng chū yuàn."},
+  {vi:"David năm nay bao nhiêu tuổi?",cn:"大卫今年多大？",py:"dà wèi jīn nián duō dà？"},
+  {vi:"Anh ấy cao bao nhiêu?",cn:"他多高？",py:"tā duō gāo？"},
+  {vi:"Làm sao bạn biết nhiều vậy?",cn:"你怎么知道这么多呀？",py:"nǐ zěn me zhī dào zhè me duō ya？"},
+  {vi:"Ngày mai là chủ nhật, tôi muốn nghỉ ngơi ở nhà.",cn:"明天星期天，我想在家休息。",py:"míng tiān xīng qī tiān， wǒ xiǎng zài jiā xiū xī."},
+  {vi:"Tôi rất bận, không có thời gian nghỉ ngơi.",cn:"我很忙，没有时间休息。",py:"wǒ hěn máng， méi yǒu shí jiān xiū xī."},
+  {vi:"Những ngày này thầy Trương rất bận.",cn:"张老师这几天很忙。",py:"zhāng lǎo shī zhè jǐ tiān hěn máng."},
+  {vi:"Anh ấy mỗi ngày về nhà đều rất mệt.",cn:"他每天回来都很累。",py:"tā měi tiān huí lái dōu hěn lèi."},
+  {vi:"Chúng ta nghỉ ngơi một chút đi.",cn:"我们休息一下吧。",py:"wǒ men xiū xī yī xià ba."}
+ ]
+};
+LESSONS['h2b3'] = {
+ title:"HSK2 · Bài 3 - Cái ly màu đỏ ở bên trái là của tôi",
+ cn:"手表",
+ count:82,
+ grammar:{label:"💡 Luyện HSK2",formula:"Từ vựng → mẫu câu → dịch Việt-Trung",ex:"Dữ liệu lấy từ tài liệu HSK2 bạn cung cấp."},
+ words:[
+  {cn:"手表",py:"shǒu biǎo",vi:"đồng hồ đeo tay"},
+  {cn:"表",py:"biǎo",vi:"đồng hồ"},
+  {cn:"闹钟",py:"nào zhōng",vi:"đồng hồ báo thức"},
+  {cn:"一百",py:"yī bǎi",vi:"từ vựng HSK2"},
+  {cn:"一百零一",py:"yī bǎi líng yī",vi:"từ vựng HSK2"},
+  {cn:"一百零二",py:"yī bǎi líng èr",vi:"từ vựng HSK2"},
+  {cn:"一百零三",py:"yī bǎi líng sān",vi:"từ vựng HSK2"},
+  {cn:"一百一十",py:"yī bǎi yī shí",vi:"từ vựng HSK2"},
+  {cn:"一百一十一",py:"yī bǎi yī shí yī",vi:"từ vựng HSK2"},
+  {cn:"一百一十二",py:"yī bǎi yī shí èr",vi:"từ vựng HSK2"},
+  {cn:"一百一十三",py:"yī bǎi yī shí sān",vi:"từ vựng HSK2"},
+  {cn:"一百二十",py:"yī bǎi èr shí",vi:"từ vựng HSK2"},
+  {cn:"一百三十",py:"yī bǎi sān shí",vi:"từ vựng HSK2"},
+  {cn:"两百",py:"liǎng bǎi",vi:"từ vựng HSK2"},
+  {cn:"一千",py:"yī qiān",vi:"từ vựng HSK2"},
+  {cn:"一万",py:"yī wàn",vi:"từ vựng HSK2"},
+  {cn:"这块手表是你的吗？",py:"zhè kuài shǒu biǎo shì nǐ de ma？",vi:"câu/cụm luyện tập"},
+  {cn:"不是我的，是我爸爸的。",py:"bù shì wǒ de， shì wǒ bà bà de.",vi:"câu/cụm luyện tập"},
+  {cn:"多少钱买的？",py:"duō shǎo qián mǎi de？",vi:"câu/cụm luyện tập"},
+  {cn:"三千多块。",py:"sān qiān duō kuài.",vi:"câu/cụm luyện tập"},
+  {cn:"报纸",py:"bào zhǐ",vi:"báo"},
+  {cn:"看报纸",py:"kàn bào zhǐ",vi:"đọc báo"},
+  {cn:"我爸爸喜欢看报纸。",py:"wǒ bà bà xǐ huān kàn bào zhǐ.",vi:"câu/cụm luyện tập"},
+  {cn:"我爷爷每天都要买报纸。",py:"wǒ yé yé měi tiān dōu yào mǎi bào zhǐ.",vi:"câu/cụm luyện tập"},
+  {cn:"送",py:"sòng",vi:"đưa / tặng / giao"},
+  {cn:"我送你回家。",py:"wǒ sòng nǐ huí jiā.",vi:"câu/cụm luyện tập"},
+  {cn:"送给你",py:"sòng gěi nǐ",vi:"từ vựng HSK2"},
+  {cn:"送外卖",py:"sòng wài mài",vi:"từ vựng HSK2"},
+  {cn:"小丽在送饭给我们吃。",py:"xiǎo lì zài sòng fàn gěi wǒ men chī.",vi:"câu/cụm luyện tập"},
+  {cn:"牛奶",py:"niú nǎi",vi:"sữa bò"},
+  {cn:"鲜奶",py:"xiān nǎi",vi:"sữa tươi"},
+  {cn:"一下",py:"yī xià",vi:"một chút"},
+  {cn:"看一下",py:"kàn yī xià",vi:"từ vựng HSK2"},
+  {cn:"这是今天早上的报纸吗？",py:"zhè shì jīn tiān zǎo shàng de bào zhǐ ma？",vi:"câu/cụm luyện tập"},
+  {cn:"不是，是昨天的。",py:"bù shì， shì zuó tiān de.",vi:"câu/cụm luyện tập"},
+  {cn:"你听，是不是送报纸的来了？",py:"nǐ tīng， shì bù shì sòng bào zhǐ de lái le？",vi:"câu/cụm luyện tập"},
+  {cn:"我看一下，不是，是送牛奶的。",py:"wǒ kàn yī xià， bù shì， shì sòng niú nǎi de.",vi:"câu/cụm luyện tập"},
+  {cn:"房间",py:"fáng jiān",vi:"phòng"},
+  {cn:"房子",py:"fáng zǐ",vi:"nhà"},
+  {cn:"一套房子",py:"yī tào fáng zǐ",vi:"từ vựng HSK2"},
+  {cn:"这套房子有五个房间。",py:"zhè tào fáng zǐ yǒu wǔ gè fáng jiān.",vi:"câu/cụm luyện tập"},
+  {cn:"妻子",py:"qī zǐ",vi:"vợ"},
+  {cn:"老婆",py:"lǎo pó",vi:"vợ"},
+  {cn:"爱人",py:"ài rén",vi:"người yêu / vợ chồng"},
+  {cn:"丈夫",py:"zhàng fū",vi:"chồng"},
+  {cn:"老公",py:"lǎo gōng",vi:"chồng"},
+  {cn:"颜色",py:"yán sè",vi:"màu sắc"},
+  {cn:"红色",py:"hóng sè",vi:"màu đỏ"},
+  {cn:"粉色",py:"fěn sè",vi:"màu hồng"},
+  {cn:"黑色",py:"hēi sè",vi:"màu đen"},
+  {cn:"白色",py:"bái sè",vi:"màu trắng"},
+  {cn:"蓝色",py:"lán sè",vi:"màu xanh lam"},
+  {cn:"绿色",py:"lǜ sè",vi:"màu xanh lá"},
+  {cn:"旁边",py:"páng biān",vi:"bên cạnh"},
+  {cn:"医院在那个小商店旁边。",py:"yī yuàn zài nà gè xiǎo shāng diàn páng biān.",vi:"câu/cụm luyện tập"},
+  {cn:"真",py:"zhēn",vi:"thật / rất"},
+  {cn:"真的吗？",py:"zhēn de ma？",vi:"câu/cụm luyện tập"},
+  {cn:"真的",py:"zhēn de",vi:"từ vựng HSK2"},
+  {cn:"假的",py:"jiǎ de",vi:"từ vựng HSK2"},
+  {cn:"真好",py:"zhēn hǎo",vi:"từ vựng HSK2"},
+  {cn:"真大",py:"zhēn dà",vi:"từ vựng HSK2"},
+  {cn:"这是谁的房间？",py:"zhè shì shéi de fáng jiān？",vi:"câu/cụm luyện tập"},
+  {cn:"这是我和我丈夫的，",py:"zhè shì wǒ hé wǒ zhàng fū de，",vi:"câu/cụm luyện tập"},
+  {cn:"旁边那个小的房间是我女儿的。",py:"páng biān nà gè xiǎo de fáng jiān shì wǒ nǚ ér de.",vi:"câu/cụm luyện tập"},
+  {cn:"你女儿的房间真漂亮！都是粉色的。",py:"nǐ nǚ ér de fáng jiān zhēn piào liàng！ dōu shì fěn sè de.",vi:"câu/cụm luyện tập"},
+  {cn:"是啊，粉色是我女儿最喜欢的颜色。",py:"shì a， fěn sè shì wǒ nǚ ér zuì xǐ huān de yán sè.",vi:"câu/cụm luyện tập"},
+  {cn:"左边",py:"zuǒ biān",vi:"bên trái"},
+  {cn:"这块手表是你的吗？",py:"zhè kuài shǒu biǎo shì nǐ de ma？",vi:"Cái đồng hồ này là của bạn sao?"},
+  {cn:"不是我的，是我爸爸的。",py:"bù shì wǒ de， shì wǒ bà bà de.",vi:"Không phải của tôi, là của ba tôi."},
+  {cn:"这块手表多少钱？",py:"zhè kuài shǒu biǎo duō shǎo qián？",vi:"Cái đồng hồ này bao nhiêu tiền?"},
+  {cn:"我爸爸喜欢看报纸。",py:"wǒ bà bà xǐ huān kàn bào zhǐ.",vi:"Ba tôi thích đọc báo."},
+  {cn:"我爷爷每天都要买报纸。",py:"wǒ yé yé měi tiān dōu yào mǎi bào zhǐ.",vi:"Ông tôi mỗi ngày đều mua báo."},
+  {cn:"我送你回家。",py:"wǒ sòng nǐ huí jiā.",vi:"Tôi đưa bạn về nhà nhé."},
+  {cn:"这是今天早上的报纸吗？",py:"zhè shì jīn tiān zǎo shàng de bào zhǐ ma？",vi:"Đây là báo sáng nay sao?"},
+  {cn:"不是，是昨天的。",py:"bù shì， shì zuó tiān de.",vi:"Không phải, là báo hôm qua."},
+  {cn:"是不是送牛奶的来了？",py:"shì bù shì sòng niú nǎi de lái le？",vi:"Đó có phải người giao sữa không?"},
+  {cn:"这套房子有五个房间。",py:"zhè tào fáng zǐ yǒu wǔ gè fáng jiān.",vi:"Căn nhà này có năm phòng."},
+  {cn:"这是我和我丈夫的房间。",py:"zhè shì wǒ hé wǒ zhàng fū de fáng jiān.",vi:"Đây là phòng của tôi và chồng tôi."},
+  {cn:"旁边那个房间是我女儿的。",py:"páng biān nà gè fáng jiān shì wǒ nǚ ér de.",vi:"Phòng bên cạnh là của con gái tôi."},
+  {cn:"你女儿的房间真漂亮！",py:"nǐ nǚ ér de fáng jiān zhēn piào liàng！",vi:"Phòng con gái bạn thật đẹp."},
+  {cn:"粉色是我女儿最喜欢的颜色。",py:"fěn sè shì wǒ nǚ ér zuì xǐ huān de yán sè.",vi:"Màu hồng là màu con gái tôi thích nhất."},
+  {cn:"医院在那个小商店旁边。",py:"yī yuàn zài nà gè xiǎo shāng diàn páng biān.",vi:"Bệnh viện ở bên cạnh cửa hàng nhỏ đó."}
+ ],
+ dialogue:[
+  {spk:"句",cn:"这块手表是你的吗？",py:"zhè kuài shǒu biǎo shì nǐ de ma？",vi:"Cái đồng hồ này là của bạn sao?"},
+  {spk:"句",cn:"不是我的，是我爸爸的。",py:"bù shì wǒ de， shì wǒ bà bà de.",vi:"Không phải của tôi, là của ba tôi."},
+  {spk:"句",cn:"这块手表多少钱？",py:"zhè kuài shǒu biǎo duō shǎo qián？",vi:"Cái đồng hồ này bao nhiêu tiền?"},
+  {spk:"句",cn:"我爸爸喜欢看报纸。",py:"wǒ bà bà xǐ huān kàn bào zhǐ.",vi:"Ba tôi thích đọc báo."},
+  {spk:"句",cn:"我爷爷每天都要买报纸。",py:"wǒ yé yé měi tiān dōu yào mǎi bào zhǐ.",vi:"Ông tôi mỗi ngày đều mua báo."},
+  {spk:"句",cn:"我送你回家。",py:"wǒ sòng nǐ huí jiā.",vi:"Tôi đưa bạn về nhà nhé."},
+  {spk:"句",cn:"这是今天早上的报纸吗？",py:"zhè shì jīn tiān zǎo shàng de bào zhǐ ma？",vi:"Đây là báo sáng nay sao?"},
+  {spk:"句",cn:"不是，是昨天的。",py:"bù shì， shì zuó tiān de.",vi:"Không phải, là báo hôm qua."}
+ ],
+ translate:[
+  {vi:"Cái đồng hồ này là của bạn sao?",cn:"这块手表是你的吗？",py:"zhè kuài shǒu biǎo shì nǐ de ma？"},
+  {vi:"Không phải của tôi, là của ba tôi.",cn:"不是我的，是我爸爸的。",py:"bù shì wǒ de， shì wǒ bà bà de."},
+  {vi:"Cái đồng hồ này bao nhiêu tiền?",cn:"这块手表多少钱？",py:"zhè kuài shǒu biǎo duō shǎo qián？"},
+  {vi:"Ba tôi thích đọc báo.",cn:"我爸爸喜欢看报纸。",py:"wǒ bà bà xǐ huān kàn bào zhǐ."},
+  {vi:"Ông tôi mỗi ngày đều mua báo.",cn:"我爷爷每天都要买报纸。",py:"wǒ yé yé měi tiān dōu yào mǎi bào zhǐ."},
+  {vi:"Tôi đưa bạn về nhà nhé.",cn:"我送你回家。",py:"wǒ sòng nǐ huí jiā."},
+  {vi:"Đây là báo sáng nay sao?",cn:"这是今天早上的报纸吗？",py:"zhè shì jīn tiān zǎo shàng de bào zhǐ ma？"},
+  {vi:"Không phải, là báo hôm qua.",cn:"不是，是昨天的。",py:"bù shì， shì zuó tiān de."},
+  {vi:"Đó có phải người giao sữa không?",cn:"是不是送牛奶的来了？",py:"shì bù shì sòng niú nǎi de lái le？"},
+  {vi:"Căn nhà này có năm phòng.",cn:"这套房子有五个房间。",py:"zhè tào fáng zǐ yǒu wǔ gè fáng jiān."},
+  {vi:"Đây là phòng của tôi và chồng tôi.",cn:"这是我和我丈夫的房间。",py:"zhè shì wǒ hé wǒ zhàng fū de fáng jiān."},
+  {vi:"Phòng bên cạnh là của con gái tôi.",cn:"旁边那个房间是我女儿的。",py:"páng biān nà gè fáng jiān shì wǒ nǚ ér de."},
+  {vi:"Phòng con gái bạn thật đẹp.",cn:"你女儿的房间真漂亮！",py:"nǐ nǚ ér de fáng jiān zhēn piào liàng！"},
+  {vi:"Màu hồng là màu con gái tôi thích nhất.",cn:"粉色是我女儿最喜欢的颜色。",py:"fěn sè shì wǒ nǚ ér zuì xǐ huān de yán sè."},
+  {vi:"Bệnh viện ở bên cạnh cửa hàng nhỏ đó.",cn:"医院在那个小商店旁边。",py:"yī yuàn zài nà gè xiǎo shāng diàn páng biān."}
+ ]
+};
+LESSONS['h2b4'] = {
+ title:"HSK2 · Bài 4 - Công việc này là do anh ấy giới thiệu cho tôi",
+ cn:"生日",
+ count:62,
+ grammar:{label:"💡 Luyện HSK2",formula:"Từ vựng → mẫu câu → dịch Việt-Trung",ex:"Dữ liệu lấy từ tài liệu HSK2 bạn cung cấp."},
+ words:[
+  {cn:"生日",py:"shēng rì",vi:"sinh nhật"},
+  {cn:"快乐",py:"kuài lè",vi:"vui vẻ"},
+  {cn:"生日快乐",py:"shēng rì kuài lè",vi:"từ vựng HSK2"},
+  {cn:"祝",py:"zhù",vi:"chúc"},
+  {cn:"祝你生日快乐",py:"zhù nǐ shēng rì kuài lè",vi:"từ vựng HSK2"},
+  {cn:"你的生日是几月几号？",py:"nǐ de shēng rì shì jǐ yuè jǐ hào？",vi:"câu/cụm luyện tập"},
+  {cn:"生日快乐！这是我送给你的！",py:"shēng rì kuài lè！ zhè shì wǒ sòng gěi nǐ de！",vi:"câu/cụm luyện tập"},
+  {cn:"是什么？是一本书吗？",py:"shì shén me？ shì yī běn shū ma？",vi:"câu/cụm luyện tập"},
+  {cn:"对，这本书是我写的。",py:"duì， zhè běn shū shì wǒ xiě de.",vi:"câu/cụm luyện tập"},
+  {cn:"太谢谢你了！",py:"tài xiè xiè nǐ le！",vi:"câu/cụm luyện tập"},
+  {cn:"接",py:"jiē",vi:"đón / nhận"},
+  {cn:"接电话",py:"jiē diàn huà",vi:"nghe điện thoại"},
+  {cn:"接朋友",py:"jiē péng yǒu",vi:"từ vựng HSK2"},
+  {cn:"早上",py:"zǎo shàng",vi:"buổi sáng"},
+  {cn:"晚上",py:"wǎn shàng",vi:"từ vựng HSK2"},
+  {cn:"晚安",py:"wǎn ān",vi:"từ vựng HSK2"},
+  {cn:"晚饭",py:"wǎn fàn",vi:"từ vựng HSK2"},
+  {cn:"问",py:"wèn",vi:"từ vựng HSK2"},
+  {cn:"请问，你忙吗？",py:"qǐng wèn， nǐ máng ma？",vi:"câu/cụm luyện tập"},
+  {cn:"早上有你一个电话。",py:"zǎo shàng yǒu nǐ yī gè diàn huà.",vi:"câu/cụm luyện tập"},
+  {cn:"电话是谁打的？",py:"diàn huà shì shéi dǎ de？",vi:"câu/cụm luyện tập"},
+  {cn:"不知道，是儿子接的。",py:"bù zhī dào， shì ér zǐ jiē de.",vi:"câu/cụm luyện tập"},
+  {cn:"好，晚上我问一下儿子。",py:"hǎo， wǎn shàng wǒ wèn yī xià ér zǐ.",vi:"câu/cụm luyện tập"},
+  {cn:"非常",py:"fēi cháng",vi:"rất"},
+  {cn:"你的汉语非常好。",py:"nǐ de hàn yǔ fēi cháng hǎo.",vi:"câu/cụm luyện tập"},
+  {cn:"开始",py:"kāi shǐ",vi:"bắt đầu"},
+  {cn:"每天八点就开始上课了。",py:"měi tiān bā diǎn jiù kāi shǐ shàng kè le.",vi:"câu/cụm luyện tập"},
+  {cn:"已经",py:"yǐ jīng",vi:"đã"},
+  {cn:"他们已经回家了。",py:"tā men yǐ jīng huí jiā le.",vi:"câu/cụm luyện tập"},
+  {cn:"她已经结婚了。",py:"tā yǐ jīng jié hūn le.",vi:"câu/cụm luyện tập"},
+  {cn:"你喜欢踢足球吗？",py:"nǐ xǐ huān tī zú qiú ma？",vi:"câu/cụm luyện tập"},
+  {cn:"非常喜欢。",py:"fēi cháng xǐ huān.",vi:"câu/cụm luyện tập"},
+  {cn:"你是什么时候开始踢足球的？",py:"nǐ shì shén me shí hòu kāi shǐ tī zú qiú de？",vi:"câu/cụm luyện tập"},
+  {cn:"我十一岁开始踢足球，已经踢了十年了。",py:"wǒ shí yī suì kāi shǐ tī zú qiú， yǐ jīng tī le shí nián le.",vi:"câu/cụm luyện tập"},
+  {cn:"长",py:"cháng / zhǎng",vi:"từ vựng HSK2"},
+  {cn:"很长",py:"hěn zhǎng",vi:"từ vựng HSK2"},
+  {cn:"短",py:"duǎn",vi:"ngắn"},
+  {cn:"多长时间",py:"duō zhǎng shí jiān",vi:"từ vựng HSK2"},
+  {cn:"你学汉语学了多长时间？",py:"nǐ xué hàn yǔ xué le duō zhǎng shí jiān？",vi:"câu/cụm luyện tập"},
+  {cn:"帮",py:"bāng",vi:"giúp"},
+  {cn:"介绍",py:"jiè shào",vi:"giới thiệu"},
+  {cn:"我先介绍一下儿， 我是",py:"wǒ xiān jiè shào yī xià ér， wǒ shì",vi:"câu/cụm luyện tập"},
+  {cn:"我来介绍一下儿我自己， 我是",py:"wǒ lái jiè shào yī xià ér wǒ zì jǐ， wǒ shì",vi:"câu/cụm luyện tập"},
+  {cn:"你在这儿工作多长时间了？",py:"nǐ zài zhè ér gōng zuò duō zhǎng shí jiān le？",vi:"câu/cụm luyện tập"},
+  {cn:"已经两年多了，我是2011年来的。",py:"yǐ jīng liǎng nián duō le， wǒ shì2011nián lái de.",vi:"câu/cụm luyện tập"},
+  {cn:"你认识谢先生吗？",py:"nǐ rèn shí xiè xiān shēng ma？",vi:"câu/cụm luyện tập"},
+  {cn:"认识，我们是大学同学，这个工作是他帮我介绍的。",py:"rèn shí， wǒ men shì dà xué tóng xué， zhè gè gōng zuò shì tā bāng wǒ jiè shào de.",vi:"câu/cụm luyện tập"},
+  {cn:"祝你生日快乐！",py:"zhù nǐ shēng rì kuài lè！",vi:"Chúc bạn sinh nhật vui vẻ!"},
+  {cn:"你的生日是几月几号？",py:"nǐ de shēng rì shì jǐ yuè jǐ hào？",vi:"Sinh nhật của bạn là ngày mấy tháng mấy?"},
+  {cn:"这是我送给你的！",py:"zhè shì wǒ sòng gěi nǐ de！",vi:"Đây là quà tôi tặng cho bạn."},
+  {cn:"这本书是你写的吗？",py:"zhè běn shū shì nǐ xiě de ma？",vi:"Đây là sách bạn viết sao?"},
+  {cn:"你的汉语非常好。",py:"nǐ de hàn yǔ fēi cháng hǎo.",vi:"Tiếng Trung của bạn rất tốt."},
+  {cn:"每天几点开始上课？",py:"měi tiān jǐ diǎn kāi shǐ shàng kè？",vi:"Mấy giờ bắt đầu học?"},
+  {cn:"他们已经回家了。",py:"tā men yǐ jīng huí jiā le.",vi:"Họ đã về nhà rồi."},
+  {cn:"你喜欢踢足球吗？",py:"nǐ xǐ huān tī zú qiú ma？",vi:"Bạn thích đá bóng không?"},
+  {cn:"我十一岁开始踢足球。",py:"wǒ shí yī suì kāi shǐ tī zú qiú.",vi:"Tôi mười một tuổi bắt đầu đá bóng."},
+  {cn:"我已经踢了十年了。",py:"wǒ yǐ jīng tī le shí nián le.",vi:"Tôi đã đá bóng mười năm rồi."},
+  {cn:"我来介绍一下儿我自己。",py:"wǒ lái jiè shào yī xià ér wǒ zì jǐ.",vi:"Tôi giới thiệu bản thân một chút."},
+  {cn:"你在这儿工作多长时间了？",py:"nǐ zài zhè ér gōng zuò duō zhǎng shí jiān le？",vi:"Bạn làm việc ở đây bao lâu rồi?"},
+  {cn:"我是2011年来的。",py:"wǒ shì2011nián lái de.",vi:"Tôi đến đây từ năm 2011."},
+  {cn:"你认识谢先生吗？",py:"nǐ rèn shí xiè xiān shēng ma？",vi:"Bạn có quen anh Tạ không?"},
+  {cn:"这个工作是他帮我介绍的。",py:"zhè gè gōng zuò shì tā bāng wǒ jiè shào de.",vi:"Công việc này là anh ấy giúp tôi giới thiệu."}
+ ],
+ dialogue:[
+  {spk:"句",cn:"祝你生日快乐！",py:"zhù nǐ shēng rì kuài lè！",vi:"Chúc bạn sinh nhật vui vẻ!"},
+  {spk:"句",cn:"你的生日是几月几号？",py:"nǐ de shēng rì shì jǐ yuè jǐ hào？",vi:"Sinh nhật của bạn là ngày mấy tháng mấy?"},
+  {spk:"句",cn:"这是我送给你的！",py:"zhè shì wǒ sòng gěi nǐ de！",vi:"Đây là quà tôi tặng cho bạn."},
+  {spk:"句",cn:"这本书是你写的吗？",py:"zhè běn shū shì nǐ xiě de ma？",vi:"Đây là sách bạn viết sao?"},
+  {spk:"句",cn:"你的汉语非常好。",py:"nǐ de hàn yǔ fēi cháng hǎo.",vi:"Tiếng Trung của bạn rất tốt."},
+  {spk:"句",cn:"每天几点开始上课？",py:"měi tiān jǐ diǎn kāi shǐ shàng kè？",vi:"Mấy giờ bắt đầu học?"},
+  {spk:"句",cn:"他们已经回家了。",py:"tā men yǐ jīng huí jiā le.",vi:"Họ đã về nhà rồi."},
+  {spk:"句",cn:"你喜欢踢足球吗？",py:"nǐ xǐ huān tī zú qiú ma？",vi:"Bạn thích đá bóng không?"}
+ ],
+ translate:[
+  {vi:"Chúc bạn sinh nhật vui vẻ!",cn:"祝你生日快乐！",py:"zhù nǐ shēng rì kuài lè！"},
+  {vi:"Sinh nhật của bạn là ngày mấy tháng mấy?",cn:"你的生日是几月几号？",py:"nǐ de shēng rì shì jǐ yuè jǐ hào？"},
+  {vi:"Đây là quà tôi tặng cho bạn.",cn:"这是我送给你的！",py:"zhè shì wǒ sòng gěi nǐ de！"},
+  {vi:"Đây là sách bạn viết sao?",cn:"这本书是你写的吗？",py:"zhè běn shū shì nǐ xiě de ma？"},
+  {vi:"Tiếng Trung của bạn rất tốt.",cn:"你的汉语非常好。",py:"nǐ de hàn yǔ fēi cháng hǎo."},
+  {vi:"Mấy giờ bắt đầu học?",cn:"每天几点开始上课？",py:"měi tiān jǐ diǎn kāi shǐ shàng kè？"},
+  {vi:"Họ đã về nhà rồi.",cn:"他们已经回家了。",py:"tā men yǐ jīng huí jiā le."},
+  {vi:"Bạn thích đá bóng không?",cn:"你喜欢踢足球吗？",py:"nǐ xǐ huān tī zú qiú ma？"},
+  {vi:"Tôi mười một tuổi bắt đầu đá bóng.",cn:"我十一岁开始踢足球。",py:"wǒ shí yī suì kāi shǐ tī zú qiú."},
+  {vi:"Tôi đã đá bóng mười năm rồi.",cn:"我已经踢了十年了。",py:"wǒ yǐ jīng tī le shí nián le."},
+  {vi:"Tôi giới thiệu bản thân một chút.",cn:"我来介绍一下儿我自己。",py:"wǒ lái jiè shào yī xià ér wǒ zì jǐ."},
+  {vi:"Bạn làm việc ở đây bao lâu rồi?",cn:"你在这儿工作多长时间了？",py:"nǐ zài zhè ér gōng zuò duō zhǎng shí jiān le？"},
+  {vi:"Tôi đến đây từ năm 2011.",cn:"我是2011年来的。",py:"wǒ shì2011nián lái de."},
+  {vi:"Bạn có quen anh Tạ không?",cn:"你认识谢先生吗？",py:"nǐ rèn shí xiè xiān shēng ma？"},
+  {vi:"Công việc này là anh ấy giúp tôi giới thiệu.",cn:"这个工作是他帮我介绍的。",py:"zhè gè gōng zuò shì tā bāng wǒ jiè shào de."}
+ ]
+};
+LESSONS['h2b5'] = {
+ title:"HSK2 · Bài 5 - Mua cái này đi",
+ cn:"外面",
+ count:62,
+ grammar:{label:"💡 Luyện HSK2",formula:"Từ vựng → mẫu câu → dịch Việt-Trung",ex:"Dữ liệu lấy từ tài liệu HSK2 bạn cung cấp."},
+ words:[
+  {cn:"外面",py:"wài miàn",vi:"bên ngoài"},
+  {cn:"外边",py:"wài biān",vi:"bên ngoài"},
+  {cn:"外面在下雨呢。",py:"wài miàn zài xià yǔ ne.",vi:"câu/cụm luyện tập"},
+  {cn:"外面是大卫的小狗。",py:"wài miàn shì dà wèi de xiǎo gǒu.",vi:"câu/cụm luyện tập"},
+  {cn:"准备",py:"zhǔn bèi",vi:"chuẩn bị"},
+  {cn:"他们准备买新房子。",py:"tā men zhǔn bèi mǎi xīn fáng zǐ.",vi:"câu/cụm luyện tập"},
+  {cn:"准备，出发！",py:"zhǔn bèi， chū fā！",vi:"câu/cụm luyện tập"},
+  {cn:"就",py:"jiù",vi:"thì / liền / chỉ"},
+  {cn:"准备，出发chūfā！",py:"zhǔn bèi， chū fā chūfā！",vi:"câu/cụm luyện tập"},
+  {cn:"鱼",py:"yú",vi:"cá"},
+  {cn:"晚上我们去饭馆吃饭，怎么样？",py:"wǎn shàng wǒ men qù fàn guǎn chī fàn， zěn me yàng？",vi:"câu/cụm luyện tập"},
+  {cn:"我不想去外面吃，我想在家吃。",py:"wǒ bù xiǎng qù wài miàn chī， wǒ xiǎng zài jiā chī.",vi:"câu/cụm luyện tập"},
+  {cn:"那你准备做什么呢？",py:"nà nǐ zhǔn bèi zuò shén me ne？",vi:"câu/cụm luyện tập"},
+  {cn:"就做你爱吃的鱼吧。",py:"jiù zuò nǐ ài chī de yú ba.",vi:"câu/cụm luyện tập"},
+  {cn:"还钱",py:"huán qián",vi:"trả tiền"},
+  {cn:"还书",py:"huán shū",vi:"trả sách"},
+  {cn:"还行",py:"hái xíng",vi:"cũng được"},
+  {cn:"还好",py:"hái hǎo",vi:"cũng ổn"},
+  {cn:"可以",py:"kě yǐ",vi:"có thể"},
+  {cn:"还可以",py:"hái kě yǐ",vi:"từ vựng HSK2"},
+  {cn:"不错",py:"bù cuò",vi:"không tệ"},
+  {cn:"错",py:"cuò",vi:"sai"},
+  {cn:"不对",py:"bù duì",vi:"không đúng"},
+  {cn:"有点儿",py:"yǒu diǎn ér",vi:"hơi / một chút"},
+  {cn:"有点儿热",py:"yǒu diǎn ér rè",vi:"từ vựng HSK2"},
+  {cn:"帮我看一下这件衣服怎么样。",py:"bāng wǒ kàn yī xià zhè jiàn yī fú zěn me yàng.",vi:"câu/cụm luyện tập"},
+  {cn:"颜色还可以，就是有点儿大。",py:"yán sè hái kě yǐ， jiù shì yǒu diǎn ér dà.",vi:"câu/cụm luyện tập"},
+  {cn:"这件小的怎么样？",py:"zhè jiàn xiǎo de zěn me yàng？",vi:"câu/cụm luyện tập"},
+  {cn:"这件不错，就买这件吧。",py:"zhè jiàn bù cuò， jiù mǎi zhè jiàn ba.",vi:"câu/cụm luyện tập"},
+  {cn:"考试",py:"kǎo shì",vi:"kỳ thi"},
+  {cn:"你们什么时候考试呢？",py:"nǐ men shén me shí hòu kǎo shì ne？",vi:"câu/cụm luyện tập"},
+  {cn:"这次考试很难，你们好好复习fūxí吧。加油！",py:"zhè cì kǎo shì hěn nán， nǐ men hǎo hǎo fù xí fūxí ba. jiā yóu！",vi:"câu/cụm luyện tập"},
+  {cn:"意思",py:"yì sī",vi:"ý nghĩa"},
+  {cn:"这次考试很难，你们好好复习吧。加油！",py:"zhè cì kǎo shì hěn nán， nǐ men hǎo hǎo fù xí ba. jiā yóu！",vi:"câu/cụm luyện tập"},
+  {cn:"今天去不去打球？",py:"jīn tiān qù bù qù dǎ qiú？",vi:"câu/cụm luyện tập"},
+  {cn:"这两天有点儿累，不去打球了。",py:"zhè liǎng tiān yǒu diǎn ér lèi， bù qù dǎ qiú le.",vi:"câu/cụm luyện tập"},
+  {cn:"你在做什么呢？是在想昨天的考试吗？",py:"nǐ zài zuò shén me ne？ shì zài xiǎng zuó tiān de kǎo shì ma？",vi:"câu/cụm luyện tập"},
+  {cn:"是啊，我觉得听和说还可以，读和写不好，很多字我都不知道是什么意思。",py:"shì a， wǒ jué dé tīng hé shuō hái kě yǐ， dú hé xiě bù hǎo， hěn duō zì wǒ dōu bù zhī dào shì shén me yì sī.",vi:"câu/cụm luyện tập"},
+  {cn:"咖啡",py:"kā fēi",vi:"cà phê"},
+  {cn:"早睡早起对身体很好。",py:"zǎo shuì zǎo qǐ duì shēn tǐ hěn hǎo.",vi:"câu/cụm luyện tập"},
+  {cn:"他对我很好。",py:"tā duì wǒ hěn hǎo.",vi:"câu/cụm luyện tập"},
+  {cn:"以后",py:"yǐ hòu",vi:"sau này"},
+  {cn:"后来",py:"hòu lái",vi:"sau đó"},
+  {cn:"休息一下吧，喝咖啡吗？",py:"xiū xī yī xià ba， hē kā fēi ma？",vi:"câu/cụm luyện tập"},
+  {cn:"不喝了，我已经喝两杯了。",py:"bù hē le， wǒ yǐ jīng hē liǎng bēi le.",vi:"câu/cụm luyện tập"},
+  {cn:"是啊，喝咖啡多了对身体不好。",py:"shì a， hē kā fēi duō le duì shēn tǐ bù hǎo.",vi:"câu/cụm luyện tập"},
+  {cn:"以后我少喝一点儿，每天喝一杯。",py:"yǐ hòu wǒ shǎo hē yī diǎn ér， měi tiān hē yī bēi.",vi:"câu/cụm luyện tập"},
+  {cn:"外面在下雨呢。",py:"wài miàn zài xià yǔ ne.",vi:"Bên ngoài đang mưa."},
+  {cn:"他们准备买新房子。",py:"tā men zhǔn bèi mǎi xīn fáng zǐ.",vi:"Họ chuẩn bị mua nhà mới."},
+  {cn:"准备，出发！",py:"zhǔn bèi， chū fā！",vi:"Chuẩn bị, xuất phát!"},
+  {cn:"我不想去外面吃。",py:"wǒ bù xiǎng qù wài miàn chī.",vi:"Tôi không muốn ăn ở ngoài."},
+  {cn:"我想在家吃。",py:"wǒ xiǎng zài jiā chī.",vi:"Tôi muốn ăn ở nhà."},
+  {cn:"那你准备做什么呢？",py:"nà nǐ zhǔn bèi zuò shén me ne？",vi:"Vậy bạn định nấu món gì?"},
+  {cn:"就做你爱吃的鱼吧。",py:"jiù zuò nǐ ài chī de yú ba.",vi:"Tôi chỉ làm món cá bạn thích ăn thôi."},
+  {cn:"颜色还可以，就是有点儿大。",py:"yán sè hái kě yǐ， jiù shì yǒu diǎn ér dà.",vi:"Màu sắc cũng được, chỉ là hơi to."},
+  {cn:"这件小的怎么样？",py:"zhè jiàn xiǎo de zěn me yàng？",vi:"Cái nhỏ này thế nào?"},
+  {cn:"这件不错，就买这件吧。",py:"zhè jiàn bù cuò， jiù mǎi zhè jiàn ba.",vi:"Cái này không tệ, mua cái này đi."},
+  {cn:"这次考试很难。",py:"zhè cì kǎo shì hěn nán.",vi:"Kỳ thi lần này rất khó."},
+  {cn:"这两天有点儿累。",py:"zhè liǎng tiān yǒu diǎn ér lèi.",vi:"Hai ngày nay tôi hơi mệt."},
+  {cn:"我觉得听和说还可以。",py:"wǒ jué dé tīng hé shuō hái kě yǐ.",vi:"Tôi thấy nghe và nói cũng được."},
+  {cn:"很多字我都不知道是什么意思。",py:"hěn duō zì wǒ dōu bù zhī dào shì shén me yì sī.",vi:"Rất nhiều chữ tôi không biết nghĩa là gì."},
+  {cn:"以后我少喝一点儿咖啡。",py:"yǐ hòu wǒ shǎo hē yī diǎn ér kā fēi.",vi:"Sau này tôi sẽ uống ít cà phê hơn một chút."}
+ ],
+ dialogue:[
+  {spk:"句",cn:"外面在下雨呢。",py:"wài miàn zài xià yǔ ne.",vi:"Bên ngoài đang mưa."},
+  {spk:"句",cn:"他们准备买新房子。",py:"tā men zhǔn bèi mǎi xīn fáng zǐ.",vi:"Họ chuẩn bị mua nhà mới."},
+  {spk:"句",cn:"准备，出发！",py:"zhǔn bèi， chū fā！",vi:"Chuẩn bị, xuất phát!"},
+  {spk:"句",cn:"我不想去外面吃。",py:"wǒ bù xiǎng qù wài miàn chī.",vi:"Tôi không muốn ăn ở ngoài."},
+  {spk:"句",cn:"我想在家吃。",py:"wǒ xiǎng zài jiā chī.",vi:"Tôi muốn ăn ở nhà."},
+  {spk:"句",cn:"那你准备做什么呢？",py:"nà nǐ zhǔn bèi zuò shén me ne？",vi:"Vậy bạn định nấu món gì?"},
+  {spk:"句",cn:"就做你爱吃的鱼吧。",py:"jiù zuò nǐ ài chī de yú ba.",vi:"Tôi chỉ làm món cá bạn thích ăn thôi."},
+  {spk:"句",cn:"颜色还可以，就是有点儿大。",py:"yán sè hái kě yǐ， jiù shì yǒu diǎn ér dà.",vi:"Màu sắc cũng được, chỉ là hơi to."}
+ ],
+ translate:[
+  {vi:"Bên ngoài đang mưa.",cn:"外面在下雨呢。",py:"wài miàn zài xià yǔ ne."},
+  {vi:"Họ chuẩn bị mua nhà mới.",cn:"他们准备买新房子。",py:"tā men zhǔn bèi mǎi xīn fáng zǐ."},
+  {vi:"Chuẩn bị, xuất phát!",cn:"准备，出发！",py:"zhǔn bèi， chū fā！"},
+  {vi:"Tôi không muốn ăn ở ngoài.",cn:"我不想去外面吃。",py:"wǒ bù xiǎng qù wài miàn chī."},
+  {vi:"Tôi muốn ăn ở nhà.",cn:"我想在家吃。",py:"wǒ xiǎng zài jiā chī."},
+  {vi:"Vậy bạn định nấu món gì?",cn:"那你准备做什么呢？",py:"nà nǐ zhǔn bèi zuò shén me ne？"},
+  {vi:"Tôi chỉ làm món cá bạn thích ăn thôi.",cn:"就做你爱吃的鱼吧。",py:"jiù zuò nǐ ài chī de yú ba."},
+  {vi:"Màu sắc cũng được, chỉ là hơi to.",cn:"颜色还可以，就是有点儿大。",py:"yán sè hái kě yǐ， jiù shì yǒu diǎn ér dà."},
+  {vi:"Cái nhỏ này thế nào?",cn:"这件小的怎么样？",py:"zhè jiàn xiǎo de zěn me yàng？"},
+  {vi:"Cái này không tệ, mua cái này đi.",cn:"这件不错，就买这件吧。",py:"zhè jiàn bù cuò， jiù mǎi zhè jiàn ba."},
+  {vi:"Kỳ thi lần này rất khó.",cn:"这次考试很难。",py:"zhè cì kǎo shì hěn nán."},
+  {vi:"Hai ngày nay tôi hơi mệt.",cn:"这两天有点儿累。",py:"zhè liǎng tiān yǒu diǎn ér lèi."},
+  {vi:"Tôi thấy nghe và nói cũng được.",cn:"我觉得听和说还可以。",py:"wǒ jué dé tīng hé shuō hái kě yǐ."},
+  {vi:"Rất nhiều chữ tôi không biết nghĩa là gì.",cn:"很多字我都不知道是什么意思。",py:"hěn duō zì wǒ dōu bù zhī dào shì shén me yì sī."},
+  {vi:"Sau này tôi sẽ uống ít cà phê hơn một chút.",cn:"以后我少喝一点儿咖啡。",py:"yǐ hòu wǒ shǎo hē yī diǎn ér kā fēi."}
+ ]
+};
+/* ─── END GENERATED HSK 2 LESSONS ─── */
+/* ─── GENERATED HSK 4 LESSONS ─── */
+LESSONS['h4b1'] = {
+ title:"HSK4 · Bài 1",
+ cn:"法律 / 俩 / 印象",
+ count:32,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"法律",py:"fǎ lǜ",vi:"pháp luật"},
+  {cn:"俩",py:"liǎ",vi:"hai người"},
+  {cn:"印象",py:"yìn xiàng",vi:"ấn tượng"},
+  {cn:"深",py:"shēn",vi:"sâu"},
+  {cn:"熟悉",py:"shú xī",vi:"quen thuộc"},
+  {cn:"不仅",py:"bù jǐn",vi:"không chỉ"},
+  {cn:"性格",py:"xìng gé",vi:"tính cách"},
+  {cn:"开玩笑",py:"kāi wán xiào",vi:"đùa"},
+  {cn:"从来",py:"cóng lái",vi:"từ trước đến nay"},
+  {cn:"最好",py:"zuì hǎo",vi:"tốt nhất"},
+  {cn:"共同",py:"gòng tóng",vi:"chung"},
+  {cn:"适合",py:"shì hé",vi:"phù hợp"},
+  {cn:"幸福",py:"xìng fú",vi:"hạnh phúc"},
+  {cn:"生活",py:"shēng huó",vi:"cuộc sống"},
+  {cn:"刚",py:"gāng",vi:"vừa mới"},
+  {cn:"浪漫",py:"làng màn",vi:"lãng mạn"},
+  {cn:"够",py:"gòu",vi:"đủ"},
+  {cn:"缺点",py:"quē diǎn",vi:"khuyết điểm"},
+  {cn:"接受",py:"jiē shòu",vi:"chấp nhận"},
+  {cn:"羡慕",py:"xiàn mù",vi:"ngưỡng mộ"},
+  {cn:"爱情",py:"ài qíng",vi:"tình yêu"},
+  {cn:"星星",py:"xīng xīng",vi:"ngôi sao"},
+  {cn:"即使",py:"jí shǐ",vi:"cho dù"},
+  {cn:"加班",py:"jiā bān",vi:"tăng ca"},
+  {cn:"亮",py:"liàng",vi:"sáng"},
+  {cn:"感动",py:"gǎn dòng",vi:"cảm động"},
+  {cn:"自然",py:"zì rán",vi:"tự nhiên"},
+  {cn:"原因",py:"yuán yīn",vi:"nguyên nhân"},
+  {cn:"互相",py:"hù xiāng",vi:"lẫn nhau"},
+  {cn:"吸引",py:"xī yǐn",vi:"thu hút"},
+  {cn:"幽默",py:"yōu mò",vi:"hài hước"},
+  {cn:"脾气",py:"pí qì",vi:"tính khí"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b2'] = {
+ title:"HSK4 · Bài 2",
+ cn:"适应 / 交 / 平时",
+ count:31,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"适应",py:"shì yīng",vi:"thích ứng"},
+  {cn:"交",py:"jiāo",vi:"kết giao / nộp"},
+  {cn:"平时",py:"píng shí",vi:"bình thường"},
+  {cn:"逛",py:"guàng",vi:"đi dạo / đi shopping"},
+  {cn:"短信",py:"duǎn xìn",vi:"tin nhắn"},
+  {cn:"正好",py:"zhèng hǎo",vi:"vừa đúng lúc"},
+  {cn:"购物",py:"gòu wù",vi:"mua sắm"},
+  {cn:"聚会",py:"jù huì",vi:"buổi tụ họp"},
+  {cn:"联系",py:"lián xì",vi:"liên lạc"},
+  {cn:"差不多",py:"chà bù duō",vi:"gần như"},
+  {cn:"专门",py:"zhuān mén",vi:"chuyên môn / đặc biệt"},
+  {cn:"毕业",py:"bì yè",vi:"tốt nghiệp"},
+  {cn:"麻烦",py:"má fán",vi:"phiền phức / làm phiền"},
+  {cn:"好像",py:"hǎo xiàng",vi:"hình như"},
+  {cn:"重新",py:"zhòng xīn",vi:"lại / làm lại"},
+  {cn:"尽管",py:"jǐn guǎn",vi:"mặc dù"},
+  {cn:"真正",py:"zhēn zhèng",vi:"thực sự"},
+  {cn:"友谊",py:"yǒu yì",vi:"tình bạn"},
+  {cn:"丰富",py:"fēng fù",vi:"phong phú"},
+  {cn:"无聊",py:"wú liáo",vi:"nhàm chán"},
+  {cn:"讨厌",py:"tǎo yàn",vi:"ghét"},
+  {cn:"却",py:"què",vi:"nhưng lại"},
+  {cn:"周围",py:"zhōu wéi",vi:"xung quanh"},
+  {cn:"交流",py:"jiāo liú",vi:"giao lưu"},
+  {cn:"理解",py:"lǐ jiě",vi:"hiểu / thông cảm"},
+  {cn:"镜子",py:"jìng zǐ",vi:"gương"},
+  {cn:"而",py:"ér",vi:"mà / còn"},
+  {cn:"当",py:"dāng",vi:"khi / làm"},
+  {cn:"困难",py:"kùn nán",vi:"khó khăn"},
+  {cn:"及时",py:"jí shí",vi:"kịp thời"},
+  {cn:"陪",py:"péi",vi:"đi cùng"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b3'] = {
+ title:"HSK4 · Bài 3",
+ cn:"挺 / 紧张 / 信心",
+ count:31,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"挺",py:"tǐng",vi:"khá"},
+  {cn:"紧张",py:"jǐn zhāng",vi:"căng thẳng"},
+  {cn:"信心",py:"xìn xīn",vi:"lòng tin"},
+  {cn:"能力",py:"néng lì",vi:"năng lực"},
+  {cn:"招聘",py:"zhāo pìn",vi:"tuyển dụng"},
+  {cn:"提供",py:"tí gōng",vi:"cung cấp"},
+  {cn:"负责",py:"fù zé",vi:"phụ trách"},
+  {cn:"本来",py:"běn lái",vi:"vốn dĩ"},
+  {cn:"应聘",py:"yīng pìn",vi:"ứng tuyển"},
+  {cn:"材料",py:"cái liào",vi:"tài liệu"},
+  {cn:"符合",py:"fú hé",vi:"phù hợp"},
+  {cn:"通知",py:"tōng zhī",vi:"thông báo"},
+  {cn:"律师",py:"lǜ shī",vi:"luật sư"},
+  {cn:"专业",py:"zhuān yè",vi:"chuyên ngành"},
+  {cn:"另外",py:"lìng wài",vi:"ngoài ra"},
+  {cn:"收入",py:"shōu rù",vi:"thu nhập"},
+  {cn:"咱们",py:"zán men",vi:"chúng ta"},
+  {cn:"安排",py:"ān pái",vi:"sắp xếp"},
+  {cn:"首先",py:"shǒu xiān",vi:"trước tiên"},
+  {cn:"正式",py:"zhèng shì",vi:"chính thức"},
+  {cn:"留",py:"liú",vi:"giữ lại / lưu lại"},
+  {cn:"其次",py:"qí cì",vi:"thứ hai"},
+  {cn:"诚实",py:"chéng shí",vi:"thành thật"},
+  {cn:"改变",py:"gǎi biàn",vi:"thay đổi"},
+  {cn:"感觉",py:"gǎn jué",vi:"cảm giác"},
+  {cn:"判断",py:"pàn duàn",vi:"phán đoán"},
+  {cn:"顾客",py:"gù kè",vi:"khách hàng"},
+  {cn:"准时",py:"zhǔn shí",vi:"đúng giờ"},
+  {cn:"不管",py:"bù guǎn",vi:"bất kể"},
+  {cn:"与",py:"yǔ",vi:"với / và"},
+  {cn:"约会",py:"yuē huì",vi:"cuộc hẹn"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b4'] = {
+ title:"HSK4 · Bài 4",
+ cn:"提 / 以为 / 份",
+ count:31,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"提",py:"tí",vi:"nhắc / đưa ra"},
+  {cn:"以为",py:"yǐ wèi",vi:"tưởng rằng"},
+  {cn:"份",py:"fèn",vi:"phần / bản"},
+  {cn:"完全",py:"wán quán",vi:"hoàn toàn"},
+  {cn:"赚",py:"zhuàn",vi:"kiếm tiền"},
+  {cn:"调查",py:"diào chá",vi:"điều tra"},
+  {cn:"原来",py:"yuán lái",vi:"thì ra / vốn dĩ"},
+  {cn:"计划",py:"jì huà",vi:"kế hoạch"},
+  {cn:"提前",py:"tí qián",vi:"trước thời hạn"},
+  {cn:"保证",py:"bǎo zhèng",vi:"bảo đảm"},
+  {cn:"提醒",py:"tí xǐng",vi:"nhắc nhở"},
+  {cn:"乱",py:"luàn",vi:"lộn xộn"},
+  {cn:"生意",py:"shēng yì",vi:"kinh doanh"},
+  {cn:"谈",py:"tán",vi:"bàn bạc / nói chuyện"},
+  {cn:"并",py:"bìng",vi:"và / đồng thời"},
+  {cn:"积累",py:"jī lèi",vi:"tích lũy"},
+  {cn:"经验",py:"jīng yàn",vi:"kinh nghiệm"},
+  {cn:"一切",py:"yī qiè",vi:"mọi thứ"},
+  {cn:"按照",py:"àn zhào",vi:"dựa theo"},
+  {cn:"成功",py:"chéng gōng",vi:"thành công"},
+  {cn:"顺利",py:"shùn lì",vi:"thuận lợi"},
+  {cn:"感谢",py:"gǎn xiè",vi:"cảm ơn"},
+  {cn:"消息",py:"xiāo xī",vi:"tin tức"},
+  {cn:"按时",py:"àn shí",vi:"đúng giờ"},
+  {cn:"奖金",py:"jiǎng jīn",vi:"tiền thưởng"},
+  {cn:"工资",py:"gōng zī",vi:"lương"},
+  {cn:"方法",py:"fāng fǎ",vi:"phương pháp"},
+  {cn:"知识",py:"zhī shí",vi:"kiến thức"},
+  {cn:"不得不",py:"bù dé bù",vi:"không thể không"},
+  {cn:"甚至",py:"shèn zhì",vi:"thậm chí"},
+  {cn:"责任",py:"zé rèn",vi:"trách nhiệm"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b5'] = {
+ title:"HSK4 · Bài 5",
+ cn:"家具 / 沙发 / 打折",
+ count:31,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"家具",py:"jiā jù",vi:"đồ nội thất"},
+  {cn:"沙发",py:"shā fā",vi:"sofa"},
+  {cn:"打折",py:"dǎ zhé",vi:"giảm giá"},
+  {cn:"价格",py:"jià gé",vi:"giá cả"},
+  {cn:"质量",py:"zhì liàng",vi:"chất lượng"},
+  {cn:"肯定",py:"kěn dìng",vi:"chắc chắn"},
+  {cn:"流行",py:"liú xíng",vi:"thịnh hành"},
+  {cn:"顺便",py:"shùn biàn",vi:"tiện thể"},
+  {cn:"台",py:"tái",vi:"lượng từ cho máy"},
+  {cn:"光",py:"guāng",vi:"ánh sáng / chỉ"},
+  {cn:"实在",py:"shí zài",vi:"thực sự"},
+  {cn:"制冷",py:"zhì lěng",vi:"làm lạnh"},
+  {cn:"效果",py:"xiào guǒ",vi:"hiệu quả"},
+  {cn:"现金",py:"xiàn jīn",vi:"tiền mặt"},
+  {cn:"邀请",py:"yāo qǐng",vi:"mời"},
+  {cn:"葡萄",py:"pú táo",vi:"nho"},
+  {cn:"艺术",py:"yì shù",vi:"nghệ thuật"},
+  {cn:"广告",py:"guǎng gào",vi:"quảng cáo"},
+  {cn:"味道",py:"wèi dào",vi:"mùi vị"},
+  {cn:"优点",py:"yōu diǎn",vi:"ưu điểm"},
+  {cn:"实际",py:"shí jì",vi:"thực tế"},
+  {cn:"考虑",py:"kǎo lǜ",vi:"cân nhắc"},
+  {cn:"标准",py:"biāo zhǔn",vi:"tiêu chuẩn"},
+  {cn:"样子",py:"yàng zǐ",vi:"dáng vẻ / kiểu dáng"},
+  {cn:"年龄",py:"nián líng",vi:"tuổi tác"},
+  {cn:"浪费",py:"làng fèi",vi:"lãng phí"},
+  {cn:"购物",py:"gòu wù",vi:"mua sắm"},
+  {cn:"尤其",py:"yóu qí",vi:"đặc biệt là"},
+  {cn:"受到",py:"shòu dào",vi:"nhận được / chịu"},
+  {cn:"任何",py:"rèn hé",vi:"bất kỳ"},
+  {cn:"寄",py:"jì",vi:"gửi"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b6'] = {
+ title:"HSK4 · Bài 6",
+ cn:"果汁 / 售货员 / 袜子",
+ count:31,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"果汁",py:"guǒ zhī",vi:"nước ép"},
+  {cn:"售货员",py:"shòu huò yuán",vi:"nhân viên bán hàng"},
+  {cn:"袜子",py:"wà zǐ",vi:"tất / vớ"},
+  {cn:"打扰",py:"dǎ rǎo",vi:"làm phiền"},
+  {cn:"竟然",py:"jìng rán",vi:"không ngờ"},
+  {cn:"西红柿",py:"xī hóng shì",vi:"cà chua"},
+  {cn:"百分之",py:"bǎi fēn zhī",vi:"phần trăm"},
+  {cn:"倍",py:"bèi",vi:"lần / gấp"},
+  {cn:"皮肤",py:"pí fū",vi:"da"},
+  {cn:"好处",py:"hǎo chù",vi:"lợi ích"},
+  {cn:"尝",py:"cháng",vi:"nếm thử"},
+  {cn:"轻",py:"qīng",vi:"nhẹ"},
+  {cn:"方面",py:"fāng miàn",vi:"phương diện"},
+  {cn:"值得",py:"zhí dé",vi:"đáng"},
+  {cn:"活动",py:"huó dòng",vi:"hoạt động"},
+  {cn:"內",py:"nèi",vi:"bên trong"},
+  {cn:"免费",py:"miǎn fèi",vi:"miễn phí"},
+  {cn:"修理",py:"xiū lǐ",vi:"sửa chữa"},
+  {cn:"支持",py:"zhī chí",vi:"ủng hộ"},
+  {cn:"举行",py:"jǔ xíng",vi:"tổ chức"},
+  {cn:"满",py:"mǎn",vi:"đầy / đủ"},
+  {cn:"其中",py:"qí zhōng",vi:"trong đó"},
+  {cn:"小说",py:"xiǎo shuō",vi:"tiểu thuyết"},
+  {cn:"会员卡",py:"huì yuán kǎ",vi:"thẻ hội viên"},
+  {cn:"所有",py:"suǒ yǒu",vi:"tất cả"},
+  {cn:"获得",py:"huò dé",vi:"đạt được"},
+  {cn:"情况",py:"qíng kuàng",vi:"tình hình"},
+  {cn:"例如",py:"lì rú",vi:"ví dụ"},
+  {cn:"举办",py:"jǔ bàn",vi:"tổ chức"},
+  {cn:"各",py:"gè",vi:"mỗi / các"},
+  {cn:"降低",py:"jiàng dī",vi:"giảm xuống"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b7'] = {
+ title:"HSK4 · Bài 7",
+ cn:"流血 / 擦 / 气候",
+ count:33,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"流血",py:"liú xuè",vi:"chảy máu"},
+  {cn:"擦",py:"cā",vi:"lau"},
+  {cn:"气候",py:"qì hòu",vi:"khí hậu"},
+  {cn:"估计",py:"gū jì",vi:"ước tính"},
+  {cn:"咳嗽",py:"hāi sòu",vi:"ho"},
+  {cn:"严重",py:"yán zhòng",vi:"nghiêm trọng"},
+  {cn:"窗戶",py:"chuāng hù",vi:"cửa sổ"},
+  {cn:"空气",py:"kōng qì",vi:"không khí"},
+  {cn:"抽烟",py:"chōu yān",vi:"hút thuốc"},
+  {cn:"动作",py:"dòng zuò",vi:"động tác"},
+  {cn:"帅",py:"shuài",vi:"đẹp trai"},
+  {cn:"出现",py:"chū xiàn",vi:"xuất hiện"},
+  {cn:"后悔",py:"hòu huǐ",vi:"hối hận"},
+  {cn:"来不及",py:"lái bù jí",vi:"không kịp"},
+  {cn:"反对",py:"fǎn duì",vi:"phản đối"},
+  {cn:"大夫",py:"dà fū",vi:"bác sĩ"},
+  {cn:"植物",py:"zhí wù",vi:"thực vật"},
+  {cn:"研究",py:"yán jiū",vi:"nghiên cứu"},
+  {cn:"超过",py:"chāo guò",vi:"vượt quá"},
+  {cn:"散步",py:"sàn bù",vi:"đi dạo"},
+  {cn:"指",py:"zhǐ",vi:"chỉ ra"},
+  {cn:"精神",py:"jīng shén",vi:"tinh thần"},
+  {cn:"教授",py:"jiào shòu",vi:"giáo sư"},
+  {cn:"数字",py:"shù zì",vi:"chữ số / số liệu"},
+  {cn:"说明",py:"shuō míng",vi:"giải thích / cho thấy"},
+  {cn:"要是",py:"yào shì",vi:"nếu như"},
+  {cn:"既",py:"jì",vi:"vừa / đã"},
+  {cn:"减肥",py:"jiǎn féi",vi:"giảm cân"},
+  {cn:"辛苦",py:"xīn kǔ",vi:"vất vả"},
+  {cn:"肚子",py:"dù zǐ",vi:"bụng"},
+  {cn:"感情",py:"gǎn qíng",vi:"tình cảm"},
+  {cn:"烦恼",py:"fán nǎo",vi:"phiền não"},
+  {cn:"掉",py:"diào",vi:"rơi / mất"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b8'] = {
+ title:"HSK4 · Bài 8",
+ cn:"巧克力 / 亲戚 / 伤心",
+ count:29,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"巧克力",py:"qiǎo kè lì",vi:"sô cô la"},
+  {cn:"亲戚",py:"qīn qī",vi:"họ hàng"},
+  {cn:"伤心",py:"shāng xīn",vi:"buồn lòng"},
+  {cn:"使",py:"shǐ",vi:"khiến / làm cho"},
+  {cn:"心情",py:"xīn qíng",vi:"tâm trạng"},
+  {cn:"愉快",py:"yú kuài",vi:"vui vẻ"},
+  {cn:"景色",py:"jǐng sè",vi:"phong cảnh"},
+  {cn:"放松",py:"fàng sōng",vi:"thư giãn"},
+  {cn:"压力",py:"yā lì",vi:"áp lực"},
+  {cn:"回忆",py:"huí yì",vi:"hồi ức"},
+  {cn:"发生",py:"fā shēng",vi:"xảy ra"},
+  {cn:"成为",py:"chéng wèi",vi:"trở thành"},
+  {cn:"只要",py:"zhǐ yào",vi:"chỉ cần"},
+  {cn:"师傅",py:"shī fù",vi:"thợ / sư phụ"},
+  {cn:"大使馆",py:"dà shǐ guǎn",vi:"đại sứ quán"},
+  {cn:"堵车",py:"dǔ chē",vi:"tắc đường"},
+  {cn:"距离",py:"jù lí",vi:"khoảng cách"},
+  {cn:"耐心",py:"nài xīn",vi:"kiên nhẫn"},
+  {cn:"生命",py:"shēng mìng",vi:"sinh mệnh"},
+  {cn:"缺少",py:"quē shǎo",vi:"thiếu"},
+  {cn:"到处",py:"dào chù",vi:"khắp nơi"},
+  {cn:"态度",py:"tài dù",vi:"thái độ"},
+  {cn:"因此",py:"yīn cǐ",vi:"vì vậy"},
+  {cn:"科学",py:"kē xué",vi:"khoa học"},
+  {cn:"证明",py:"zhèng míng",vi:"chứng minh"},
+  {cn:"往往",py:"wǎng wǎng",vi:"thường hay"},
+  {cn:"阳光",py:"yáng guāng",vi:"ánh nắng / lạc quan"},
+  {cn:"积极",py:"jī jí",vi:"tích cực"},
+  {cn:"特点",py:"tè diǎn",vi:"đặc điểm"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b9'] = {
+ title:"HSK4 · Bài 9",
+ cn:"饼干 / 难道 / 得",
+ count:32,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"饼干",py:"bǐng gàn",vi:"bánh quy"},
+  {cn:"难道",py:"nán dào",vi:"lẽ nào"},
+  {cn:"得",py:"děi / de",vi:"phải / được"},
+  {cn:"坚持",py:"jiān chí",vi:"kiên trì"},
+  {cn:"放弃",py:"fàng qì",vi:"từ bỏ"},
+  {cn:"主意",py:"zhǔ yì",vi:"ý kiến / chủ ý"},
+  {cn:"网球",py:"wǎng qiú",vi:"quần vợt"},
+  {cn:"国际",py:"guó jì",vi:"quốc tế"},
+  {cn:"轻松",py:"qīng sōng",vi:"thoải mái"},
+  {cn:"贏",py:"yíng",vi:"thắng"},
+  {cn:"随便",py:"suí biàn",vi:"tùy tiện"},
+  {cn:"汗",py:"hàn",vi:"mồ hôi"},
+  {cn:"通过",py:"tōng guò",vi:"thông qua"},
+  {cn:"篇",py:"piān",vi:"bài / thiên"},
+  {cn:"作家",py:"zuò jiā",vi:"nhà văn"},
+  {cn:"当时",py:"dāng shí",vi:"lúc đó"},
+  {cn:"可是",py:"kě shì",vi:"nhưng"},
+  {cn:"正确",py:"zhèng què",vi:"chính xác"},
+  {cn:"理想",py:"lǐ xiǎng",vi:"lý tưởng"},
+  {cn:"勇敢",py:"yǒng gǎn",vi:"dũng cảm"},
+  {cn:"结果",py:"jié guǒ",vi:"kết quả"},
+  {cn:"失败",py:"shī bài",vi:"thất bại"},
+  {cn:"过程",py:"guò chéng",vi:"quá trình"},
+  {cn:"至少",py:"zhì shǎo",vi:"ít nhất"},
+  {cn:"总结",py:"zǒng jié",vi:"tổng kết"},
+  {cn:"取",py:"qǔ",vi:"lấy"},
+  {cn:"经历",py:"jīng lì",vi:"trải qua / kinh nghiệm"},
+  {cn:"许多",py:"xǔ duō",vi:"rất nhiều"},
+  {cn:"区别",py:"qū bié",vi:"khác biệt"},
+  {cn:"暂时",py:"zàn shí",vi:"tạm thời"},
+  {cn:"面对",py:"miàn duì",vi:"đối mặt"},
+  {cn:"爱迪生",py:"ài dí shēng",vi:"từ vựng HSK4"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+LESSONS['h4b10'] = {
+ title:"HSK4 · Bài 10",
+ cn:"礼拜天 / 空儿 / 母亲",
+ count:30,
+ grammar:{label:"💡 Luyện HSK4",formula:"Từ vựng → pinyin → nghĩa tiếng Việt",ex:"Dữ liệu lấy từ tài liệu HSK4 bạn cung cấp."},
+ words:[
+  {cn:"礼拜天",py:"lǐ bài tiān",vi:"Chủ nhật"},
+  {cn:"空儿",py:"kòngr",vi:"thời gian rảnh"},
+  {cn:"母亲",py:"mǔ qīn",vi:"mẹ"},
+  {cn:"不过",py:"bù guò",vi:"nhưng / tuy nhiên"},
+  {cn:"永远",py:"yǒng yuǎn",vi:"mãi mãi"},
+  {cn:"方向",py:"fāng xiàng",vi:"phương hướng"},
+  {cn:"优秀",py:"yōu xiù",vi:"ưu tú"},
+  {cn:"硕士",py:"shuò shì",vi:"thạc sĩ"},
+  {cn:"翻译",py:"fān yì",vi:"phiên dịch / dịch"},
+  {cn:"确实",py:"què shí",vi:"quả thực"},
+  {cn:"兴奋",py:"xìng fèn",vi:"phấn khích"},
+  {cn:"拉",py:"lā",vi:"kéo"},
+  {cn:"建议",py:"jiàn yì",vi:"đề nghị"},
+  {cn:"职业",py:"zhí yè",vi:"nghề nghiệp"},
+  {cn:"关键",py:"guān jiàn",vi:"mấu chốt"},
+  {cn:"将来",py:"jiāng lái",vi:"tương lai"},
+  {cn:"发展",py:"fā zhǎn",vi:"phát triển"},
+  {cn:"躺",py:"tǎng",vi:"nằm"},
+  {cn:"困",py:"kùn",vi:"buồn ngủ"},
+  {cn:"经济",py:"jīng jì",vi:"kinh tế"},
+  {cn:"条件",py:"tiáo jiàn",vi:"điều kiện"},
+  {cn:"富",py:"fù",vi:"giàu"},
+  {cn:"穷",py:"qióng",vi:"nghèo"},
+  {cn:"等",py:"děng",vi:"vân vân / đợi"},
+  {cn:"由于",py:"yóu yú",vi:"do / bởi vì"},
+  {cn:"比如",py:"bǐ rú",vi:"ví dụ như"},
+  {cn:"橡皮",py:"xiàng pí",vi:"cục tẩy"},
+  {cn:"糖",py:"táng",vi:"kẹo / đường"},
+  {cn:"低",py:"dī",vi:"thấp"},
+  {cn:"答案",py:"dá àn",vi:"đáp án"}
+ ],
+ dialogue:[],
+ translate:[]
+};
+/* ─── END GENERATED HSK 4 LESSONS ─── */
+
+/* ─── HSK4 TRANSLATION EXERCISES FROM REFERENCE APP ─── */
+if(LESSONS['h4b1']){
+  LESSONS['h4b1'].translate = [
+    {vi:"Để nắm vững ngoại ngữ này, bạn cần tích lũy một lượng lớn từ vựng hàng ngày.",cn:"为了掌握这门外语，你需要每天积累大量的词汇。",py:"Wèile zhǎngwō zhè mén wàiyǔ, nǐ xūyào měitiān jīlěi dàliàng de cíhuì."},
+    {vi:"Mặc dù anh ấy bận đi công tác, nhưng rốt cuộc anh ấy cũng đồng ý đi xem biểu diễn.",cn:"尽管他忙着出差，但他到底还是同意去看看演出了。",py:"Jǐnguǎn tā mángzhe chūchāi, dàn tā dàodǐ háishì tóngyì qù kànkan yǎnchū le."},
+    {vi:"Khi gặp tắc xe trên đường ra sân bay, cô ấy vội vã thời gian đến mức quên cả mang máy ảnh.",cn:"在去机场的路上遇到堵车时，她太赶时间了，甚至连照相机都忘了带。",py:"Zài qù jīchǎng de lùshàng yùdào dǔchē shí, tā tài gǎn shíjiān le, shènzhì lián zhàoxiàngjī dōu wàng le dài."},
+    {vi:"Thầy hiệu trưởng hy vọng học viên thạc sĩ có thể kiên trì rèn luyện thói quen tốt.",cn:"校长希望硕士生们能够坚持养成好习惯。",py:"Xiàozhǎng xīwàng shuòshìshēng men nénggòu jiānchí yǎngchéng hǎo xíguàn."},
+    {vi:"Thực ra, nếu bạn dũng cảm đối mặt với thất bại, bạn sẽ đạt được kinh nghiệm thực tế quý giá.",cn:"其实，如果你勇敢面对失败，你就会获得宝贵的实际经验。",py:"Qíshí, rúguǒ nǐ yǒnggǎn miànduì shībài, nǐ jiù huì huòdé bǎoguì de shíjì jīngyàn."},
+    {vi:"Ngờ đâu chiếc máy in sát vách bị hỏng, chúng tôi đành phải đi photocopy.",cn:"竟然隔壁的打印机坏了，我们不得不去复印。",py:"Jìngrán gébì de dǎyìnjī huài le, wǒmen bùdébù qù fùyìn."},
+    {vi:"Chúng ta cần có trách nhiệm và sự kiên nhẫn khi nuôi một con thú cưng mới.",cn:"我们养一只新宠物的时候，需要有责任心和耐心。",py:"Wǒmen yǎng yì zhī xīn chǒngwù de shíhou, xūyào yǒu zérènxīn hé nàixīn."},
+    {vi:"Nghe đài phát thanh giúp chúng ta quen thuộc hơn với cuộc sống hàng ngày ở đây.",cn:"听广播能让我们对平时的生活更加熟悉。",py:"Tīng guǎngbō néng ràng wǒmen duì píngshí de shēnghuó gèngjiā shúxī."},
+    {vi:"Mệt mỏi kéo dài có hại cho sức khỏe, bạn cần tĩnh tâm lại để sắp xếp suy nghĩ.",cn:"长期疲劳对健康有害，你需要静下心来整理想法。",py:"Chángqī píláo duì jiànkāng yǒuhài, nǐ xūyào jìng xià xīn lái zhěnglǐ xiǎngfǎ."},
+    {vi:"Ý kiến khuyên bảo của giáo sư đã khơi gợi cho tôi rất nhiều bài học quý giá.",cn:"教授的建议给我带来了很大的启发。",py:"Jiàoshòu de jiànyì gěi wǒ dài lái le hěn dà de qǐfā."},
+    {vi:"Được nhận vào ứng tuyển ở ngoại ô khiến anh ấy vô cùng may mắn và vui vẻ.",cn:"能在郊区应聘成功让他感到非常幸运和愉快。",py:"Néng zài jiāoqū yìngpìn chénggōng ràng tā gǎndào fēicháng xìngyùn hé yúkuài."},
+    {vi:"Anh ấy hối hận vì thói cẩu thả trong lúc thanh toán hóa đơn bằng tiền mặt.",cn:"他后悔在用现金付款时太粗心了。",py:"Tā hòuhuǐ zài yòng xiànjīn fùkuǎn shí tài cūxīn le."},
+    {vi:"Ngày thường anh ấy rất hài hước, mang đến nhiều tiếng cười cho mọi người xung quanh.",cn:"他平时很幽默，给周围的人带来了很多笑声。",py:"Tā píngshí hěn yōumò, gěi zhōuwéi de rén dài lái le hěn duō xiàoshēng."},
+    {vi:"Tiêu chuẩn dinh dưỡng của trẻ em ngày nay đã được nâng cao rất nhiều.",cn:"现在的儿童营养标准已经提高了很多。",py:"Xiànzài de értóng yíngyǎng biāozhǔn yǐjīng tígāo le hěn duō."},
+    {vi:"Bạn hãy tha thứ cho tôi, tôi thực lòng không muốn gây ra phiền não này.",cn:"请原谅我，我实在不想造成这个烦恼。",py:"Qǐng yuánliàng wǒ, wǒ shízài bù xiǎng zàochéng zhège fánnǎo."},
+    {vi:"Để tiết kiệm tiền, cô ấy chỉ ăn bánh quy thay vị bữa ăn chính.",cn:"为了省钱，她只吃饼干而不吃正餐。",py:"Wèile shěng qián, tā zhǐ chī bǐnggān ér bù chī zhèngcān."},
+    {vi:"Cho dù là nghệ thuật đích thực cũng cần thời gian tích lũy lâu dài để thấu hiểu.",cn:"即使是真正的艺术，也需要长期的积累才能理解。",py:"Jíshǐ shì zhēnzhèng de yìshù, yě xūyào chángqī de jīlěi cáinéng lǐjiě."},
+    {vi:"Việc phán đoán chính xác đôi khi bị ảnh hưởng bởi môi trường xung quanh.",cn:"正确的判断有时会受到周围环境的影响。",py:"Zhèngquè de pànduàn yǒushí huì shòudào zhōuwéi huánjìng de yǐngxiǎng."},
+    {vi:"Cho dù bị bệnh rất nặng, anh ấy vẫn tích cực đối mặt và trân trọng từng ngày.",cn:"尽管病得很厉害，但他依然积极面对，珍惜每一天。",py:"Jǐnguǎn bìng de hěn lìhai, dàn tā yīrán jījí miànduì, zhēnxī měi yì tiān."},
+    {vi:"Chúng ta cần tiết kiệm giấy khi in ấn tài liệu trong văn phòng.",cn:"我们在办公室打印文件时需要节约纸张。",py:"Wǒmen zài bàngōngshì dǎyìn wénjiàn shí xūyào jiéyuē zhǐzhāng."}
+  ];
+  LESSONS['h4b1'].dialogue = LESSONS['h4b1'].translate.slice(0,8).map(x=>({spk:"句",cn:x.cn,py:x.py,vi:x.vi}));
+}
+if(LESSONS['h4b2']){
+  LESSONS['h4b2'].translate = [
+    {vi:"Ban đầu tôi không định tham gia, nhưng do sự bảo đảm của cô ấy nên tôi đã đăng ký.",cn:"本来我不想参加，但是因为她的保证，我报名了。",py:"Běnlái wǒ bù xiǎng cānjiā, dànshì yīnwèi tā de bǎozhèng, wǒ bàomíng le."},
+    {vi:"Hiệu trưởng biểu dương bạn vì bạn đã hoàn thành xuất sắc cuốn vở ghi chép này.",cn:"校长表扬你，因为你非常优秀地完成了这本笔记本。",py:"Xiàozhǎng biǎoyáng nǐ, yīnwèi nǐ fēicháng yōuxiù de wánchéng le zhè běn bǐjìběn."}
+  ];
+  LESSONS['h4b2'].dialogue = LESSONS['h4b2'].translate.slice(0,8).map(x=>({spk:"句",cn:x.cn,py:x.py,vi:x.vi}));
+}
+if(LESSONS['h4b3']){
+  LESSONS['h4b3'].translate = [
+    {vi:"Không chỉ thành công trong việc tham quan Trường Giang, họ còn đạt được sự hiểu biết sâu sắc.",cn:"不仅参观长江成功，他们还获得了深刻的了解。",py:"Bùjǐn cānguān chángjiāng chénggōng, tāmen hái huòdé le shēnkè de liǎojiě."}
+  ];
+  LESSONS['h4b3'].dialogue = LESSONS['h4b3'].translate.slice(0,8).map(x=>({spk:"句",cn:x.cn,py:x.py,vi:x.vi}));
+}
+if(LESSONS['h4b4']){
+  LESSONS['h4b4'].translate = [
+    {vi:"Tôi rất kinh ngạc khi thấy anh ấy lại đi công tác và làm lại tài liệu in ấn đó.",cn:"我很吃惊地看到他去出差并重新做那份打印材料。",py:"Wǒ hěn chījīng de kàndào tā qù chūchāi bìng chóngxīn zuò nà fèn dǎyìn cáiliào."}
+  ];
+  LESSONS['h4b4'].dialogue = LESSONS['h4b4'].translate.slice(0,8).map(x=>({spk:"句",cn:x.cn,py:x.py,vi:x.vi}));
+}
+if(LESSONS['h4b5']){
+  LESSONS['h4b5'].translate = [
+    {vi:"Đại sứ quán thông báo rằng đại biểu của địa phương sẽ được giảm giá.",cn:"大使馆通知，当地的代表将获得打折优惠。",py:"Dàshǐguǎn tōngzhī, dāngdì de dàibiǎo jiāng huòdé dǎzhé yōuhuì."}
+  ];
+  LESSONS['h4b5'].dialogue = LESSONS['h4b5'].translate.slice(0,8).map(x=>({spk:"句",cn:x.cn,py:x.py,vi:x.vi}));
+}
+/* ─── END HSK4 TRANSLATION EXERCISES ─── */
+
+
 /* ─── GENERATED HSK 3 LESSONS 4-20 ─── */
 LESSONS['h3b4'] = {
  title:"HSK3 · Bài 4: Phục vụ & thi đấu",
@@ -3504,6 +4529,27 @@ hsk1LessonIds.forEach(i=>{
   </div>`;
 });
 
+function renderLessonGrid(targetId, prefix, label, icons){
+  const target=document.getElementById(targetId);
+  const ids=Object.keys(LESSONS)
+    .filter(k=>k.startsWith(prefix) && /^\d+$/.test(k.slice(prefix.length)))
+    .sort((a,b)=>parseInt(a.replace(prefix,''),10)-parseInt(b.replace(prefix,''),10));
+  ids.forEach((id,idx)=>{
+    const L=LESSONS[id];
+    const no=parseInt(id.replace(prefix,''),10);
+    const extra = idx===0?'style="border-color:var(--p300);background:linear-gradient(135deg,#fff5f9,white);"':'';
+    target.innerHTML+=`<div class="lcard" ${extra} onclick="openLesson('${id}')">
+      <span class="lic">${icons[idx] || '📘'}</span>
+      <div class="lnum">${label} · BÀI ${no}</div>
+      <div class="ltitle">${L.title.replace(/^HSK\d · Bài \d+\s*[-:]\s*/,'').replace(/^HSK\d · Bài \d+:\s*/,'')}</div>
+      <div class="lcn" style="font-family:'Noto Sans SC',sans-serif;">${L.cn}</div>
+      <div class="ltags"><span class="tag cur">${idx===0?'Đang học':'Mới thêm'}</span><span class="tag">${L.count} từ/câu</span></div>
+    </div>`;
+  });
+}
+
+renderLessonGrid('hsk2-cards','h2b','HSK 2',['🧳','⏰','⌚','🎂','🐟']);
+
 const hsk3Grid = document.getElementById('hsk3-cards');
 const hsk3Icons = ['🌸','🌿','🍵','🎂','🌱','🎧','⏱️','🐼','🎨','🚲','📧','🧳','🎁','🧹','🌕','👟','🧭','🌍','🚢','📷'];
 const hsk3LessonIds = Object.keys(LESSONS)
@@ -3521,6 +4567,8 @@ hsk3LessonIds.forEach((id,idx)=>{
     <div class="ltags"><span class="tag cur">${no<=3?'Đang học':'Mới thêm'}</span><span class="tag">${L.count} từ/câu</span></div>
   </div>`;
 });
+
+renderLessonGrid('hsk4-cards','h4b','HSK 4',['⚖️','🤝','💼','📈','🛋️','🛒','🩺','🍫','🎾','🎓']);
 
 const dailyGrid = document.getElementById('daily-cards');
 dailyLessons.forEach(([id],idx)=>{
@@ -3755,11 +4803,13 @@ renderPinyin();
 function setLevel(el,lvl){
   document.querySelectorAll('.npill').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
-  ['pinyin','hsk1','hsk2','hsk3','daily','song'].forEach(k=>{
+  ['pinyin','hsk1','hsk2','hsk3','hsk4','daily','song'].forEach(k=>{
     document.getElementById(k+'-section').style.display=k===lvl?'':'none';
   });
   if(lvl==='hsk1'){ renderVP(4); document.getElementById('vpreview').style.display=''; }
+  else if(lvl==='hsk2'){ renderVP('h2b1'); document.getElementById('vpreview').style.display=''; }
   else if(lvl==='hsk3'){ renderVP('h3b1'); document.getElementById('vpreview').style.display=''; }
+  else if(lvl==='hsk4'){ renderVP('h4b1'); document.getElementById('vpreview').style.display=''; }
   else { document.getElementById('vpreview').style.display='none'; }
 }
 
@@ -3811,6 +4861,55 @@ const FLASH_PANEL_HTML = document.getElementById('panel-flash').innerHTML;
 function ensureFlashPanel(){
   const panel=document.getElementById('panel-flash');
   if(!document.getElementById('flashcard')) panel.innerHTML=FLASH_PANEL_HTML;
+}
+
+function flashStateKey(){
+  return `nana-flash-state:${activeLesson}`;
+}
+
+function getFlashState(){
+  try{return JSON.parse(localStorage.getItem(flashStateKey()) || '{}');}
+  catch(e){return {};}
+}
+
+function setFlashState(state){
+  try{localStorage.setItem(flashStateKey(), JSON.stringify(state));}
+  catch(e){}
+}
+
+function wordKey(w){
+  return (w && w.cn) ? w.cn : '';
+}
+
+function markFlash(mastered){
+  if(!fcWords[fcIdx]) return;
+  const state=getFlashState();
+  state[wordKey(fcWords[fcIdx])] = mastered ? 'known' : 'unknown';
+  setFlashState(state);
+  renderFlashDictionary();
+  fcNext();
+}
+
+function renderFlashDictionary(){
+  if(!document.getElementById('fc-dict-learned')) return;
+  const state=getFlashState();
+  const learned=[];
+  const unlearned=[];
+  fcWords.forEach(w=>{
+    if(state[wordKey(w)]==='known') learned.push(w);
+    else unlearned.push(w);
+  });
+  const itemHtml = list => list.length ? list.map(w=>`
+    <div class="lesson-dict-item">
+      <div class="lesson-dict-cn">${w.cn}</div>
+      <div class="lesson-dict-py">${w.py || ''}</div>
+      <div class="lesson-dict-vi">${w.vi || ''}</div>
+    </div>`).join('') : '<div class="lesson-dict-empty">Chưa có từ nào</div>';
+  document.getElementById('fc-dict-learned').innerHTML=itemHtml(learned);
+  document.getElementById('fc-dict-unlearned').innerHTML=itemHtml(unlearned);
+  document.getElementById('fc-dict-learned-count').textContent=learned.length;
+  document.getElementById('fc-dict-unlearned-count').textContent=unlearned.length;
+  document.getElementById('fc-dict-summary').textContent=`${learned.length} đã thuộc / ${fcWords.length} từ`;
 }
 
 function flashcardDifficulty(w,idx){
@@ -3878,6 +4977,7 @@ function renderFC(){
   // Progress bar
   document.getElementById('pbar').style.width=Math.round((fcIdx/total)*100)+'%';
   document.getElementById('plabel').textContent=`${fcIdx} / ${total}`;
+  renderFlashDictionary();
 }
 function flipCard(){
   fcFlipped=!fcFlipped;
@@ -4160,7 +5260,7 @@ function renderReview(){
         <div class="trans-answer" id="ta-${activeLesson}-${i}">${ex.cn}</div>
         <div class="trans-py" id="tp-${activeLesson}-${i}">${ex.py}</div>
         <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
-          <button class="show-ans-btn" onclick="toggleAns(${activeLesson},${i})">Xem đáp án</button>
+          <button class="show-ans-btn" onclick="toggleAns('${String(activeLesson).replace(/'/g,"\\'")}',${i})">Xem đáp án</button>
           <button class="d-speak" style="font-size:14px;" onclick="speakCN('${ex.cn.replace(/'/g,"\'")}')">🔊</button>
         </div>
       </div>`;
