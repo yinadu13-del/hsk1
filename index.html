@@ -29,6 +29,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .npill{padding:7px 18px;border-radius:40px;border:2px solid var(--p200);background:white;color:var(--tm);font-family:'Quicksand',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s;}
 .npill:hover,.npill.active{background:var(--p400);border-color:var(--p400);color:white;transform:translateY(-2px);box-shadow:0 4px 14px rgba(255,77,150,.3);}
 
+.voice-speed-bar{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:-12px auto 26px;background:white;border:2px solid var(--p100);border-radius:16px;padding:10px 12px;max-width:520px;box-shadow:0 6px 18px rgba(232,56,124,.08);}
+.voice-speed-label{font-size:12px;font-weight:800;color:var(--tm);}
+.voice-speed-btn{min-width:54px;padding:7px 10px;border-radius:12px;border:2px solid var(--p100);background:var(--cream);color:var(--tm);font-family:'Quicksand',sans-serif;font-weight:800;font-size:12px;cursor:pointer;transition:all .18s;}
+.voice-speed-btn:hover,.voice-speed-btn.active{background:var(--p400);border-color:var(--p400);color:white;box-shadow:0 4px 12px rgba(255,77,150,.2);}
+
 /* SECTION */
 .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
 .sec-head .badge{background:linear-gradient(135deg,var(--p400),var(--p600));color:white;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 11px;border-radius:20px;}
@@ -107,6 +112,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .fc-status-btn.unknown:hover{border-color:#fca5a5;background:#fff1f2;color:#be123c;}
 .fc-status-btn.known{border:none;background:linear-gradient(135deg,var(--p400),var(--p600));color:white;}
 .fc-status-btn.known:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(232,56,124,.2);}
+
+.fc-filter{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;}
+.fc-filter-label{font-size:12px;font-weight:800;color:var(--tm);}
+.fc-filter-btn{padding:8px 12px;border-radius:12px;border:2px solid var(--p100);background:white;color:var(--tm);font-family:'Quicksand',sans-serif;font-weight:800;font-size:12px;cursor:pointer;transition:all .18s;}
+.fc-filter-btn:hover,.fc-filter-btn.active{background:var(--p400);border-color:var(--p400);color:white;}
+.fc-empty-filter{background:white;border:2px solid var(--p100);border-radius:18px;padding:28px 18px;text-align:center;color:var(--tm);}
+.fc-empty-filter h3{font-family:'Playfair Display',serif;color:var(--td);font-size:22px;margin-bottom:8px;}
 .lesson-dict{margin-top:16px;text-align:left;background:white;border:2px solid var(--p100);border-radius:16px;padding:14px;}
 .lesson-dict-title{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--td);margin-bottom:10px;}
 .lesson-dict-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -336,6 +348,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <button class="npill" onclick="setLevel(this,'daily')">Hội Thoại</button>
   <button class="npill" onclick="setLevel(this,'song')">Bài Hát</button>
 </nav>
+<div class="voice-speed-bar" id="voice-speed-control">
+  <span class="voice-speed-label">🔊 Tốc độ AI</span>
+  <button class="voice-speed-btn" data-rate="0.25" onclick="setTtsRate(0.25)">0.25x</button>
+  <button class="voice-speed-btn" data-rate="0.5" onclick="setTtsRate(0.5)">0.5x</button>
+  <button class="voice-speed-btn" data-rate="1" onclick="setTtsRate(1)">1x</button>
+  <button class="voice-speed-btn" data-rate="1.25" onclick="setTtsRate(1.25)">1.25x</button>
+</div>
 
 <div class="tip">
   <span class="ti">💡</span>
@@ -350,7 +369,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="voice-badges">
       <span class="voice-badge">Web Speech API</span>
       <span class="voice-badge">zh-CN</span>
-      <span class="voice-badge">Rate 0.7</span>
+      <span class="voice-badge">Tốc độ tùy chọn</span>
       <span class="voice-badge">Soft Beijing target</span>
     </div>
     <div class="pinyin-actions">
@@ -473,6 +492,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <!-- FLASHCARD PANEL -->
   <div class="mpanel active" id="panel-flash">
     <div class="fc-container">
+      <div class="fc-filter">
+        <span class="fc-filter-label">Học</span>
+        <button class="fc-filter-btn active" id="fc-filter-all" onclick="setFlashFilter('all')">Tất cả</button>
+        <button class="fc-filter-btn" id="fc-filter-unknown" onclick="setFlashFilter('unknown')">Chỉ từ chưa thuộc</button>
+      </div>
       <div class="fc-counter" id="fc-counter">Thẻ 1 / 10</div>
       <div class="flashcard" id="flashcard" onclick="flipCard()">
         <!-- FRONT: chỉ chữ Hán -->
@@ -5262,7 +5286,7 @@ renderVP(4);
    PINYIN
 ═══════════════════════════════════════════════ */
 const PINYIN_INITIALS = [
-  ['b','bō'],['p','pō'],['m','mō'],['f','fū'],['d','dē'],['t','tē'],['n','nē'],['l','lē'],
+  ['b','bō'],['p','pō'],['m','mō'],['f','fō'],['d','dē'],['t','tē'],['n','nē'],['l','lē'],
   ['g','gē'],['k','kē'],['h','hē'],['j','jī'],['q','qī'],['x','xī'],['zh','zhī'],['ch','chī'],
   ['sh','shī'],['r','rī'],['z','zī'],['c','cī'],['s','sī'],['y','yī'],['w','wū']
 ];
@@ -5293,6 +5317,27 @@ const PINYIN_MATRIX_INITIALS = ['b','p','m','f','d','t','n','l','g','k','h','j',
 const PINYIN_MATRIX_FINALS = ['a','o','e','ai','ei','ao','ou','an','en','ang','eng','ong'];
 let currentPinyinAnswer = '';
 
+const TTS_RATE_OPTIONS = [0.25,0.5,1,1.25];
+let _ttsRate = Number(localStorage.getItem('nana-tts-rate') || '1');
+if(!TTS_RATE_OPTIONS.includes(_ttsRate)) _ttsRate = 1;
+
+function setTtsRate(rate){
+  _ttsRate = TTS_RATE_OPTIONS.includes(Number(rate)) ? Number(rate) : 1;
+  try{localStorage.setItem('nana-tts-rate', String(_ttsRate));}catch(e){}
+  updateTtsRateButtons();
+  stopSpeech();
+}
+
+function getTtsRate(){
+  return _ttsRate;
+}
+
+function updateTtsRateButtons(){
+  document.querySelectorAll('.voice-speed-btn').forEach(btn=>{
+    btn.classList.toggle('active', Number(btn.dataset.rate) === _ttsRate);
+  });
+}
+
 const AI_VOICE_PROFILE = {
   project:'Học Tiếng Trung Cùng Nana',
   standard:'Standard Mainland Putonghua — Soft Beijing accent',
@@ -5312,7 +5357,7 @@ const VIETNAMESE_PHONOLOGY_COACH = [
 
 const PINYIN_PHONETIC_CARRIER = {
   'mā':'妈','má':'麻','mǎ':'马','mà':'骂','ma':'吗',
-  'bō':'波','pō':'坡','mō':'摸','fū':'夫','dē':'的','tē':'特','nē':'呢','lē':'勒',
+  'bō':'波','pō':'坡','mō':'摸','fō':'佛','dē':'的','tē':'特','nē':'呢','lē':'勒',
   'gē':'哥','kē':'科','hē':'喝','jī':'鸡','qī':'七','xī':'西',
   'zhī':'知','chī':'吃','shī':'诗','rī':'日','zī':'资','cī':'呲','sī':'思','yī':'一','wū':'乌',
   'ā':'啊','ō':'哦','ē':'鹅','ī':'衣','ū':'乌','ǖ':'迂',
@@ -5338,7 +5383,7 @@ function speakPinyin(text, fallbackText){
   const spokenText = fallbackText || resolveMandarinPhoneticText(text);
   const utt = new SpeechSynthesisUtterance(spokenText);
   utt.lang = 'zh-CN';
-  utt.rate = 0.68;
+  utt.rate = getTtsRate();
   utt.pitch = 1.0;
   utt.volume = 1;
   if(!_voicesReady || !_selectedVoice) _selectedVoice = onVoicesReady();
@@ -5460,6 +5505,7 @@ function checkPinyinQuiz(btn,choice){
   }
   setTimeout(startPinyinQuiz,1200);
 }
+updateTtsRateButtons();
 renderPinyin();
 
 /* ═══════════════════════════════════════════════
@@ -5520,8 +5566,32 @@ function resetPbar(){
 /* ═══════════════════════════════════════════════
    FLASHCARD
 ═══════════════════════════════════════════════ */
-let fcWords=[], fcIdx=0, fcFlipped=false;
+let fcWords=[], fcIdx=0, fcFlipped=false, fcFilter='all';
 const FLASH_PANEL_HTML = document.getElementById('panel-flash').innerHTML;
+
+
+function setFlashFilter(mode){
+  fcFilter = mode === 'unknown' ? 'unknown' : 'all';
+  initFlash();
+}
+
+function getAllLessonFlashcards(){
+  return orderedFlashcards(LESSONS[activeLesson].words || []);
+}
+
+function getFilteredFlashcards(){
+  const all = getAllLessonFlashcards();
+  if(fcFilter !== 'unknown') return all;
+  const state = getFlashState();
+  return all.filter(w => state[wordKey(w)] !== 'known');
+}
+
+function updateFlashFilterButtons(){
+  const allBtn=document.getElementById('fc-filter-all');
+  const unknownBtn=document.getElementById('fc-filter-unknown');
+  if(allBtn) allBtn.classList.toggle('active', fcFilter==='all');
+  if(unknownBtn) unknownBtn.classList.toggle('active', fcFilter==='unknown');
+}
 
 function ensureFlashPanel(){
   const panel=document.getElementById('panel-flash');
@@ -5560,7 +5630,7 @@ function renderFlashDictionary(){
   const state=getFlashState();
   const learned=[];
   const unlearned=[];
-  fcWords.forEach(w=>{
+  getAllLessonFlashcards().forEach(w=>{
     if(state[wordKey(w)]==='known') learned.push(w);
     else unlearned.push(w);
   });
@@ -5574,7 +5644,7 @@ function renderFlashDictionary(){
   document.getElementById('fc-dict-unlearned').innerHTML=itemHtml(unlearned);
   document.getElementById('fc-dict-learned-count').textContent=learned.length;
   document.getElementById('fc-dict-unlearned-count').textContent=unlearned.length;
-  document.getElementById('fc-dict-summary').textContent=`${learned.length} đã thuộc / ${fcWords.length} từ`;
+  document.getElementById('fc-dict-summary').textContent=`${learned.length} đã thuộc / ${learned.length+unlearned.length} từ`;
 }
 
 function flashcardDifficulty(w,idx){
@@ -5595,10 +5665,33 @@ function orderedFlashcards(words){
 
 function initFlash(){
   ensureFlashPanel();
-  fcWords=orderedFlashcards(LESSONS[activeLesson].words);
+  updateFlashFilterButtons();
+  fcWords=getFilteredFlashcards();
   fcIdx=0; fcFlipped=false;
+  if(fcWords.length===0){showFCEmptyFilter();return;}
   renderFC();
 }
+
+function showFCEmptyFilter(){
+  const panel=document.getElementById('panel-flash');
+  renderFlashDictionary();
+  document.getElementById('pbar').style.width='100%';
+  document.getElementById('plabel').textContent='0 / 0';
+  panel.innerHTML=`<div class="fc-empty-filter">
+    <div style="font-size:44px;margin-bottom:10px;">🌸</div>
+    <h3>Không còn từ chưa thuộc</h3>
+    <p style="font-size:13px;line-height:1.55;margin-bottom:18px;">Bạn đã đánh dấu thuộc tất cả flashcard trong bài này.</p>
+    <button onclick="setFlashFilter('all')" class="fc-status-btn known" style="margin-right:8px;">Xem tất cả</button>
+    <button onclick="resetFlashProgress()" class="fc-status-btn">Học lại từ đầu</button>
+  </div>`;
+}
+
+function resetFlashProgress(){
+  setFlashState({});
+  fcFilter='all';
+  initFlash();
+}
+
 function renderFC(){
   const w=fcWords[fcIdx];
   const total=fcWords.length;
@@ -5676,9 +5769,9 @@ function showFCDone(){
   document.getElementById('panel-flash').innerHTML=`<div style="text-align:center;padding:40px 20px;">
     <div style="font-size:48px;margin-bottom:12px;">🎉</div>
     <h3 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--td);margin-bottom:8px;">Học xong tất cả flashcard!</h3>
-    <p style="font-size:13px;color:var(--ts);margin-bottom:20px;">Bạn đã xem qua ${fcWords.length} thẻ từ vựng. Hãy làm bài tập để kiểm tra nhé!</p>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:20px;">${fcFilter==='unknown'?'Bạn đã học xong các từ chưa thuộc trong bài này.':`Bạn đã xem qua ${fcWords.length} thẻ từ vựng. Hãy làm bài tập để kiểm tra nhé!`}</p>
     <button onclick="switchTab('mcq')" style="padding:13px 28px;border-radius:40px;border:none;background:linear-gradient(135deg,var(--p400),var(--p600));color:white;font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;cursor:pointer;margin-right:8px;">🎯 Trắc Nghiệm</button>
-    <button onclick="initFlash()" style="padding:13px 24px;border-radius:40px;border:2px solid var(--p300);background:white;color:var(--p500);font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">🔄 Học lại</button>
+    <button onclick="resetFlashProgress()" style="padding:13px 24px;border-radius:40px;border:2px solid var(--p300);background:white;color:var(--p500);font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">🔄 Học lại từ đầu</button>
   </div>`;
 }
 
@@ -6056,7 +6149,7 @@ function stopSpeech(){
 function speakWithCurrentVoice(text){
   const utt = new SpeechSynthesisUtterance(text);
   utt.lang  = 'zh-CN';
-  utt.rate  = 0.85;   // Tốc độ rõ ràng, tự nhiên (0.8–0.9)
+  utt.rate  = getTtsRate();   // Tốc độ do người học chọn
   utt.pitch = 1.05;   // Giọng nữ nhẹ nhàng
   utt.volume = 1;
   if(_selectedVoice) utt.voice = _selectedVoice;
@@ -6072,7 +6165,7 @@ function speakWithCurrentVoice(text){
 
 /**
  * Đọc văn bản tiếng Trung chuẩn Phổ Thông Bắc Kinh.
- * - rate: 0.85 (rõ từng chữ, vẫn tự nhiên)
+ * - rate: người học chọn bằng nút tốc độ AI
  * - pitch: 1.05 (giọng nữ nhẹ nhàng)
  * - Đối với từ đồng âm 他/她/它: đọc là "tā" — chuẩn xác vì
  *   speechSynthesis đọc theo chữ Hán đúng âm điệu, không nhầm.
