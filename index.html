@@ -97,6 +97,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* Mặt trước — chữ Hán lớn */
 .fc-cn{font-family:'Noto Sans SC',sans-serif;font-size:58px;font-weight:700;color:var(--p500);line-height:1.15;margin:8px 0;}
 .fc-cn.small{font-size:30px;line-height:1.4;}
+.fc-py-front{font-family:'Quicksand',sans-serif;font-style:italic;font-size:42px;font-weight:700;color:var(--p500);line-height:1.25;margin:8px 0;letter-spacing:.5px;}
+.fc-py-front.small{font-size:26px;line-height:1.4;}
 /* Mặt sau */
 .fc-cn-small{font-family:'Noto Sans SC',sans-serif;font-size:26px;font-weight:700;color:var(--td);margin-bottom:6px;}
 .fc-py-big{font-size:20px;color:var(--ts);font-style:italic;letter-spacing:.6px;margin-bottom:10px;}
@@ -150,6 +152,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .obtn.wrong{background:#fee2e2;border-color:#f87171;color:#991b1b;}
 .obtn:disabled{cursor:not-allowed;}
 .obtn.cn{font-family:'Noto Sans SC',sans-serif;font-size:17px;}
+.obtn-letter{font-family:'Quicksand',sans-serif;font-weight:800;color:var(--p500);margin-right:4px;}
+.obtn-py{display:block;font-family:'Quicksand',sans-serif;font-style:italic;font-size:12px;color:var(--ts);margin-top:3px;}
 
 /* TYPING */
 .tinput{width:100%;padding:13px 16px;border:2px solid var(--p200);border-radius:13px;font-family:'Quicksand',sans-serif;font-size:15px;font-weight:600;color:var(--td);outline:none;transition:border .2s;background:white;margin-bottom:10px;}
@@ -499,17 +503,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
       <div class="fc-counter" id="fc-counter">Thẻ 1 / 10</div>
       <div class="flashcard" id="flashcard" onclick="flipCard()">
-        <!-- FRONT: chỉ chữ Hán -->
+        <!-- FRONT: chỉ Pinyin -->
         <div class="fc-front" id="fc-front">
-          <div class="fc-badge">🀄 Chữ Hán</div>
-          <div class="fc-cn" id="fc-cn">你好</div>
-          <div class="fc-flip-hint">👆 Nhấn để xem Pinyin &amp; nghĩa</div>
+          <div class="fc-badge">🔤 Pinyin</div>
+          <div class="fc-py-front" id="fc-py-front">nǐ hǎo</div>
+          <div class="fc-flip-hint">👆 Nhấn để xem chữ Hán &amp; nghĩa</div>
         </div>
-        <!-- BACK: Pinyin + nghĩa Việt -->
+        <!-- BACK: Chữ Hán + nghĩa Việt -->
         <div class="fc-back" id="fc-back" style="display:none">
-          <div class="fc-badge" style="background:var(--p400);color:white;">🌸 Pinyin &amp; Nghĩa</div>
-          <div class="fc-cn-small" id="fc-cn-back">你好</div>
-          <div class="fc-py-big" id="fc-py-back">nǐ hǎo</div>
+          <div class="fc-badge" style="background:var(--p400);color:white;">🀄 Chữ Hán &amp; Nghĩa</div>
+          <div class="fc-cn" id="fc-cn-back">你好</div>
           <div class="fc-vi-big" id="fc-vi-big">xin chào</div>
           <div class="fc-homophone-note" id="fc-homo-back" style="display:none"></div>
           <div class="fc-flip-hint">👆 Nhấn để lật lại</div>
@@ -5697,14 +5700,16 @@ function renderFC(){
   const total=fcWords.length;
   document.getElementById('fc-counter').textContent=`Thẻ ${fcIdx+1} / ${total}`;
 
-  // FRONT — chỉ chữ Hán
-  const cnEl=document.getElementById('fc-cn');
-  cnEl.textContent=w.cn;
-  cnEl.className='fc-cn'+(w.cn.length>6?' small':'');
+  // FRONT — chỉ Pinyin
+  const pyEl=document.getElementById('fc-py-front');
+  const pyTxt=w.py || 'Pinyin đang cập nhật';
+  pyEl.textContent=pyTxt;
+  pyEl.className='fc-py-front'+(pyTxt.length>10?' small':'');
 
-  // BACK — pinyin + nghĩa Việt
-  document.getElementById('fc-cn-back').textContent=w.cn;
-  document.getElementById('fc-py-back').textContent=w.py || 'Pinyin đang cập nhật';
+  // BACK — chữ Hán + nghĩa Việt
+  const cnBackEl=document.getElementById('fc-cn-back');
+  cnBackEl.textContent=w.cn;
+  cnBackEl.className='fc-cn'+(w.cn.length>6?' small':'');
   document.getElementById('fc-vi-big').textContent=w.vi || 'Nghĩa tiếng Việt đang cập nhật';
 
   // Ghi chú đồng âm ở mặt sau
@@ -5809,7 +5814,7 @@ function showQ(){
     return;
   }
 
-  qDir=Math.random()>0.5?'CN_VI':'VI_CN';
+  qDir=qMode==='mcq' ? 'VI_CN' : (Math.random()>0.5?'CN_VI':'VI_CN');
   const sfx=qMode==='mcq'?'-m':'-t';
   const fb=document.getElementById('fb'+sfx);
   const nb=document.getElementById('nb'+sfx);
@@ -5838,26 +5843,29 @@ function showQ(){
 
 function buildOpts(correct){
   const grid=document.getElementById('opts-m'); grid.innerHTML='';
-  const isCN=qDir==='CN_VI';
+  const letters=['A','B','C','D'];
   const pool=getQuizPool(LESSONS[activeLesson]);
   const dist=pool.filter(v=>v.cn!==correct.cn).sort(()=>0.5-Math.random()).slice(0,3);
-  [...dist,correct].sort(()=>0.5-Math.random()).forEach(opt=>{
-    const lbl=isCN?opt.vi:opt.cn;
+  const opts=[...dist,correct].sort(()=>0.5-Math.random());
+  opts.forEach((opt,i)=>{
     const b=document.createElement('button');
-    b.className='obtn'+(isCN?'':' cn'); b.textContent=lbl;
-    const cLbl=isCN?correct.vi:correct.cn;
-    b.onclick=()=>checkMCQ(b,lbl,cLbl);
+    b.className='obtn cn';
+    b.innerHTML=`<span class="obtn-letter">${letters[i]}.</span>${opt.cn}<span class="obtn-py">${opt.py||''}</span>`;
+    b.dataset.cn=opt.cn;
+    b.onclick=()=>checkMCQ(b,opt.cn,correct.cn);
     grid.appendChild(b);
   });
 }
 
-function checkMCQ(btn,sel,correct){
+function checkMCQ(btn,selCn,correctCn){
+  const correctBtn=[...document.getElementById('opts-m').querySelectorAll('button')].find(b=>b.dataset.cn===correctCn);
   document.getElementById('opts-m').querySelectorAll('button').forEach(b=>{
-    b.disabled=true; if(b.textContent===correct) b.classList.add('correct');
+    b.disabled=true; if(b.dataset.cn===correctCn) b.classList.add('correct');
   });
   const fb=document.getElementById('fb-m');
-  if(sel===correct){qScore++;fb.textContent='正确！Chính xác! ✨';fb.className='fb show ok';btn.classList.add('correct');}
-  else{fb.textContent=`Chưa đúng~ Đáp án: ${correct}`;fb.className='fb show bad';btn.classList.add('wrong');}
+  const correctLbl=correctBtn ? `${correctBtn.querySelector('.obtn-letter').textContent} ${correctCn}` : correctCn;
+  if(selCn===correctCn){qScore++;fb.textContent='正确！Chính xác! ✨';fb.className='fb show ok';btn.classList.add('correct');}
+  else{fb.textContent=`Chưa đúng~ Đáp án: ${correctLbl}`;fb.className='fb show bad';btn.classList.add('wrong');}
   document.getElementById('nb-m').className='nbtn show';
 }
 
