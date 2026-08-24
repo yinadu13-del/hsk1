@@ -819,68 +819,44 @@ const LESSONS = {
   ]
  },
  6:{
-  title:"Bài 6: Con số & Ngày trong tuần",cn:"数字 / 星期",count:42,
-  grammar:{label:"💡 Ngữ pháp: 星期 + số = Thứ...",formula:"星期 + 一/二/三/四/五/六/天",ex:"星期一 = Thứ Hai | 星期天 / 星期日 = Chủ Nhật"},
+  title:"Bài 6: Cô ấy là giáo viên tiếng Hán của tôi",cn:"她是我的汉语老师",count:25,
+  grammar:{label:"💡 Ngữ pháp: 的 (sở hữu) & 谁 / 哪",formula:"Người sở hữu + 的 + danh từ · 谁 = ai · 哪 + lượng từ = nào",ex:"她是我的汉语老师。= Cô ấy là giáo viên tiếng Hán của tôi. | 他是谁？= Anh ấy là ai?"},
   words:[
-   {cn:"零",  py:"líng",  vi:"0"},
-   {cn:"一",  py:"yī",    vi:"1"},
-   {cn:"二",  py:"èr",    vi:"2"},
-   {cn:"三",  py:"sān",   vi:"3"},
-   {cn:"四",  py:"sì",    vi:"4"},
-   {cn:"五",  py:"wǔ",    vi:"5"},
-   {cn:"六",  py:"liù",   vi:"6"},
-   {cn:"七",  py:"qī",    vi:"7"},
-   {cn:"八",  py:"bā",    vi:"8"},
-   {cn:"九",  py:"jiǔ",   vi:"9"},
-   {cn:"十",  py:"shí",   vi:"10"},
-   {cn:"十一", py:"shíyī",  vi:"11"},
-   {cn:"十二", py:"shí'èr", vi:"12"},
-   {cn:"十三", py:"shísān", vi:"13"},
-   {cn:"二十", py:"èrshí",  vi:"20"},
-   {cn:"三十", py:"sānshí", vi:"30"},
-   {cn:"四十", py:"sìshí",  vi:"40"},
-   {cn:"五十", py:"wǔshí",  vi:"50"},
-   {cn:"六十", py:"liùshí", vi:"60"},
-   {cn:"七十", py:"qīshí",  vi:"70"},
-   {cn:"八十", py:"bāshí",  vi:"80"},
-   {cn:"九十", py:"jiǔshí", vi:"90"},
-   {cn:"星期",  py:"xīngqī",  vi:"tuần"},
-   {cn:"星期一", py:"xīngqī yī",  vi:"Thứ Hai"},
-   {cn:"星期二", py:"xīngqī èr",  vi:"Thứ Ba"},
-   {cn:"星期三", py:"xīngqī sān", vi:"Thứ Tư"},
-   {cn:"星期四", py:"xīngqī sì",  vi:"Thứ Năm"},
-   {cn:"星期五", py:"xīngqī wǔ",  vi:"Thứ Sáu"},
-   {cn:"星期六", py:"xīngqī liù", vi:"Thứ Bảy"},
-   {cn:"星期天", py:"xīngqītiān", vi:"Chủ Nhật (văn nói)"},
-   {cn:"星期日", py:"xīngqīrì",   vi:"Chủ Nhật (văn viết)"},
-   {cn:"几",    py:"jǐ",     vi:"mấy / bao nhiêu (≤10)"},
-   {cn:"星期几？",py:"xīngqī jǐ?",vi:"Hôm nay thứ mấy?"},
-   {cn:"问",    py:"wèn",    vi:"hỏi"},
-   {cn:"请问",  py:"qǐngwèn",vi:"cho phép hỏi / xin hỏi"},
-   {cn:"姓",    py:"xìng",   vi:"họ"},
-   {cn:"贵姓",  py:"guìxìng",vi:"quý danh / họ quý vị"},
-   {cn:"您贵姓？",py:"nín guìxìng?",vi:"Thưa quý vị, họ của ngài là gì?"},
-   {cn:"我姓…", py:"wǒ xìng…",vi:"tôi họ…"},
-   {cn:"什么",  py:"shénme", vi:"gì / cái gì"},
-   {cn:"你姓什么？",py:"nǐ xìng shénme?",vi:"Bạn họ gì?"},
-   {cn:"名字",  py:"míngzi", vi:"tên"},
-   {cn:"叫",    py:"jiào",   vi:"gọi là / tên là"},
-   {cn:"你叫什么名字？",py:"nǐ jiào shénme míngzi?",vi:"Bạn tên là gì?"}
+   {cn:"她",   py:"tā",    vi:"cô ấy / bà ấy (ngôi 3, nữ)"},
+   {cn:"他",   py:"tā",    vi:"anh ấy / ông ấy (ngôi 3, nam)"},
+   {cn:"谁",   py:"shéi",  vi:"ai"},
+   {cn:"的",   py:"de",    vi:"của (trợ từ sở hữu)"},
+   {cn:"汉语", py:"Hànyǔ", vi:"tiếng Hán / tiếng Trung"},
+   {cn:"哪",   py:"nǎ",    vi:"nào"},
+   {cn:"国",   py:"guó",   vi:"nước / quốc gia"},
+   {cn:"哪国人？",py:"nǎ guó rén?",vi:"người nước nào?"},
+   {cn:"越南", py:"Yuènán",vi:"Việt Nam"},
+   {cn:"呢",   py:"ne",    vi:"còn... thì sao? / nhé"},
+   {cn:"同学", py:"tóngxué",vi:"bạn học / bạn cùng lớp"},
+   {cn:"朋友", py:"péngyou",vi:"bạn bè"},
+   {cn:"他是谁？",py:"Tā shì shéi?",vi:"Anh ấy là ai?"},
+   {cn:"她是我的汉语老师",py:"Tā shì wǒ de Hànyǔ lǎoshī.",vi:"Cô ấy là giáo viên tiếng Hán của tôi."},
+   {cn:"你是哪国人？",py:"Nǐ shì nǎ guó rén?",vi:"Bạn là người nước nào?"},
+   {cn:"她是我朋友",py:"Tā shì wǒ péngyou.",vi:"Cô ấy là bạn của tôi."},
+   {cn:"他是我同学",py:"Tā shì wǒ tóngxué.",vi:"Anh ấy là bạn học của tôi."}
   ],
   dialogue:[
-   {spk:"A",cn:"请问，今天星期几？",py:"Qǐngwèn, jīntiān xīngqī jǐ?",vi:"Xin hỏi, hôm nay là thứ mấy?"},
-   {spk:"B",cn:"今天星期三。",py:"Jīntiān xīngqī sān.",vi:"Hôm nay là Thứ Tư."},
-   {spk:"A",cn:"您贵姓？",py:"Nín guìxìng?",vi:"Thưa, họ của ngài là gì?"},
-   {spk:"B",cn:"我姓李，叫李月。你叫什么名字？",py:"Wǒ xìng Lǐ, jiào Lǐ Yuè. Nǐ jiào shénme míngzi?",vi:"Tôi họ Lý, tên Lý Nguyệt. Bạn tên là gì?"},
-   {spk:"A",cn:"我叫王明。",py:"Wǒ jiào Wáng Míng.",vi:"Tôi tên là Vương Minh."}
+   {spk:"A",cn:"他是谁？",py:"Tā shì shéi?",vi:"Anh ấy là ai?"},
+   {spk:"B",cn:"他是我同学。",py:"Tā shì wǒ tóngxué.",vi:"Anh ấy là bạn học của tôi."},
+   {spk:"A",cn:"那她呢？她是谁？",py:"Nà tā ne? Tā shì shéi?",vi:"Vậy còn cô ấy thì sao? Cô ấy là ai?"},
+   {spk:"B",cn:"她是我的汉语老师。",py:"Tā shì wǒ de Hànyǔ lǎoshī.",vi:"Cô ấy là giáo viên tiếng Hán của tôi."},
+   {spk:"A",cn:"你是哪国人？",py:"Nǐ shì nǎ guó rén?",vi:"Bạn là người nước nào?"},
+   {spk:"B",cn:"我是越南人。",py:"Wǒ shì Yuènánrén.",vi:"Tôi là người Việt Nam."}
   ],
   translate:[
-   {vi:"Hôm nay là thứ mấy?", cn:"今天星期几？", py:"Jīntiān xīngqī jǐ?"},
-   {vi:"Hôm nay là Thứ Hai.", cn:"今天星期一。", py:"Jīntiān xīngqī yī."},
-   {vi:"Thưa ngài, họ của ngài là gì?", cn:"您贵姓？", py:"Nín guìxìng?"},
-   {vi:"Tôi họ Vương.", cn:"我姓王。", py:"Wǒ xìng Wáng."},
-   {vi:"Bạn tên là gì?", cn:"你叫什么名字？", py:"Nǐ jiào shénme míngzi?"},
-   {vi:"Xin hỏi, hôm nay là Thứ Sáu không?", cn:"请问，今天星期五吗？", py:"Qǐngwèn, jīntiān xīngqī wǔ ma?"}
+   {vi:"Anh ấy là ai?", cn:"他是谁？", py:"Tā shì shéi?"},
+   {vi:"Anh ấy là bạn học của tôi.", cn:"他是我同学。", py:"Tā shì wǒ tóngxué."},
+   {vi:"Cô ấy là ai?", cn:"她是谁？", py:"Tā shì shéi?"},
+   {vi:"Cô ấy là giáo viên tiếng Hán của tôi.", cn:"她是我的汉语老师。", py:"Tā shì wǒ de Hànyǔ lǎoshī."},
+   {vi:"Bạn là người nước nào?", cn:"你是哪国人？", py:"Nǐ shì nǎ guó rén?"},
+   {vi:"Tôi là người Việt Nam.", cn:"我是越南人。", py:"Wǒ shì Yuènánrén."},
+   {vi:"Cô ấy là bạn của tôi.", cn:"她是我朋友。", py:"Tā shì wǒ péngyou."},
+   {vi:"Còn bạn thì sao?", cn:"你呢？", py:"Nǐ ne?"}
   ]
  }
 };
@@ -890,59 +866,21 @@ const makeTranslate = rows => rows.map(([vi,cn,py=''])=>({vi,cn,py}));
 const makeDialogue = rows => rows.map(([cn,vi,py=''])=>({spk:"句",cn,py,vi}));
 
 LESSONS[7] = {
- title:"Bài 7: Tôi học tiếng Trung",cn:"我学习汉语",count:78,
- grammar:{label:"💡 Ngữ pháp: 的",formula:"Định ngữ / sở hữu + 的 + danh từ",ex:"我的书 = sách của tôi | 漂亮的衣服 = quần áo đẹp | Quan hệ gần có thể bỏ 的: 我妈妈"},
+ title:"Bài 7: Con gái cô ấy năm nay 20 tuổi",cn:"她女儿今年二十岁了",count:23,
+ grammar:{label:"💡 Ngữ pháp: 几 / 多大 dùng để hỏi",formula:"你家有几口人？· 你女儿今年几岁了？· 你今年多大了？",ex:"我家有三口人。/ 你今年多大了？"},
  words:makeWords([
-  ["问","wèn","hỏi"],["请问","qǐngwèn","xin hỏi"],["贵姓","guìxìng","quý danh / họ gì"],["你贵姓？","nǐ guìxìng?","bạn họ gì?"],["您贵姓？","nín guìxìng?","ngài họ gì?"],
-  ["姓","xìng","họ"],["什么","shénme","cái gì / gì"],["你姓什么？","nǐ xìng shénme?","bạn họ gì?"],["我姓…","wǒ xìng...","tôi họ..."],["名字","míngzi","tên"],
-  ["叫","jiào","gọi là / tên là"],["你叫什么名字？","nǐ jiào shénme míngzi?","bạn tên là gì?"],["我叫","wǒ jiào","tôi tên là"],["我名字叫","wǒ míngzi jiào","tên tôi là"],["人","rén","người"],
-  ["国","guó","nước / quốc gia"],["国家","guójiā","quốc gia"],["哪","nǎ","nào"],["你是哪国人？","nǐ shì nǎ guó rén?","bạn là người nước nào?"],["华人","huárén","người Hoa"],
-  ["我是华人","wǒ shì huárén","tôi là người Hoa"],["中国人","zhōngguórén","người Trung Quốc"],["我是中国人","wǒ shì zhōngguórén","tôi là người Trung Quốc"],["越南人","yuènánrén","người Việt Nam"],["我是越南人","wǒ shì yuènánrén","tôi là người Việt Nam"],
-  ["美国人","měiguórén","người Mỹ"],["我是美国人","wǒ shì měiguórén","tôi là người Mỹ"],["韩国人","hánguórén","người Hàn Quốc"],["日本人","rìběnrén","người Nhật Bản"],["英国人","yīngguórén","người Anh"],
-  ["加拿大人","jiānádàrén","người Canada"],["汉语","hànyǔ","tiếng Hán / tiếng Trung"],["中文","zhōngwén","tiếng Trung"],["英语","yīngyǔ","tiếng Anh"],["越南语","yuènányǔ","tiếng Việt"],
-  ["学习","xuéxí","học tập"],["汉字","hànzì","chữ Hán"],["发音","fāyīn","phát âm"],["汉字很难","hànzì hěn nán","chữ Hán rất khó"],["发音不难","fāyīn bù nán","phát âm không khó"],
-  ["这","zhè","đây / này"],["那","nà","kia / đó"],["这是中国人","zhè shì zhōngguórén","đây là người Trung Quốc"],["那是越南人","nà shì yuènánrén","kia là người Việt Nam"],["谁","shéi","ai"],
-  ["那是谁？","nà shì shéi?","kia là ai?"],["这是谁？","zhè shì shéi?","đây là ai?"],["朋友","péngyou","bạn bè"],["男朋友","nán péngyou","bạn trai"],["女朋友","nǚ péngyou","bạn gái"],
-  ["好朋友","hǎo péngyou","bạn tốt"],["坏朋友","huài péngyou","bạn xấu"],["兄弟","xiōngdì","anh em trai"],["姐妹","jiěmèi","chị em gái"],["男性朋友","nánxìng péngyou","bạn nam"],
-  ["女性朋友","nǚxìng péngyou","bạn nữ"],["这个","zhège","cái này / người này"],["那个","nàge","cái kia / người kia"],["这个是什么？","zhège shì shénme?","đây là cái gì?"],["这个学生","zhège xuésheng","học sinh này"],
-  ["那位老师","nà wèi lǎoshī","vị giáo viên kia"],["我的老师","wǒ de lǎoshī","giáo viên của tôi"],["我的男朋友","wǒ de nán péngyou","bạn trai của tôi"],["我的女朋友","wǒ de nǚ péngyou","bạn gái của tôi"],["我的老板","wǒ de lǎobǎn","sếp của tôi"],
-  ["我的同事","wǒ de tóngshì","đồng nghiệp của tôi"],["我的同学","wǒ de tóngxué","bạn học của tôi"],["我的书","wǒ de shū","sách của tôi"],["她的老师","tā de lǎoshī","giáo viên của cô ấy"],["漂亮的衣服","piàoliang de yīfu","quần áo đẹp"],["好吃的菜","hǎochī de cài","món ăn ngon"]
+  ["一","yī","một"],["二","èr","hai"],["三","sān","ba"],["四","sì","bốn"],["五","wǔ","năm"],
+  ["六","liù","sáu"],["七","qī","bảy"],["八","bā","tám"],["九","jiǔ","chín"],["十","shí","mười"],
+  ["家","jiā","nhà / gia đình"],["有","yǒu","có"],["几","jǐ","mấy"],["口","kǒu","lượng từ cho người trong gia đình"],["人","rén","người"],
+  ["你家有几口人？","nǐ jiā yǒu jǐ kǒu rén?","nhà bạn có mấy người?"],["我家有三口人","wǒ jiā yǒu sān kǒu rén","nhà tôi có ba người"],["女儿","nǚ'ér","con gái"],["岁","suì","tuổi"],["了","le","trợ từ hoàn thành / thay đổi trạng thái"],
+  ["今年","jīnnián","năm nay"],["你女儿今年几岁了？","nǐ nǚ'ér jīnnián jǐ suì le?","con gái bạn năm nay mấy tuổi rồi?"],["多大","duō dà","bao nhiêu tuổi / bao lớn"],["你多大？","nǐ duō dà?","bạn bao nhiêu tuổi?"],["你今年多大了？","nǐ jīnnián duō dà le?","năm nay bạn bao nhiêu tuổi rồi?"]
  ]),
  dialogue:makeDialogue([
-  ["请问，你贵姓？","Xin hỏi, bạn họ gì?"],["我姓阮，你呢？","Tôi họ Nguyễn, còn bạn thì sao?"],["你叫什么名字？","Bạn tên là gì?"],["我名字叫兰，我是越南人。","Tên tôi là Lan, tôi là người Việt Nam."],
-  ["这是我的好朋友，她在中国学习汉语。","Đây là bạn tốt của tôi, cô ấy học tiếng Hán ở Trung Quốc."],["那是我的英语老师。","Kia là giáo viên tiếng Anh của tôi."],["我的女朋友在学习中文和汉字。","Bạn gái của tôi đang học tiếng Trung và chữ Hán."]
+  ["你家有几口人？","Nhà bạn có mấy người?"],["我家有三口人。","Nhà tôi có ba người."],["你女儿今年几岁了？","Con gái bạn năm nay mấy tuổi rồi?"],["她今年二十岁了。","Năm nay cô ấy 20 tuổi rồi."],["你今年多大了？","Năm nay bạn bao nhiêu tuổi rồi?"]
  ]),
  translate:makeTranslate([
-  ["Xin hỏi, bạn họ gì?","请问，你贵姓？"],["Tôi họ Nguyễn, còn bạn thì sao?","我姓阮，你呢？"],["Bạn tên là gì?","你叫什么名字？"],["Tên tôi là Lan, tôi là người Việt Nam.","我名字叫兰，我是越南人。"],["Anh ấy là người Trung Quốc, còn cô ấy là người Hàn Quốc.","他是中国人，她是韩国人。"],
-  ["Đây là bạn tốt của tôi, cô ấy học tiếng Hán ở Trung Quốc.","这是我的好朋友，她在中国学习汉语。"],["Kia là ai?","那是谁？"],["Kia là giáo viên tiếng Anh của tôi.","那是我的英语老师。"],["Đây là bạn trai của tôi, anh ấy là người Mỹ.","这是我的男朋友，他是美国人。"],["Bạn gái của tôi đang học tiếng Trung và chữ Hán.","我的女朋友在学习中文和汉字。"],
-  ["Tôi cảm thấy chữ Hán rất khó, nhưng phát âm không khó.","我觉得汉字很难，但是发音不难。"],["Đây là đồng nghiệp của tôi, còn kia là sếp của tôi.","这是我的同事，那是我的老板。"],["Bạn của bạn là người nước nào?","你的朋友是哪国人？"],["Anh trai tôi là người Canada, còn chị gái tôi là người Anh.","我哥哥是加拿大人，我姐姐是英国人。"],["Đây là ai? Đây là thầy giáo tiếng Trung của tôi.","这是谁？这是我的中文老师。"],
-  ["Bạn học của tôi là người Nhật Bản, anh ấy nói tiếng Anh rất tốt.","我的同学是日本人，他的英语很好。"],["Đây là bạn nam của tôi, còn kia là bạn nữ của tôi.","这是我的男性朋友，那是我的女性朋友。"],["Tôi và bạn gái đều đang học tiếng Hán.","我跟我的女朋友都在学习汉语。"],["Bạn trai của cô ấy là người Hàn Quốc hay người Trung Quốc?","她的男朋友是韩国人还是中国人？"],["Xin hỏi, đây có phải là bạn tốt của bạn không?","请问，这是你的好朋友吗？"]
- ])
-};
-
-LESSONS[8] = {
- title:"Bài 8: Con gái cô ấy năm nay 20 tuổi",cn:"她女儿今年二十岁了",count:60,
- grammar:{label:"💡 Ngữ pháp: Hỏi tuổi & 二 / 两",formula:"你几岁？ / 你今年多大？ / 您多大年纪？ / 你哪年出生？ / 你属什么？",ex:"二 dùng để đọc số: 二十, 二楼, 星期二. 两 đứng trước lượng từ: 两个人, 两本书, 两杯茶."},
- words:makeWords([
-  ["家","jiā","nhà / gia đình"],["有","yǒu","có"],["口","kǒu","lượng từ cho người trong gia đình"],["女儿","nǚ'ér","con gái"],["几","jǐ","mấy"],
-  ["岁","suì","tuổi"],["了","le","trợ từ hoàn thành / thay đổi trạng thái"],["今年","jīnnián","năm nay"],["多","duō","nhiều / bao nhiêu"],["大","dà","lớn"],
-  ["两","liǎng","hai (trước lượng từ)"],["我家","wǒ jiā","nhà tôi"],["家人","jiārén","người nhà"],["国家","guójiā","quốc gia"],["我有好朋友","wǒ yǒu hǎo péngyou","tôi có bạn tốt"],
-  ["我有一个好朋友","wǒ yǒu yí gè hǎo péngyou","tôi có một người bạn tốt"],["你家有几口人？","nǐ jiā yǒu jǐ kǒu rén?","nhà bạn có mấy người?"],["三口人","sān kǒu rén","ba người"],["他家有五口人","tā jiā yǒu wǔ kǒu rén","nhà anh ấy có năm người"],["这是我爸爸","zhè shì wǒ bàba","đây là ba tôi"],
-  ["这个人是我爸爸","zhège rén shì wǒ bàba","người này là ba tôi"],["这个人叫什么名字？","zhège rén jiào shénme míngzi?","người này tên là gì?"],["那是我爸爸","nà shì wǒ bàba","kia là ba tôi"],["那是我妈妈","nà shì wǒ māma","kia là mẹ tôi"],["我有一个女儿","wǒ yǒu yí gè nǚ'ér","tôi có một con gái"],
-  ["我有两个儿子","wǒ yǒu liǎng gè érzi","tôi có hai con trai"],["你几岁？","nǐ jǐ suì?","em mấy tuổi?"],["多大？","duō dà?","bao nhiêu tuổi?"],["你今年多大？","nǐ jīnnián duō dà?","năm nay bạn bao nhiêu tuổi?"],["年龄","niánlíng","tuổi tác"],
-  ["您多大年纪？","nín duō dà niánjì?","ông/bà bao nhiêu tuổi?"],["你哪一年出生的？","nǐ nǎ yì nián chūshēng de?","bạn sinh năm nào?"],["你哪年出生？","nǐ nǎ nián chūshēng?","bạn sinh năm nào?"],["你属什么？","nǐ shǔ shénme?","bạn cầm tinh con gì?"],["鼠","shǔ","chuột"],
-  ["牛","niú","trâu / bò"],["虎","hǔ","hổ"],["兔","tù","thỏ"],["龙","lóng","rồng"],["蛇","shé","rắn"],
-  ["马","mǎ","ngựa"],["羊","yáng","dê / cừu"],["猴","hóu","khỉ"],["鸡","jī","gà"],["狗","gǒu","chó"],["猪","zhū","lợn / heo"],
-  ["两个人","liǎng gè rén","hai người"],["两本书","liǎng běn shū","hai quyển sách"],["两杯茶","liǎng bēi chá","hai cốc trà"],["星期二","xīngqī èr","thứ Ba"],["二十岁","èrshí suì","20 tuổi"]
- ]),
- dialogue:makeDialogue([
-  ["你家有几口人？","Nhà bạn có mấy người?"],["我家有三口人。","Nhà tôi có ba người."],["她女儿今年二十岁了。","Con gái của cô ấy năm nay 20 tuổi."],["你今年多大？","Năm nay bạn bao nhiêu tuổi?"],["你属什么？","Bạn cầm tinh con gì?"],["我属龙。","Tôi tuổi rồng."]
- ]),
- translate:makeTranslate([
-  ["Nhà bạn có mấy người?","你家有几口人？"],["Nhà tôi có ba người.","我家有三口人。"],["Nhà anh ấy có năm người.","他家有五口人。"],["Đây là ba tôi.","这是我爸爸。"],["Người này tên là gì?","这个人叫什么名字？"],
-  ["Kia là mẹ tôi.","那是我妈妈。"],["Tôi có một người bạn tốt.","我有一个好朋友。"],["Tôi có một con gái.","我有一个女儿。"],["Tôi có hai con trai.","我有两个儿子。"],["Con gái của cô ấy năm nay 20 tuổi.","她女儿今年二十岁了。"],
-  ["Em trai bạn mấy tuổi rồi?","你弟弟几岁了？"],["Năm nay bạn bao nhiêu tuổi?","你今年多大？"],["Ông năm nay bao nhiêu tuổi?","您多大年纪？"],["Bạn sinh năm nào?","你哪年出生的？"],["Bạn cầm tinh con gì?","你属什么？"],
-  ["Tôi tuổi rồng.","我属龙。"],["Tôi có hai quyển sách tiếng Hán.","我有两本汉语书。"],["Hôm nay là thứ Ba.","今天是星期二。"],["Tôi sống ở Trung Quốc.","我住在中国。"],["Hai người kia là bạn học của tôi.","那两个人是我的同学。"]
+  ["Nhà bạn có mấy người?","你家有几口人？"],["Nhà tôi có ba người.","我家有三口人。"],["Con gái bạn năm nay mấy tuổi rồi?","你女儿今年几岁了？"],["Năm nay bạn bao nhiêu tuổi rồi?","你今年多大了？"],["Bạn bao nhiêu tuổi?","你多大？"],
+  ["Một, hai, ba, bốn, năm.","一、二、三、四、五。"],["Sáu, bảy, tám, chín, mười.","六、七、八、九、十。"],["Con gái tôi năm nay mười tuổi.","我女儿今年十岁了。"]
  ])
 };
 
@@ -956,61 +894,61 @@ function addHsk1Lesson(no,title,cn,vocab,translate,grammar=null){
  };
 }
 
-addHsk1Lesson(9,"Tôi biết nói tiếng Trung Quốc","我会说汉语",[
+addHsk1Lesson(8,"Tôi biết nói tiếng Trung Quốc","我会说汉语",[
  ["会","biết / có thể"],["说","nói"],["菜","món ăn"],["要","muốn / cần"],["一点儿","một chút"],["点","gọi món"],["好吃","ngon"],["喝","uống"],["茶","trà"],["奶茶","trà sữa"],["绿茶","trà xanh"],["水","nước"],["杯","cốc"],["大杯","cốc lớn"],["小杯","cốc nhỏ"],["还是","hay là"],["一共","tổng cộng"],["做饭","nấu cơm"],["做菜","nấu ăn"],["写","viết"],["汉字","chữ Hán"],["怎么","như thế nào"],["读","đọc"],["越南菜","món Việt Nam"],["中国菜","món Trung Quốc"]
 ],[
  ["Tôi biết nói một chút tiếng Trung.","我会说一点儿汉语。"],["Bạn muốn ăn món gì?","你要吃什么？"],["Tôi muốn ăn món Trung Quốc.","我要吃中国菜。"],["Món ăn Việt Nam rất ngon.","越南菜很好吃。"],["Tôi muốn gọi món này.","我要点这个菜。"],["Tôi muốn uống trà.","我要喝茶。"],["Tôi muốn một cốc trà sữa.","我要一杯奶茶。"],["Bạn muốn cốc lớn hay cốc nhỏ?","你要大杯还是小杯？"],["Bạn biết nấu ăn không?","你会做菜吗？"],["Bạn đang làm gì?","你做什么？"],["Bạn đang viết gì?","你写什么？"],["Chữ của bạn rất đẹp.","你的字很好。"],["Chữ Hán này viết như thế nào?","这个汉字怎么写？"],["Món ăn này làm như thế nào?","这个菜怎么做？"],["Chữ Hán này đọc như thế nào?","这个汉字怎么读？"]
 ],{label:"💡 Mẫu câu: 会 / 要 / 怎么",formula:"会 + động từ · 要 + món/đồ uống · 怎么 + động từ",ex:"我会说一点儿汉语。/ 这个汉字怎么读？"});
 
-addHsk1Lesson(10,"Hôm nay là ngày mấy","今天几号",[
+addHsk1Lesson(9,"Hôm nay là ngày mấy","今天几号",[
  ["请","mời / xin"],["问","hỏi"],["请问","xin hỏi"],["今天","hôm nay"],["号","ngày"],["日","ngày"],["天","ngày / trời"],["月","tháng"],["一月","tháng 1"],["十二月","tháng 12"],["上个月","tháng trước"],["这个月","tháng này"],["下个月","tháng sau"],["星期","tuần / thứ"],["昨天","hôm qua"],["明天","ngày mai"],["去年","năm ngoái"],["今年","năm nay"],["明年","năm sau"],["学校","trường học"],["看书","đọc sách"]
 ],[
  ["Xin hỏi, bạn tên là gì?","请问，你叫什么名字？"],["Xin hỏi, bạn là người nước nào?","请问，你是哪国人？"],["Hôm nay tôi học tiếng Trung.","我今天学汉语。"],["Mẹ hôm nay nấu ăn.","妈妈今天做菜。"],["Hôm nay là ngày mấy?","今天几号？"],["Hôm nay là ngày 13 tháng 1.","今天是一月十三号。"],["Tôi học tiếng Trung được ba tháng rồi.","我学汉语学了三个月。"],["Tháng trước tôi ở Bắc Kinh.","上个月我在北京。"],["Tháng sau tôi đi Trung Quốc.","下个月我去中国。"],["Hôm nay là thứ mấy?","今天星期几？"],["Hôm qua tôi đi học.","昨天我去学校。"],["Ngày mai tôi đi Bắc Kinh.","明天我去北京。"],["Năm nay tôi học tiếng Trung.","今年我学汉语。"],["Tôi đi trường học tiếng Trung.","我去学校学汉语。"],["Tôi đọc sách tiếng Trung.","我看汉语书。"]
 ],{label:"💡 Ngày tháng",formula:"今天是 + tháng + ngày · 今天星期几？",ex:"今天是一月十三号。"});
 
-addHsk1Lesson(11,"Tôi muốn uống trà","我想喝茶",[
+addHsk1Lesson(10,"Tôi muốn uống trà","我想喝茶",[
  ["想","muốn"],["喝","uống"],["绿茶","trà xanh"],["奶茶","trà sữa"],["饮料","đồ uống"],["果汁","nước ép"],["咖啡","cà phê"],["吃饭","ăn cơm"],["米饭","cơm"],["早饭","bữa sáng"],["午饭","bữa trưa"],["晚饭","bữa tối"],["早上","sáng sớm"],["上午","buổi sáng"],["中午","buổi trưa"],["下午","buổi chiều"],["晚上","buổi tối"],["商店","cửa hàng"],["买","mua"],["卖","bán"],["多少","bao nhiêu"],["钱","tiền"],["块","đồng"],["哪儿","ở đâu"]
 ],[
  ["Tôi muốn uống trà xanh.","我想喝绿茶。"],["Tôi muốn uống cà phê.","我想喝咖啡。"],["Tôi muốn uống nước ép.","我想喝果汁。"],["Tôi muốn ăn cơm.","我想吃米饭。"],["Tôi ăn sáng lúc 7 giờ.","我七点吃早饭。"],["Tôi ăn trưa ở trường.","我在学校吃午饭。"],["Tôi ăn tối với bố.","我跟爸爸吃晚饭。"],["Tôi muốn đi cửa hàng.","我想去商店。"],["Tôi muốn mua một cốc trà sữa lớn.","我想买一杯大杯奶茶。"],["Đây là cà phê của bạn.","这是你的咖啡。"],["Đây là cái gì?","这个是什么？"],["Cái này bao nhiêu tiền?","这个多少钱？"],["Tôi không có tiền.","我没有钱。"],["Bạn có bao nhiêu tiền?","你有多少钱？"],["Bạn ở đâu?","你在哪儿？"]
 ],{label:"💡 Mẫu câu: 想",formula:"Chủ ngữ + 想 + động từ",ex:"我想喝咖啡。/ 我想去商店。"});
 
-addHsk1Lesson(12,"Con trai anh làm việc ở đâu","你儿子在哪儿工作",[
+addHsk1Lesson(11,"Con trai anh làm việc ở đâu","你儿子在哪儿工作",[
  ["小","nhỏ"],["大","lớn"],["猫","mèo"],["小猫","mèo nhỏ"],["狗","chó"],["小狗","chó nhỏ"],["在","ở"],["那儿","ở đó"],["这儿","ở đây"],["椅子","ghế"],["桌子","bàn"],["下面","bên dưới"],["上面","bên trên"],["哪儿","ở đâu"],["工作","làm việc"],["儿子","con trai"],["医院","bệnh viện"],["医生","bác sĩ"]
 ],[
  ["Con mèo nhỏ ở đâu?","小猫在哪儿？"],["Có rất nhiều người ở đó.","那儿有很多人。"],["Tôi đọc sách ở đó.","我在那儿看书。"],["Ở đây có người không?","这儿有人吗？"],["Chúng ta ở đây nhé.","我们在这儿吧。"],["Trên bàn có gì?","桌子上面有什么？"],["Trên bàn có một cốc cà phê.","桌子上面有一杯咖啡。"],["Dưới ghế có gì?","椅子下面有什么？"],["Có một con chó nhỏ.","有一只小狗。"],["Trường của bạn ở đâu?","你的学校在哪儿？"],["Chúng ta gặp nhau ở đâu?","我们在哪儿见面？"],["Đây là con trai tôi.","这是我儿子。"],["Con trai bạn làm việc ở đâu?","你儿子在哪儿工作？"],["Con trai tôi làm việc ở bệnh viện.","我儿子在医院工作。"],["Con trai tôi là bác sĩ.","我儿子是医生。"]
 ],{label:"💡 Vị trí",formula:"Danh từ + 在 + nơi chốn",ex:"小猫在那儿。/ 我儿子在医院工作。"});
 
-addHsk1Lesson(13,"Tôi có thể ngồi ở đây không","我能坐这儿吗",[
+addHsk1Lesson(12,"Tôi có thể ngồi ở đây không","我能坐这儿吗",[
  ["桌子","bàn"],["张","lượng từ cho bàn/giấy"],["电脑","máy tính"],["笔记本电脑","laptop"],["和","và / cùng"],["本","lượng từ cho sách"],["里","bên trong"],["前面","phía trước"],["后面","phía sau"],["这儿","ở đây"],["那儿","ở kia"],["没有","không có"],["能","có thể"],["坐","ngồi"],["请坐","mời ngồi"]
 ],[
  ["Chiếc bàn này quá lớn.","这个桌子太大了。"],["Tôi muốn mua một cái bàn.","我想买一张桌子。"],["Trên bàn có một quyển sách.","桌子上有一本书。"],["Trên ghế có một con mèo.","椅子上有一只猫。"],["Tôi muốn mua một máy tính.","我要买一台电脑。"],["Tôi ăn cơm với bố.","我和爸爸吃饭。"],["Trong nhà bạn có những ai?","你家里有什么人？"],["Người phía trước là ai?","前面的人是谁？"],["Người phía sau tên là gì?","后面那个人叫什么名字？"],["Ở đây không có người.","这儿没有人。"],["Tôi có thể ngồi đây không?","我能坐这儿吗？"],["Mời ngồi.","请坐。"],["Trong bàn có một quyển sách.","桌子里有一本书。"],["Anh ấy ở phía trước tôi.","他在我前面。"],["Kia là ai?","那是谁？"]
 ],{label:"💡 Có thể: 能",formula:"能 + động từ",ex:"我能坐这儿吗？"});
 
-addHsk1Lesson(14,"Bây giờ là mấy giờ","现在几点",[
+addHsk1Lesson(13,"Bây giờ là mấy giờ","现在几点",[
  ["现在","bây giờ"],["点","giờ"],["分","phút"],["半","rưỡi"],["中午","buổi trưa"],["上午","buổi sáng"],["吃饭","ăn cơm"],["晚上","buổi tối"],["时候","lúc / khi"],["什么时候","khi nào"],["回家","về nhà"],["电影","phim"],["住","sống / ở"],["前","trước"],["后","sau"],["时间","thời gian"],["多长时间","bao lâu"],["北京","Bắc Kinh"]
 ],[
  ["Bây giờ bạn muốn ăn gì?","你现在想吃什么？"],["Tôi muốn ăn món Việt Nam.","我想吃越南菜。"],["Bây giờ là mười giờ rưỡi.","现在十点半。"],["Bây giờ là chín giờ mười lăm phút.","现在九点十五分。"],["Ngày mai buổi trưa bạn đi đâu?","你明天中午去哪儿？"],["Hôm nay mẹ đi cửa hàng mua trà.","今天中午妈妈去商店买茶。"],["8 giờ sáng tôi đi học tiếng Trung.","上午八点我去学习汉语。"],["7 giờ tối chúng tôi ăn cơm.","晚上七点我们吃饭。"],["Khi nào bạn ăn cơm?","你什么时候吃饭？"],["Khi nào bạn đi cửa hàng?","你什么时候去商店？"],["Khi ăn cơm.","吃饭的时候。"],["Khi tôi còn nhỏ.","我小的时候。"],["Chúng ta đi xem phim nhé.","我们去看电影吧。"],["Bạn sống ở đâu?","你住在哪儿？"],["Tôi phải về nhà trước 8 giờ.","我八点前回家。"]
 ],{label:"💡 Thời gian",formula:"现在 + giờ · thời gian + trước động từ",ex:"上午八点我去学习汉语。"});
 
-addHsk1Lesson(15,"Ngày mai thời tiết như thế nào","明天天气怎么样",[
+addHsk1Lesson(14,"Ngày mai thời tiết như thế nào","明天天气怎么样",[
  ["天气","thời tiết"],["怎么样","như thế nào"],["帅哥","anh đẹp trai"],["帅","đẹp trai"],["好看","đẹp / hay"],["太...了","quá..."],["热","nóng"],["冷","lạnh"],["下雨","mưa"],["大雨","mưa to"],["小雨","mưa nhỏ"],["小姐","cô / tiểu thư"],["来","đến"],["身体","sức khỏe / cơ thể"],["爱","yêu / thích"],["一些","một ít"],["水果","trái cây"]
 ],[
  ["Hôm nay thời tiết rất đẹp.","今天天气很好。"],["Thời tiết ở Đà Nẵng rất đẹp.","岘港的天气很好。"],["Tiếng Trung của bạn thế nào?","你的汉语怎么样？"],["Tiếng Trung của tôi không được lắm.","我的汉语不怎么样。"],["Anh ấy là người như thế nào?","他是个怎么样的人？"],["Anh ấy là một người rất tốt.","他是个很好的人。"],["Hôm nay trời quá nóng.","今天太热了。"],["Hôm nay trời rất lạnh.","今天很冷。"],["Hôm nay có mưa không?","今天下雨吗？"],["Hôm nay mưa to.","今天下大雨。"],["Hôm nay không mưa.","今天不下雨。"],["Sức khỏe của bố bạn thế nào?","你爸爸的身体怎么样？"],["Sức khỏe của ông ấy rất tốt.","他的身体很好。"],["Tôi thích ăn trái cây.","我爱吃水果。"],["Tôi mua một ít trái cây.","我买了一些水果。"]
 ],{label:"💡 Hỏi trạng thái",formula:"...怎么样？",ex:"你的汉语怎么样？/ 今天天气怎么样？"});
 
-addHsk1Lesson(16,"Anh ấy đang học nấu món ăn Trung Quốc","他在学习做中国菜",[
+addHsk1Lesson(15,"Anh ấy đang học nấu món ăn Trung Quốc","他在学习做中国菜",[
  ["喂","alo"],["也","cũng"],["姐姐","chị gái"],["学习","học"],["日语","tiếng Nhật"],["睡觉","ngủ"],["电视","ti vi"],["喜欢","thích"],["给","cho"],["打电话","gọi điện"],["吧","nhé / đi"],["好吧","được thôi"],["一起","cùng nhau"],["热水","nước nóng"]
 ],[
  ["Alo, cô Vương có ở đó không?","喂，王小姐在吗？"],["Alo, bạn đang làm gì vậy?","喂，你在做什么？"],["Tôi có một chị gái.","我有一个姐姐。"],["Anh ấy cũng có một chị gái.","他也有一个姐姐。"],["Tôi thích ăn trái cây.","我爱吃水果。"],["Mẹ tôi cũng thích ăn trái cây.","我妈妈也爱吃水果。"],["Tôi cũng học tiếng Trung.","我也学习汉语。"],["Bạn học gì?","你学习什么？"],["Hôm qua họ học tiếng Trung ở nhà.","昨天他们在家学习汉语。"],["Tôi muốn ngủ.","我想睡觉。"],["Hôm qua David xem ti vi với bố tôi.","昨天大卫和我爸爸看电视。"],["Mẹ tôi thích xem ti vi.","我妈妈爱看电视。"],["Tôi không thích xem ti vi.","我不喜欢看电视。"],["Xin cho tôi một cốc trà.","请给我一杯茶。"],["Bây giờ tôi gọi điện cho thầy Lý.","我现在给李老师打电话。"],["Uống một cốc nước nóng trước khi ngủ nhé.","睡觉前喝杯热水吧。"],["Ở đây không có người, ngồi đi.","这儿没有人，请坐吧。"],["Được thôi.","好吧。"],["Bạn là người Việt Nam đúng không?","你是越南人吧？"],["Chúng ta cùng đi xem phim nhé.","我们一起去看电影吧。"]
 ],{label:"💡 也 và 吧",formula:"也 = cũng · 吧 = nhé/đi/đúng không",ex:"我也学习汉语。/ 请坐吧。"});
 
-addHsk1Lesson(17,"Cô ấy đã mua nhiều quần áo","她买了不少衣服",[
+addHsk1Lesson(16,"Cô ấy đã mua nhiều quần áo","她买了不少衣服",[
  ["东西","đồ / thứ"],["一点儿","một chút"],["苹果","táo"],["看见","nhìn thấy"],["先生","ông / ngài"],["开车","lái xe"],["回来","quay về"],["分钟","phút"],["衣服","quần áo"],["漂亮","đẹp"],["少","ít"],["不少","khá nhiều"],["这些","những cái này"],["都","đều"],["张","lượng từ / họ Trương"]
 ],[
  ["Nhà anh ấy có rất nhiều đồ.","他家有很多东西。"],["Bạn mua thứ gì?","你买什么东西？"],["Những đồ này là của ai?","这些东西是谁的？"],["Tôi muốn ăn cái gì đó.","我想吃东西。"],["Tôi đi cửa hàng mua một ít đồ.","我去商店买一点儿东西。"],["Tôi ăn một ít trái cây.","我吃一点儿水果。"],["Tôi muốn mua chiếc cốc lớn hơn một chút.","我想买大一点儿的杯子。"],["Táo bán thế nào?","苹果怎么卖？"],["Bố tôi thích ăn táo.","爸爸喜欢吃苹果。"],["Bạn nhìn thấy cô Lý không?","你看见李小姐吗？"],["Tôi không nhìn thấy.","我没看见。"],["Khi nào bạn quay về?","你什么时候回来？"],["Những bộ quần áo này bao nhiêu tiền?","这些衣服多少钱？"],["Chữ bạn viết rất đẹp.","你写的字很漂亮。"],["Cô ấy mua khá nhiều trái cây.","她买了不少水果。"],["Những quả táo này rất ngon.","这些苹果太好吃了。"],["Chúng tôi đều là người Trung Quốc.","我们都是中国人。"],["Họ đều thích uống trà.","他们都喜欢喝茶。"],["Người này rất đẹp.","这个人太漂亮了！"],["Quần áo của bạn không đẹp.","你的衣服不漂亮。"]
 ],{label:"💡 都 / 了 / 不少",formula:"都 = đều · 了 = đã / thay đổi · 不少 = khá nhiều",ex:"我们都是中国人。/ 她买了不少水果。"});
 
-addHsk1Lesson(18,"Tôi đáp máy bay tới đây","我坐飞机来这儿",[
+addHsk1Lesson(17,"Tôi đáp máy bay tới đây","我坐飞机来这儿",[
  ["认识","quen / biết"],["年","năm"],["大学","đại học"],["小学","tiểu học"],["初中","trung học cơ sở"],["高中","trung học phổ thông"],["大学生","sinh viên đại học"],["饭店","nhà hàng"],["出租车","taxi"],["一起","cùng nhau"],["高兴","vui"],["听","nghe"],["听到","nghe thấy"],["飞机","máy bay"],["上飞机","lên máy bay"],["下飞机","xuống máy bay"]
 ],[
  ["Tôi không quen Lý Nguyệt.","我不认识李月。"],["Hai người quen nhau khi nào?","你们什么时候认识？"],["Hôm nay là năm 2026.","今天是2026年。"],["Anh ấy làm việc được ba năm rồi.","他工作了三年。"],["Ba năm nữa cô ấy sẽ quay về.","她三年后回来。"],["Anh ấy học tiếng Trung ở Đại học Bắc Kinh.","他在北京大学学习汉语。"],["Tôi là sinh viên đại học.","我是大学生。"],["Phía sau trường học có ba nhà hàng.","学校后面有三个饭店。"],["Hôm nay buổi trưa tôi muốn đi nhà hàng ăn cơm.","今天中午我想去饭店吃饭。"],["Tôi đi taxi về nhà.","我坐出租车回家。"],["Hôm nay tôi đi taxi đi làm.","今天我坐出租车上班。"],["Hôm qua tôi ăn cơm cùng bạn.","昨天我跟朋友一起吃饭。"],["Chúng ta cùng đi Bắc Kinh bằng máy bay nhé.","我们一起坐飞机去北京吧！"],["Rất vui được quen bạn.","我很高兴认识你。"],["Tôi không nghe thấy.","我没听到。"],["Hôm nay tôi rất vui.","今天我很高兴。"],["Bạn nghe thấy chưa?","你听到了吗？"],["Ngày mai tôi đi Trung Quốc bằng máy bay.","我明天坐飞机去中国。"],["Sau khi xuống máy bay tôi sẽ gọi điện cho bạn.","我下飞机后给你打电话，好吗？"],["Chúng tôi thích cùng nhau xem phim.","我们喜欢一起看电影。"]
