@@ -888,33 +888,27 @@ function addHsk1Lesson(no,title,cn,vocab,translate,grammar=null){
  LESSONS[no]={
   title:`Bài ${no}: ${title}`,cn,count:vocab.length+translate.length,
   grammar,
-  words:makeWords(vocab.map(([cn,vi])=>[cn,'',vi])).concat(makeTranslate(translate).map(x=>({cn:x.cn,py:x.py,vi:x.vi}))),
+  words:makeWords(vocab.map(r=>r.length>=3?r:[r[0],'',r[1]])).concat(makeTranslate(translate).map(x=>({cn:x.cn,py:x.py,vi:x.vi}))),
   dialogue:makeDialogue(translate.slice(0,Math.min(8,translate.length)).map(([vi,cn])=>[cn,vi])),
   translate:makeTranslate(translate)
  };
 }
 
 addHsk1Lesson(8,"Tôi biết nói tiếng Trung Quốc","我会说汉语",[
- ["会","biết / có thể"],["说","nói"],["菜","món ăn"],["好吃","ngon"],["做菜","nấu ăn"],["写","viết"],["汉字","chữ Hán"],["怎么","như thế nào"],["读","đọc"],["越南菜","món Việt Nam"],["中国菜","món Trung Quốc"]
-]);
+ ["会","huì","biết / có thể"],["说","shuō","nói"],["妈妈","māma","mẹ"],["会说汉语","huì shuō Hànyǔ","biết nói tiếng Trung"],["不会说汉语","bú huì shuō Hànyǔ","không biết nói tiếng Trung"],["菜","cài","món ăn"],["很","hěn","rất"],["好吃","hǎochī","ngon"],["吃","chī","ăn"],["做","zuò","làm"],["做菜","zuò cài","nấu ăn"],["会做菜","huì zuò cài","biết nấu ăn"],["中国菜","Zhōngguó cài","món Trung Quốc"],["会做中国菜","huì zuò Zhōngguó cài","biết nấu món Trung Quốc"],["汉字","Hànzì","chữ Hán"],["写","xiě","viết"],["写汉字","xiě Hànzì","viết chữ Hán"],["字","zì","chữ"],["怎么","zěnme","như thế nào"],["读","dú","đọc"],["怎么读","zěnme dú","đọc như thế nào"],["怎么写","zěnme xiě","viết như thế nào"],["怎么做","zěnme zuò","làm như thế nào"],["会读不会写","huì dú bú huì xiě","biết đọc nhưng không biết viết"]
+],[]);
 
 addHsk1Lesson(9,"Hôm nay là ngày mấy","今天几号",[
- ["请","mời / xin"],["问","hỏi"],["请问","xin hỏi"],["今天","hôm nay"],["号","ngày"],["日","ngày"],["天","ngày / trời"],["月","tháng"],["一月","tháng 1"],["十二月","tháng 12"],["上个月","tháng trước"],["这个月","tháng này"],["下个月","tháng sau"],["星期","tuần / thứ"],["昨天","hôm qua"],["明天","ngày mai"],["去年","năm ngoái"],["今年","năm nay"],["明年","năm sau"],["学校","trường học"],["看书","đọc sách"]
-],[
- ["Xin hỏi, bạn tên là gì?","请问，你叫什么名字？"],["Xin hỏi, bạn là người nước nào?","请问，你是哪国人？"],["Hôm nay tôi học tiếng Trung.","我今天学汉语。"],["Mẹ hôm nay nấu ăn.","妈妈今天做菜。"],["Hôm nay là ngày mấy?","今天几号？"],["Hôm nay là ngày 13 tháng 1.","今天是一月十三号。"],["Tôi học tiếng Trung được ba tháng rồi.","我学汉语学了三个月。"],["Tháng trước tôi ở Bắc Kinh.","上个月我在北京。"],["Tháng sau tôi đi Trung Quốc.","下个月我去中国。"],["Hôm nay là thứ mấy?","今天星期几？"],["Hôm qua tôi đi học.","昨天我去学校。"],["Ngày mai tôi đi Bắc Kinh.","明天我去北京。"],["Năm nay tôi học tiếng Trung.","今年我学汉语。"],["Tôi đi trường học tiếng Trung.","我去学校学汉语。"],["Tôi đọc sách tiếng Trung.","我看汉语书。"]
-],{label:"💡 Ngày tháng",formula:"今天是 + tháng + ngày · 今天星期几？",ex:"今天是一月十三号。"});
+ ["请","qǐng","mời / xin"],["问","wèn","hỏi"],["今天","jīntiān","hôm nay"],["昨天","zuótiān","hôm qua"],["明天","míngtiān","ngày mai"],["号","hào","ngày (trong tháng)"],["月","yuè","tháng"],["星期","xīngqī","tuần / thứ"],["星期一","xīngqīyī","thứ Hai"],["星期二","xīngqī'èr","thứ Ba"],["星期三","xīngqīsān","thứ Tư"],["星期四","xīngqīsì","thứ Năm"],["星期五","xīngqīwǔ","thứ Sáu"],["星期六","xīngqīliù","thứ Bảy"],["星期天","xīngqītiān","Chủ Nhật"],["去","qù","đi"],["学校","xuéxiào","trường học"],["看","kàn","xem / đọc"],["书","shū","sách"],["今天几号？","jīntiān jǐ hào?","hôm nay ngày mấy?"],["星期几？","xīngqī jǐ?","hôm nay thứ mấy?"]
+],[]);
 
 addHsk1Lesson(10,"Tôi muốn uống trà","我想喝茶",[
- ["想","muốn"],["喝","uống"],["绿茶","trà xanh"],["奶茶","trà sữa"],["饮料","đồ uống"],["果汁","nước ép"],["咖啡","cà phê"],["吃饭","ăn cơm"],["米饭","cơm"],["早饭","bữa sáng"],["午饭","bữa trưa"],["晚饭","bữa tối"],["早上","sáng sớm"],["上午","buổi sáng"],["中午","buổi trưa"],["下午","buổi chiều"],["晚上","buổi tối"],["商店","cửa hàng"],["买","mua"],["卖","bán"],["多少","bao nhiêu"],["钱","tiền"],["块","đồng"],["哪儿","ở đâu"]
-],[
- ["Tôi muốn uống trà xanh.","我想喝绿茶。"],["Tôi muốn uống cà phê.","我想喝咖啡。"],["Tôi muốn uống nước ép.","我想喝果汁。"],["Tôi muốn ăn cơm.","我想吃米饭。"],["Tôi ăn sáng lúc 7 giờ.","我七点吃早饭。"],["Tôi ăn trưa ở trường.","我在学校吃午饭。"],["Tôi ăn tối với bố.","我跟爸爸吃晚饭。"],["Tôi muốn đi cửa hàng.","我想去商店。"],["Tôi muốn mua một cốc trà sữa lớn.","我想买一杯大杯奶茶。"],["Đây là cà phê của bạn.","这是你的咖啡。"],["Đây là cái gì?","这个是什么？"],["Cái này bao nhiêu tiền?","这个多少钱？"],["Tôi không có tiền.","我没有钱。"],["Bạn có bao nhiêu tiền?","你有多少钱？"],["Bạn ở đâu?","你在哪儿？"]
-],{label:"💡 Mẫu câu: 想",formula:"Chủ ngữ + 想 + động từ",ex:"我想喝咖啡。/ 我想去商店。"});
+ ["想","xiǎng","muốn"],["喝","hē","uống"],["茶","chá","trà"],["吃","chī","ăn"],["米饭","mǐfàn","cơm"],["吃饭","chīfàn","ăn cơm"],["下午","xiàwǔ","buổi chiều"],["商店","shāngdiàn","cửa hàng"],["买","mǎi","mua"],["个","gè","lượng từ chung"],["杯子","bēizi","cái cốc / cái ly"],["这","zhè","đây / này"],["多少","duōshao","bao nhiêu"],["钱","qián","tiền"],["块钱","kuài qián","đồng (tiền)"],["元","yuán","đồng / nhân dân tệ"],["那","nà","kia / đó"],["那个","nàge","cái kia"],["这个","zhège","cái này"]
+],[]);
 
 addHsk1Lesson(11,"Con trai anh làm việc ở đâu","你儿子在哪儿工作",[
- ["小","nhỏ"],["大","lớn"],["猫","mèo"],["小猫","mèo nhỏ"],["狗","chó"],["小狗","chó nhỏ"],["在","ở"],["那儿","ở đó"],["这儿","ở đây"],["椅子","ghế"],["桌子","bàn"],["下面","bên dưới"],["上面","bên trên"],["哪儿","ở đâu"],["工作","làm việc"],["儿子","con trai"],["医院","bệnh viện"],["医生","bác sĩ"]
-],[
- ["Con mèo nhỏ ở đâu?","小猫在哪儿？"],["Có rất nhiều người ở đó.","那儿有很多人。"],["Tôi đọc sách ở đó.","我在那儿看书。"],["Ở đây có người không?","这儿有人吗？"],["Chúng ta ở đây nhé.","我们在这儿吧。"],["Trên bàn có gì?","桌子上面有什么？"],["Trên bàn có một cốc cà phê.","桌子上面有一杯咖啡。"],["Dưới ghế có gì?","椅子下面有什么？"],["Có một con chó nhỏ.","有一只小狗。"],["Trường của bạn ở đâu?","你的学校在哪儿？"],["Chúng ta gặp nhau ở đâu?","我们在哪儿见面？"],["Đây là con trai tôi.","这是我儿子。"],["Con trai bạn làm việc ở đâu?","你儿子在哪儿工作？"],["Con trai tôi làm việc ở bệnh viện.","我儿子在医院工作。"],["Con trai tôi là bác sĩ.","我儿子是医生。"]
-],{label:"💡 Vị trí",formula:"Danh từ + 在 + nơi chốn",ex:"小猫在那儿。/ 我儿子在医院工作。"});
+ ["小","xiǎo","nhỏ"],["猫","māo","mèo"],["在","zài","ở"],["那儿","nàr","ở đó"],["狗","gǒu","chó"],["椅子","yǐzi","ghế"],["下面","xiàmiàn","bên dưới"],["哪儿","nǎr","ở đâu"],["工作","gōngzuò","làm việc"],["儿子","érzi","con trai"],["医院","yīyuàn","bệnh viện"],["医生","yīshēng","bác sĩ"],["爸爸","bàba","bố / ba"]
+],[]);
 
 addHsk1Lesson(12,"Tôi có thể ngồi ở đây không","我能坐这儿吗",[
  ["桌子","bàn"],["张","lượng từ cho bàn/giấy"],["电脑","máy tính"],["笔记本电脑","laptop"],["和","và / cùng"],["本","lượng từ cho sách"],["里","bên trong"],["前面","phía trước"],["后面","phía sau"],["这儿","ở đây"],["那儿","ở kia"],["没有","không có"],["能","có thể"],["坐","ngồi"],["请坐","mời ngồi"]
